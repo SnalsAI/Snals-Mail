@@ -1,0 +1,16 @@
+[Unit]
+Description=SNALS Email Agent - Celery Beat Scheduler
+After=network.target redis.service
+
+[Service]
+Type=simple
+User=claude
+Group=claude
+WorkingDirectory=/home/claude/snals-email-agent/backend
+Environment="PATH=/home/claude/snals-email-agent/backend/venv/bin"
+ExecStart=/home/claude/snals-email-agent/backend/venv/bin/celery -A app.tasks beat --loglevel=info
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,8 @@
+# Backup giornaliero alle 2:00
+0 2 * * * claude /home/claude/snals-email-agent/deployment/scripts/backup.sh >> /home/claude/snals-email-agent/logs/backup.log 2>&1
+
+# Monitoring ogni 5 minuti
+*/5 * * * * claude /home/claude/snals-email-agent/deployment/scripts/monitor.sh >> /home/claude/snals-email-agent/logs/monitor.log 2>&1
+
+# Pulizia log vecchi (>90 giorni) ogni domenica
+0 3 * * 0 claude find /home/claude/snals-email-agent/logs -name "*.log" -mtime +90 -delete
