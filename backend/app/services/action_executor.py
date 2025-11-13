@@ -9,11 +9,13 @@ from datetime import datetime
 from sqlalchemy.orm import Session
 
 from app.models.azione import Azione, TipoAzione, StatoAzione
-from app.models.email import Email
+from app.models.email import Email, EmailCategory
 from app.models.interpretazione import Interpretazione
+from app.models.documento import TipoDocumento
 from app.integrations.llm_client import LLMClient
 from app.integrations.google_drive_client import GoogleDriveClient
 from app.integrations.webmail_client import WebmailClient
+from app.services.rag_service import RAGService
 from app.config import get_settings
 
 settings = get_settings()
@@ -33,6 +35,7 @@ class ActionExecutor:
         self.db = db
         self.llm_client = LLMClient()
         self.drive_client = GoogleDriveClient()
+        self.rag_service = RAGService(db) if settings.RAG_ENABLED else None
 
     def execute_actions_for_email(self, email_id: int) -> List[Azione]:
         """
@@ -91,7 +94,7 @@ class ActionExecutor:
 
     def _create_draft_response(self, email: Email) -> Optional[Azione]:
         """
-        Crea una bozza di risposta usando LLM.
+        Crea una bozza di risposta usando LLM + RAG.
 
         Args:
             email: Email da cui generare risposta
@@ -102,9 +105,28 @@ class ActionExecutor:
         try:
             interpretazione_data = email.interpretazione.dati_estratti if email.interpretazione else {}
 
-            # Genera risposta con LLM
-            prompt = self._build_response_prompt(email, interpretazione_data)
-            risposta = self.llm_client.generate(prompt, model_type="generation")
+            # Usa RAG se abilitato
+            if self.rag_service and settings.RAG_ENABLED:
+                # Determina tipi documento rilevanti in base alla categoria
+                tipo_filter = self._get_documento_filter_by_category(email.categoria)
+
+                # Costruisci query per RAG
+                query = self._build_rag_query(email, interpretazione_data)
+
+                # Genera risposta con RAG
+                rag_result = self.rag_service.generate_rag_response(
+                    query=query,
+                    context=f"Email da: {email.mittente}\nOggetto: {email.oggetto}\n\n{email.corpo_testo[:500]}",
+                    tipo_filter=tipo_filter,
+                    n_docs=3
+                )
+
+                risposta = rag_result['response']
+                logger.info(f"✅ Risposta generata con RAG (confidence: {rag_result.get('confidence', 0):.2f})")
+            else:
+                # Fallback: LLM senza RAG
+                prompt = self._build_response_prompt(email, interpretazione_data)
+                risposta = self.llm_client.generate(prompt, model_type="generation")
 
             # Crea azione
             azione = Azione(
@@ -339,8 +361,51 @@ class ActionExecutor:
             logger.error(f"Errore upload Drive: {e}")
             return False
 
+    def _get_documento_filter_by_category(self, categoria: EmailCategory) -> List[TipoDocumento]:
+        """
+        Determina quali tipi di documento usare in base alla categoria email.
+
+        Args:
+            categoria: Categoria email
+
+        Returns:
+            List[TipoDocumento]: Tipi documento rilevanti
+        """
+        mapping = {
+            EmailCategory.RICHIESTA_TESSERAMENTO: [TipoDocumento.SNALS_CENTRALE, TipoDocumento.FAQ],
+            EmailCategory.RICHIESTA_APPUNTAMENTO: [TipoDocumento.FAQ],
+            EmailCategory.COMUNICAZIONE_UST_USR: [TipoDocumento.USR_USP, TipoDocumento.NORMATIVA],
+            EmailCategory.CONVOCAZIONE_SCUOLA: [TipoDocumento.NORMATIVA, TipoDocumento.FAQ],
+            EmailCategory.COMUNICAZIONE_SCUOLA: [TipoDocumento.NORMATIVA, TipoDocumento.FAQ],
+            EmailCategory.COMUNICAZIONE_SNALS_CENTRALE: [TipoDocumento.SNALS_CENTRALE],
+        }
+
+        return mapping.get(categoria, [TipoDocumento.FAQ, TipoDocumento.SNALS_CENTRALE])
+
+    def _build_rag_query(self, email: Email, interpretazione: Dict) -> str:
+        """
+        Costruisce query per RAG in base all'email.
+
+        Args:
+            email: Email
+            interpretazione: Dati interpretazione
+
+        Returns:
+            str: Query per RAG
+        """
+        categoria = email.categoria.value if email.categoria else "generale"
+
+        if categoria == "richiesta_tesseramento":
+            return "Quali sono i documenti e la procedura per il tesseramento SNALS?"
+        elif categoria == "richiesta_appuntamento":
+            return "Come gestire richieste di appuntamento e disponibilità?"
+        elif categoria == "comunicazione_ust_usr":
+            return f"Informazioni su: {email.oggetto}"
+        else:
+            return f"Informazioni su: {email.oggetto}"
+
     def _build_response_prompt(self, email: Email, interpretazione: Dict) -> str:
-        """Costruisce prompt per generare risposta."""
+        """Costruisce prompt per generare risposta (fallback senza RAG)."""
 
         prompt = f"""Sei un assistente di una sede sindacale SNALS.
 

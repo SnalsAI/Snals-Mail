@@ -85,7 +85,16 @@ class Settings(BaseSettings):
     # Logging
     LOG_LEVEL: str = "INFO"
     LOG_FILE: str = "logs/app.log"
-    
+
+    # RAG System (FASE 9)
+    CHROMA_DB_PATH: str = "./storage/chromadb"
+    EMBEDDING_PROVIDER: str = "sentence-transformers"  # o "openai"
+    EMBEDDING_MODEL: str = "all-MiniLM-L6-v2"  # Sentence transformers locale
+    CHUNK_SIZE: int = 1000
+    CHUNK_OVERLAP: int = 200
+    RAG_ENABLED: bool = True  # Abilita RAG per risposte
+    RAG_MIN_SIMILARITY: float = 0.7  # Soglia similarità minima
+
     class Config:
         env_file = ".env"
         case_sensitive = True

@@ -9,6 +9,7 @@ from app.models.evento import EventoCalendario
 from app.models.regola import Regola
 from app.models.utente import Utente, RuoloUtente
 from app.models.log_sistema import LogSistema, LivelloLog
+from app.models.documento import Documento, TipoDocumento, StatoDocumento
 
 __all__ = [
     "Email",
@@ -25,4 +26,7 @@ __all__ = [
     "RuoloUtente",
     "LogSistema",
     "LivelloLog",
+    "Documento",
+    "TipoDocumento",
+    "StatoDocumento",
 ]

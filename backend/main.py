@@ -54,12 +54,13 @@ async def health_check():
     }
 
 # Include API routers
-from app.api.routes import emails, azioni, regole, calendario
+from app.api.routes import emails, azioni, regole, calendario, documenti
 
 app.include_router(emails.router, prefix="/api")
 app.include_router(azioni.router, prefix="/api")
 app.include_router(regole.router, prefix="/api")
 app.include_router(calendario.router, prefix="/api")
+app.include_router(documenti.router, prefix="/api")
 
 if __name__ == "__main__":
     import uvicorn
