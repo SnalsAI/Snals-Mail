@@ -14,6 +14,7 @@ celery_app = Celery(
     backend=settings.REDIS_URL,
     include=[
         'app.tasks.email_polling',
+        'app.tasks.action_tasks',
     ]
 )
 
@@ -33,5 +34,13 @@ celery_app.conf.beat_schedule = {
     'poll-email-pec': {
         'task': 'app.tasks.email_polling.poll_email_pec',
         'schedule': settings.EMAIL_POLL_INTERVAL,
+    },
+    'execute-pending-actions': {
+        'task': 'app.tasks.action_tasks.execute_pending_actions',
+        'schedule': 60.0,  # Ogni 60 secondi
+    },
+    'retry-failed-actions': {
+        'task': 'app.tasks.action_tasks.retry_failed_actions',
+        'schedule': 600.0,  # Ogni 10 minuti
     },
 }

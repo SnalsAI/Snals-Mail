@@ -53,8 +53,13 @@ async def health_check():
         "redis": "not_checked"
     }
 
-# Include routers (da implementare nelle fasi successive)
-# app.include_router(emails.router, prefix="/api/emails", tags=["emails"])
+# Include API routers
+from app.api.routes import emails, azioni, regole, calendario
+
+app.include_router(emails.router, prefix="/api")
+app.include_router(azioni.router, prefix="/api")
+app.include_router(regole.router, prefix="/api")
+app.include_router(calendario.router, prefix="/api")
 
 if __name__ == "__main__":
     import uvicorn

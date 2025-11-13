@@ -2,6 +2,10 @@
 
 Sistema automatico di gestione email per sindacato scuola SNALS con analisi LLM.
 
+[![Status](https://img.shields.io/badge/status-production%20ready-green)]()
+[![Docker](https://img.shields.io/badge/docker-supported-blue)]()
+[![Python](https://img.shields.io/badge/python-3.11-blue)]()
+
 ## 📋 Stato Progetto
 
 ### ✅ FASE 1: Setup Iniziale (Completata)
@@ -23,14 +27,80 @@ Sistema automatico di gestione email per sindacato scuola SNALS con analisi LLM.
 - [x] Interpretatore con estrazione dati strutturati
 - [x] Integrazione completa nel flusso
 
-### 🔲 FASE 4-8: Da Implementare
-- [ ] Azioni automatiche (bozze risposte, eventi calendario)
-- [ ] Frontend React con UI completa
-- [ ] Integrazioni Google (Calendar, Drive)
-- [ ] Sistema regole personalizzabili
-- [ ] Testing e deployment
+### ✅ FASE 8: Testing & Deployment (Completata)
+- [x] Docker Compose setup completo
+- [x] Script testing automatizzati
+- [x] Documentazione deployment
+- [x] Makefile per gestione facile
+- [x] Health checks
 
-## 🚀 Quick Start
+### ✅ FASE 4: Azioni Automatiche (Completata)
+- [x] Google Drive Client per upload allegati
+- [x] Webmail Client IMAP per bozze
+- [x] Action Executor orchestratore
+- [x] Celery tasks azioni automatiche
+
+### ✅ FASE 6: API Complete (Completata)
+- [x] Google Calendar Client
+- [x] API REST complete (Email, Azioni, Regole, Calendario)
+- [x] 30+ endpoints CRUD
+- [x] Pydantic schemas validazione
+
+### ✅ FASE 7: Rules Engine (Completata)
+- [x] Motore valutazione regole
+- [x] Condizioni complesse (AND/OR)
+- [x] Test regole senza esecuzione
+- [x] Sistema priorità e template
+
+### 🔲 FASE 5: Frontend React (Da Implementare)
+- [ ] Dashboard con statistiche
+- [ ] Gestione email UI completa
+- [ ] Calendario eventi integrato
+- [ ] Builder regole visuale
+
+## 🚀 Quick Start con Docker
+
+### Setup in 5 Minuti
+
+```bash
+# 1. Clone repository
+git clone https://github.com/SnalsAI/Snals-Mail.git
+cd Snals-Mail
+
+# 2. Configura credenziali email
+cd backend
+cp .env.docker .env
+nano .env  # Modifica EMAIL_* con le tue credenziali reali
+
+# 3. Avvia tutto
+cd ..
+make setup
+
+# 4. Verifica
+make test
+```
+
+### Servizi Disponibili
+
+- **API REST**: http://localhost:8001
+- **Swagger Docs**: http://localhost:8001/docs
+- **PostgreSQL**: localhost:5432
+- **Redis**: localhost:6379
+- **Ollama**: localhost:11434
+
+### Comandi Utili
+
+```bash
+make help       # Mostra tutti i comandi
+make up         # Avvia servizi
+make down       # Ferma servizi
+make logs       # Visualizza logs
+make ps         # Status servizi
+make test       # Test sistema
+make clean      # Pulizia completa
+```
+
+## 🔧 Setup Manuale
 
 ### Prerequisiti
 - Python 3.10+
@@ -52,10 +122,14 @@ cp .env.example .env
 # Modifica .env con le tue credenziali
 
 # 3. Database
-# Crea database PostgreSQL: snals_email_agent
+createdb snals_email_agent
 alembic upgrade head
 
-# 4. Avvia servizi
+# 4. Ollama models
+ollama pull llama3.2:3b
+ollama pull mistral:7b
+
+# 5. Avvia servizi (3 terminali)
 # Terminal 1 - Backend API
 python main.py
 
@@ -71,6 +145,9 @@ celery -A app.tasks beat --loglevel=info
 ```bash
 curl http://localhost:8001/health
 # Output: {"status":"healthy",...}
+
+# Test completo
+python backend/scripts/test_system.py
 ```
 
 ## 📊 Architettura
@@ -107,102 +184,47 @@ curl http://localhost:8001/health
 ## 🗂️ Struttura Progetto
 
 ```
-backend/
-├── main.py                 # FastAPI entry point
-├── requirements.txt        # Python dependencies
-├── .env                    # Configuration (create from .env.example)
+Snals-Mail/
+├── docker-compose.yml          # Docker orchestration
+├── Makefile                    # Comandi utili
+├── DOCKER_README.md            # Guida Docker
+├── DEPLOYMENT_QUICKSTART.md    # Quick start deployment
 │
-├── app/
-│   ├── config.py          # Settings
-│   ├── database.py        # SQLAlchemy setup
+├── backend/
+│   ├── Dockerfile              # Container backend
+│   ├── docker-entrypoint.sh    # Startup script
+│   ├── main.py                 # FastAPI entry point
+│   ├── requirements.txt        # Dependencies
 │   │
-│   ├── models/            # Database models
-│   │   ├── email.py       # Email model
-│   │   ├── interpretazione.py
-│   │   ├── azione.py
-│   │   └── ...
+│   ├── app/
+│   │   ├── config.py          # Settings
+│   │   ├── database.py        # SQLAlchemy setup
+│   │   ├── models/            # Database models (7)
+│   │   ├── services/          # Business logic
+│   │   │   ├── email_ingest.py
+│   │   │   ├── categorizer.py
+│   │   │   └── interpreter.py
+│   │   ├── integrations/
+│   │   │   └── llm_client.py
+│   │   └── tasks/
+│   │       └── email_polling.py
 │   │
-│   ├── services/          # Business logic
-│   │   ├── email_ingest.py    # POP3/SMTP clients
-│   │   ├── categorizer.py     # LLM categorization
-│   │   └── interpreter.py     # LLM interpretation
-│   │
-│   ├── integrations/      # External integrations
-│   │   └── llm_client.py      # Ollama/OpenAI client
-│   │
-│   └── tasks/             # Celery tasks
-│       ├── __init__.py        # Celery app + schedule
-│       └── email_polling.py   # Polling tasks
+│   ├── alembic/               # Database migrations
+│   └── scripts/
+│       ├── test_system.py     # Test completo
+│       └── init_ollama.sh     # Init modelli LLM
 │
-├── alembic/               # Database migrations
-│
-├── storage/               # File storage
-│   └── attachments/       # Email attachments
-│
-docs/                      # Documentation
-├── DEVELOPMENT_LOG.md     # Development log
-├── ARCHITECTURE.md        # System architecture
-└── API_DOCUMENTATION.md   # API docs
+└── docs/
+    ├── DEVELOPMENT_LOG.md     # Development log
+    ├── ARCHITECTURE.md        # System architecture
+    ├── DEPLOYMENT.md          # Guida deployment completa
+    ├── RESUME_GUIDE.md        # Come riprendere sviluppo
+    └── API_DOCUMENTATION.md   # API reference
 ```
-
-## ⚙️ Configurazione
-
-### Variabili Ambiente (.env)
-
-```bash
-# Database
-DATABASE_URL=postgresql://user:pass@localhost:5432/snals_email_agent
-
-# Email Accounts
-EMAIL_NORMAL_POP3_HOST=pop.example.com
-EMAIL_NORMAL_POP3_USER=your@email.com
-EMAIL_NORMAL_POP3_PASSWORD=yourpassword
-# ... (similmente per PEC)
-
-# LLM
-LLM_PROVIDER=ollama  # o "openai"
-OLLAMA_BASE_URL=http://localhost:11434
-OLLAMA_MODEL_CATEGORIZATION=llama3.2:3b
-OLLAMA_MODEL_INTERPRETATION=mistral:7b
-
-# Security
-SECRET_KEY=your-secret-key-here
-
-# App
-DEBUG=false
-API_PORT=8001
-```
-
-## 📚 Documentazione
-
-- [Development Log](docs/DEVELOPMENT_LOG.md) - Diario sviluppo dettagliato
-- [Architecture](docs/ARCHITECTURE.md) - Architettura sistema
-- [API Documentation](docs/API_DOCUMENTATION.md) - API reference
-- [Resume Guide](docs/RESUME_GUIDE.md) - Come riprendere sviluppo
-
-## 🔧 Stack Tecnologico
-
-**Backend:**
-- FastAPI 0.104 - Web framework
-- SQLAlchemy 2.0 - ORM
-- Alembic - Database migrations
-- Celery 5.3 - Task queue
-- Redis - Message broker
-
-**LLM:**
-- Ollama - Local LLM inference
-- OpenAI API - Alternative LLM provider
-
-**Database:**
-- PostgreSQL - Primary database
-
-**Frontend (da implementare):**
-- React 18 + Vite
-- TailwindCSS
 
 ## 📝 Categorie Email
 
-Il sistema categorizza automaticamente le email in:
+Il sistema categorizza automaticamente le email in 8 categorie:
 
 1. **info_generiche** - Richieste informazioni generiche
 2. **richiesta_appuntamento** - Richieste appuntamenti
@@ -213,26 +235,192 @@ Il sistema categorizza automaticamente le email in:
 7. **comunicazione_snals_centrale** - Comunicazioni SNALS
 8. **varie** - Altro
 
+## 🔧 Stack Tecnologico
+
+**Backend:**
+- FastAPI 0.104 - Web framework
+- SQLAlchemy 2.0 - ORM
+- Alembic - Database migrations
+- Celery 5.3 - Task queue
+- Redis - Message broker
+- Pydantic - Validation
+
+**Database:**
+- PostgreSQL - Primary database
+
+**LLM:**
+- Ollama - Local LLM inference
+- OpenAI API - Alternative provider
+
+**Deployment:**
+- Docker & Docker Compose
+- Nginx (reverse proxy)
+- Systemd (services)
+
+## 🧪 Testing
+
+### Test Automatici
+
+```bash
+# Con Docker
+make test
+
+# Manuale
+python backend/scripts/test_system.py
+```
+
+Output atteso:
+```
+🧪 SNALS Email Agent - Test Sistema Completo
+============================================================
+✅ API Health           PASS
+✅ Database            PASS
+✅ LLM Categorizer     PASS
+✅ LLM Interpreter     PASS
+✅ Save Email          PASS
+
+Totale: 5/5 test passati
+🎉 Tutti i test sono passati!
+```
+
+### Test Manuali
+
+```bash
+# Health check
+curl http://localhost:8001/health
+
+# Swagger UI interattiva
+open http://localhost:8001/docs
+
+# Logs
+make logs          # Docker
+tail -f logs/app.log  # Manuale
+```
+
+## 📚 Documentazione
+
+- **[DOCKER_README.md](DOCKER_README.md)** - Guida completa Docker
+- **[DEPLOYMENT_QUICKSTART.md](DEPLOYMENT_QUICKSTART.md)** - Quick start
+- **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)** - Deployment produzione
+- **[docs/RESUME_GUIDE.md](docs/RESUME_GUIDE.md)** - Guida sviluppo
+- **[docs/DEVELOPMENT_LOG.md](docs/DEVELOPMENT_LOG.md)** - Diario sviluppo
+- **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** - Architettura sistema
+
+## 🔒 Sicurezza
+
+- Password database forti
+- SECRET_KEY generata
+- SSL/TLS per produzione
+- Rate limiting Nginx
+- Firewall configurato
+- Credenziali email criptate (TODO)
+
+## 💾 Backup
+
+### Database
+
+```bash
+# Backup
+docker-compose exec postgres pg_dump -U snals_user snals_email_agent > backup.sql
+
+# Restore
+docker-compose exec -T postgres psql -U snals_user snals_email_agent < backup.sql
+```
+
+### Storage
+
+```bash
+# Backup allegati e configurazioni
+tar -czf backup-storage.tar.gz storage/ backend/.env
+```
+
+## 🔄 Aggiornamento
+
+```bash
+# Pull nuovo codice
+git pull origin main
+
+# Con Docker
+make restart
+
+# Manuale
+cd backend
+source venv/bin/activate
+pip install -r requirements.txt
+alembic upgrade head
+sudo systemctl restart snals-backend snals-celery snals-celery-beat
+```
+
+## 🐛 Troubleshooting
+
+### Servizi non si avviano
+
+```bash
+# Docker
+make logs
+make ps
+
+# Manuale
+sudo systemctl status snals-backend
+journalctl -u snals-backend -n 50
+```
+
+### Database errori
+
+```bash
+# Connessione
+docker-compose exec postgres psql -U snals_user -d snals_email_agent
+
+# Verifica migrations
+alembic current
+alembic history
+```
+
+### LLM non risponde
+
+```bash
+# Verifica Ollama
+curl http://localhost:11434/api/tags
+
+# Scarica modelli
+./backend/scripts/init_ollama.sh
+```
+
+Vedi [DOCKER_README.md](DOCKER_README.md#troubleshooting) per troubleshooting dettagliato.
+
 ## 🤝 Contributing
 
-Progetto in sviluppo attivo. Per contribuire:
-
-1. Leggi [DEVELOPMENT_LOG.md](docs/DEVELOPMENT_LOG.md)
-2. Segui le convenzioni del progetto
-3. Testa accuratamente le modifiche
+1. Fork il repository
+2. Crea feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit modifiche (`git commit -m 'Add AmazingFeature'`)
+4. Push al branch (`git push origin feature/AmazingFeature`)
+5. Apri Pull Request
 
 ## 📄 Licenza
 
 [Specificare licenza]
 
-## 🔗 Links
+## 🔗 Links Utili
 
 - [Documentazione Ollama](https://ollama.ai/docs)
 - [FastAPI Docs](https://fastapi.tiangolo.com)
 - [Celery Docs](https://docs.celeryq.dev)
+- [Docker Compose](https://docs.docker.com/compose/)
+
+## 📞 Supporto
+
+- **Issues**: https://github.com/SnalsAI/Snals-Mail/issues
+- **Documentazione**: [docs/](docs/)
+- **Email**: [specificare]
 
 ---
 
-**Versione:** 0.1.0  
-**Ultima modifica:** 2025-11-13  
-**Status:** 🟢 In sviluppo attivo
+**Versione:** 0.3.0
+**Ultimo aggiornamento:** 2025-11-13
+**Status:** 🟢 Backend Production Ready - Frontend in sviluppo
+
+**Fasi completate:** 1, 2, 3, 4, 6, 7, 8 (7/8)
+**Endpoint API:** 30+
+**Integrazioni:** Google Drive, Google Calendar, Ollama LLM, OpenAI
+
+**Tempo setup:** ~5 minuti con Docker, ~15 minuti manuale
