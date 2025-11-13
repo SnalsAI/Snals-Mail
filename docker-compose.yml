@@ -1,0 +1,151 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: snals-postgres
+    environment:
+      POSTGRES_DB: snals_email_agent
+      POSTGRES_USER: snals_user
+      POSTGRES_PASSWORD: snals_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U snals_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - snals-network
+
+  # Redis (Message Broker per Celery)
+  redis:
+    image: redis:7-alpine
+    container_name: snals-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - snals-network
+
+  # Ollama (LLM locale)
+  ollama:
+    image: ollama/ollama:latest
+    container_name: snals-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - snals-network
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  # Backend FastAPI
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: snals-backend
+    ports:
+      - "8001:8001"
+    environment:
+      - DATABASE_URL=postgresql://snals_user:snals_password@postgres:5432/snals_email_agent
+      - REDIS_URL=redis://redis:6379/0
+      - OLLAMA_BASE_URL=http://ollama:11434
+    volumes:
+      - ./backend:/app
+      - ./storage:/app/storage
+      - ./logs:/app/logs
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - snals-network
+    command: uvicorn main:app --host 0.0.0.0 --port 8001 --reload
+
+  # Celery Worker
+  celery-worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: snals-celery-worker
+    environment:
+      - DATABASE_URL=postgresql://snals_user:snals_password@postgres:5432/snals_email_agent
+      - REDIS_URL=redis://redis:6379/0
+      - OLLAMA_BASE_URL=http://ollama:11434
+    volumes:
+      - ./backend:/app
+      - ./storage:/app/storage
+      - ./logs:/app/logs
+    depends_on:
+      - postgres
+      - redis
+      - backend
+    networks:
+      - snals-network
+    command: celery -A app.tasks worker --loglevel=info
+
+  # Celery Beat (Scheduler)
+  celery-beat:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: snals-celery-beat
+    environment:
+      - DATABASE_URL=postgresql://snals_user:snals_password@postgres:5432/snals_email_agent
+      - REDIS_URL=redis://redis:6379/0
+      - OLLAMA_BASE_URL=http://ollama:11434
+    volumes:
+      - ./backend:/app
+      - ./storage:/app/storage
+      - ./logs:/app/logs
+    depends_on:
+      - postgres
+      - redis
+      - backend
+    networks:
+      - snals-network
+    command: celery -A app.tasks beat --loglevel=info
+
+  # Frontend React (opzionale)
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #   container_name: snals-frontend
+  #   ports:
+  #     - "3001:3001"
+  #   environment:
+  #     - VITE_API_URL=http://localhost:8001
+  #   volumes:
+  #     - ./frontend:/app
+  #     - /app/node_modules
+  #   networks:
+  #     - snals-network
+  #   command: npm run dev -- --host
+
+volumes:
+  postgres_data:
+  redis_data:
+  ollama_data:
+
+networks:
+  snals-network:
+    driver: bridge
