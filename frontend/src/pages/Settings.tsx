@@ -40,6 +40,9 @@ interface SettingsData {
   // System
   email_poll_interval: number
   daily_summary_hour: number
+  email_mark_as_read: boolean
+  email_delete_from_server: boolean
+  email_fetch_limit: number
   debug: boolean
   log_level: string
 }
@@ -84,6 +87,9 @@ export default function Settings() {
     // System
     email_poll_interval: 120,
     daily_summary_hour: 18,
+    email_mark_as_read: false,
+    email_delete_from_server: false,
+    email_fetch_limit: 50,
     debug: true,
     log_level: 'INFO',
   })
@@ -501,6 +507,21 @@ export default function Settings() {
               </div>
 
               <div>
+                <label className="label">Limite Email per Polling</label>
+                <input
+                  type="number"
+                  min="1"
+                  max="200"
+                  className="input"
+                  value={settings.email_fetch_limit}
+                  onChange={(e) => setSettings({ ...settings, email_fetch_limit: Number(e.target.value) })}
+                />
+                <p className="mt-1 text-sm text-gray-500">
+                  Numero massimo di email da scaricare per ogni polling (default: 50)
+                </p>
+              </div>
+
+              <div>
                 <label className="label">Ora Riepilogo Giornaliero</label>
                 <input
                   type="number"
@@ -515,31 +536,86 @@ export default function Settings() {
                 </p>
               </div>
 
-              <div>
-                <label className="label">Livello Log</label>
-                <select
-                  className="input"
-                  value={settings.log_level}
-                  onChange={(e) => setSettings({ ...settings, log_level: e.target.value })}
-                >
-                  <option value="DEBUG">DEBUG</option>
-                  <option value="INFO">INFO</option>
-                  <option value="WARNING">WARNING</option>
-                  <option value="ERROR">ERROR</option>
-                </select>
+              <div className="border-t border-gray-200 pt-4">
+                <h3 className="text-sm font-semibold text-gray-700 uppercase mb-3">
+                  Comportamento Email sul Server
+                </h3>
+
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3">
+                    <input
+                      type="checkbox"
+                      id="mark_as_read"
+                      checked={settings.email_mark_as_read}
+                      onChange={(e) => setSettings({ ...settings, email_mark_as_read: e.target.checked })}
+                      className="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500 mt-1"
+                    />
+                    <div className="flex-1">
+                      <label htmlFor="mark_as_read" className="text-sm font-medium text-gray-700">
+                        Marca email come lette sul server
+                      </label>
+                      <p className="text-xs text-gray-500 mt-1">
+                        ⚠️ Richiede IMAP. Con POP3 questa opzione non ha effetto.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <input
+                      type="checkbox"
+                      id="delete_from_server"
+                      checked={settings.email_delete_from_server}
+                      onChange={(e) => setSettings({ ...settings, email_delete_from_server: e.target.checked })}
+                      className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500 mt-1"
+                    />
+                    <div className="flex-1">
+                      <label htmlFor="delete_from_server" className="text-sm font-medium text-gray-700">
+                        Elimina email dal server dopo il download
+                      </label>
+                      <p className="text-xs text-red-600 mt-1">
+                        ⚠️ ATTENZIONE: Le email saranno cancellate definitivamente dal server!
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                  <p className="text-sm text-blue-800">
+                    <strong>ℹ️ Nota:</strong> Di default il sistema scarica SOLO una copia delle email
+                    e le lascia intatte sul server. Nessuna modifica viene apportata alle email originali.
+                  </p>
+                </div>
               </div>
 
-              <div className="flex items-center gap-3">
-                <input
-                  type="checkbox"
-                  id="debug"
-                  checked={settings.debug}
-                  onChange={(e) => setSettings({ ...settings, debug: e.target.checked })}
-                  className="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
-                />
-                <label htmlFor="debug" className="text-sm font-medium text-gray-700">
-                  Modalità Debug
-                </label>
+              <div className="border-t border-gray-200 pt-4">
+                <h3 className="text-sm font-semibold text-gray-700 uppercase mb-3">Debug & Logging</h3>
+
+                <div>
+                  <label className="label">Livello Log</label>
+                  <select
+                    className="input"
+                    value={settings.log_level}
+                    onChange={(e) => setSettings({ ...settings, log_level: e.target.value })}
+                  >
+                    <option value="DEBUG">DEBUG</option>
+                    <option value="INFO">INFO</option>
+                    <option value="WARNING">WARNING</option>
+                    <option value="ERROR">ERROR</option>
+                  </select>
+                </div>
+
+                <div className="flex items-center gap-3 mt-3">
+                  <input
+                    type="checkbox"
+                    id="debug"
+                    checked={settings.debug}
+                    onChange={(e) => setSettings({ ...settings, debug: e.target.checked })}
+                    className="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
+                  />
+                  <label htmlFor="debug" className="text-sm font-medium text-gray-700">
+                    Modalità Debug
+                  </label>
+                </div>
               </div>
             </div>
           </div>

@@ -76,6 +76,11 @@ class Settings(BaseSettings):
     # Scheduling
     EMAIL_POLL_INTERVAL: int = 120
     DAILY_SUMMARY_HOUR: int = 18
+
+    # Email Behavior
+    EMAIL_MARK_AS_READ: bool = False  # Se True, marca le email come lette sul server (richiede IMAP)
+    EMAIL_DELETE_FROM_SERVER: bool = False  # Se True, elimina le email dal server dopo il download
+    EMAIL_FETCH_LIMIT: int = 50  # Numero massimo di email da scaricare per polling
     
     # Security
     SECRET_KEY: str
