@@ -25,11 +25,11 @@ app = FastAPI(
     description="Sistema automatizzazione gestione email SNALS"
 )
 
-# CORS
+# CORS - Permetti tutte le origini per sviluppo
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3001", "http://localhost:3000"],
-    allow_credentials=True,
+    allow_origins=["*"],  # In produzione, specificare gli host esatti
+    allow_credentials=False,  # Deve essere False con allow_origins=["*"]
     allow_methods=["*"],
     allow_headers=["*"],
 )
