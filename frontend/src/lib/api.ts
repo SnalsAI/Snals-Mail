@@ -97,10 +97,10 @@ export const calendarApi = {
 // Settings endpoints (configuration)
 export const settingsApi = {
   getAll: () =>
-    api.get('/settings/'),
+    api.get('/api/settings/'),
 
   update: (data: Record<string, any>) =>
-    api.put('/settings/', data),
+    api.put('/api/settings/', data),
 
   testEmailNormal: () =>
     api.post('/api/settings/test-email-normal'),
