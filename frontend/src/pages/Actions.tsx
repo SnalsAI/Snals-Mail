@@ -1,11 +1,15 @@
+import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { Play, Trash2, Clock, CheckCircle, XCircle } from 'lucide-react'
+import { Play, Trash2, Clock, CheckCircle, XCircle, Plus } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { actionsApi } from '../lib/api'
 import { ActionStatus, ActionType } from '../types'
+import ActionForm from '../components/ActionForm'
+import type { Action } from '../types'
 
 export default function Actions() {
   const queryClient = useQueryClient()
+  const [showModal, setShowModal] = useState(false)
 
   const { data: actions, isLoading } = useQuery({
     queryKey: ['actions'],
@@ -30,6 +34,22 @@ export default function Actions() {
       toast.success('Azione eliminata')
     },
   })
+
+  const createMutation = useMutation({
+    mutationFn: (data: Partial<Action>) => actionsApi.create(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['actions'] })
+      toast.success('Azione creata con successo')
+      setShowModal(false)
+    },
+    onError: () => {
+      toast.error('Errore nella creazione dell\'azione')
+    },
+  })
+
+  const handleSaveAction = (data: Partial<Action>) => {
+    createMutation.mutate(data)
+  }
 
   const getStatusIcon = (stato: ActionStatus) => {
     switch (stato) {
@@ -61,11 +81,20 @@ export default function Actions() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">Azioni</h1>
-        <p className="mt-1 text-sm text-gray-500">
-          Gestisci le azioni automatiche generate dal sistema
-        </p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">Azioni</h1>
+          <p className="mt-1 text-sm text-gray-500">
+            Gestisci le azioni automatiche e crea azioni manuali
+          </p>
+        </div>
+        <button
+          onClick={() => setShowModal(true)}
+          className="btn-primary flex items-center gap-2"
+        >
+          <Plus className="w-4 h-4" />
+          Nuova Azione
+        </button>
       </div>
 
       <div className="card">
@@ -166,10 +195,21 @@ export default function Actions() {
         ) : (
           <div className="text-center py-12">
             <CheckCircle className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-500">Nessuna azione trovata</p>
+            <p className="text-gray-500 mb-4">Nessuna azione trovata</p>
+            <button onClick={() => setShowModal(true)} className="btn-primary">
+              Crea la tua prima azione
+            </button>
           </div>
         )}
       </div>
+
+      {/* Action Form Modal */}
+      {showModal && (
+        <ActionForm
+          onSave={handleSaveAction}
+          onClose={() => setShowModal(false)}
+        />
+      )}
     </div>
   )
 }

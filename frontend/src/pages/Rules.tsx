@@ -3,10 +3,13 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Settings, Power, PowerOff, Trash2, Plus } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { rulesApi } from '../lib/api'
+import RuleBuilder from '../components/RuleBuilder'
+import type { Rule } from '../types'
 
 export default function Rules() {
   const queryClient = useQueryClient()
   const [showModal, setShowModal] = useState(false)
+  const [editingRule, setEditingRule] = useState<Rule | undefined>(undefined)
 
   const { data: rules, isLoading } = useQuery({
     queryKey: ['rules'],
@@ -29,6 +32,51 @@ export default function Rules() {
     },
   })
 
+  const createMutation = useMutation({
+    mutationFn: (data: Partial<Rule>) => rulesApi.create(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['rules'] })
+      toast.success('Regola creata con successo')
+      setShowModal(false)
+      setEditingRule(undefined)
+    },
+    onError: () => {
+      toast.error('Errore nella creazione della regola')
+    },
+  })
+
+  const updateMutation = useMutation({
+    mutationFn: ({ id, data }: { id: number; data: Partial<Rule> }) =>
+      rulesApi.update(id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['rules'] })
+      toast.success('Regola aggiornata con successo')
+      setShowModal(false)
+      setEditingRule(undefined)
+    },
+    onError: () => {
+      toast.error('Errore nell\'aggiornamento della regola')
+    },
+  })
+
+  const handleSaveRule = (data: Partial<Rule>) => {
+    if (editingRule) {
+      updateMutation.mutate({ id: editingRule.id, data })
+    } else {
+      createMutation.mutate(data)
+    }
+  }
+
+  const handleEditRule = (rule: Rule) => {
+    setEditingRule(rule)
+    setShowModal(true)
+  }
+
+  const handleNewRule = () => {
+    setEditingRule(undefined)
+    setShowModal(true)
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -39,7 +87,7 @@ export default function Rules() {
           </p>
         </div>
         <button
-          onClick={() => setShowModal(true)}
+          onClick={handleNewRule}
           className="btn-primary flex items-center gap-2"
         >
           <Plus className="w-4 h-4" />
@@ -141,6 +189,12 @@ export default function Rules() {
                     {/* Actions */}
                     <div className="flex items-center gap-2 ml-4">
                       <button
+                        onClick={() => handleEditRule(rule)}
+                        className="btn-secondary"
+                      >
+                        Modifica
+                      </button>
+                      <button
                         onClick={() => toggleMutation.mutate(rule.id)}
                         className={rule.attivo ? 'btn-secondary' : 'btn-primary'}
                         disabled={toggleMutation.isPending}
@@ -171,32 +225,23 @@ export default function Rules() {
           <div className="text-center py-12">
             <Settings className="w-12 h-12 text-gray-400 mx-auto mb-4" />
             <p className="text-gray-500 mb-4">Nessuna regola configurata</p>
-            <button onClick={() => setShowModal(true)} className="btn-primary">
+            <button onClick={handleNewRule} className="btn-primary">
               Crea la tua prima regola
             </button>
           </div>
         )}
       </div>
 
-      {/* Modal placeholder */}
+      {/* Rule Builder Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-8 max-w-2xl w-full mx-4">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
-              Nuova Regola
-            </h2>
-            <p className="text-gray-600 mb-6">
-              Il builder visuale per le regole sarà implementato prossimamente.
-              Per ora, utilizza le API REST per creare regole.
-            </p>
-            <button
-              onClick={() => setShowModal(false)}
-              className="btn-primary"
-            >
-              Chiudi
-            </button>
-          </div>
-        </div>
+        <RuleBuilder
+          rule={editingRule}
+          onSave={handleSaveRule}
+          onClose={() => {
+            setShowModal(false)
+            setEditingRule(undefined)
+          }}
+        />
       )}
     </div>
   )

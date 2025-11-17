@@ -6,6 +6,7 @@ import EmailDetail from './pages/EmailDetail'
 import Actions from './pages/Actions'
 import Rules from './pages/Rules'
 import Calendar from './pages/Calendar'
+import Settings from './pages/Settings'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="actions" element={<Actions />} />
         <Route path="rules" element={<Rules />} />
         <Route path="calendar" element={<Calendar />} />
+        <Route path="settings" element={<Settings />} />
       </Route>
     </Routes>
   )

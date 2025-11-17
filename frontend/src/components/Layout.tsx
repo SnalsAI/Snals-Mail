@@ -3,16 +3,18 @@ import {
   LayoutDashboard,
   Mail,
   ListChecks,
-  Settings,
-  Calendar as CalendarIcon
+  Sliders,
+  Calendar as CalendarIcon,
+  Settings
 } from 'lucide-react'
 
 const navigation = [
   { name: 'Dashboard', href: '/', icon: LayoutDashboard },
   { name: 'Email', href: '/emails', icon: Mail },
   { name: 'Azioni', href: '/actions', icon: ListChecks },
-  { name: 'Regole', href: '/rules', icon: Settings },
+  { name: 'Regole', href: '/rules', icon: Sliders },
   { name: 'Calendario', href: '/calendar', icon: CalendarIcon },
+  { name: 'Configurazioni', href: '/settings', icon: Settings },
 ]
 
 export default function Layout() {
