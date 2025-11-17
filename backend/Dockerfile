@@ -24,15 +24,8 @@ COPY . .
 # Create necessary directories
 RUN mkdir -p storage/attachments storage/repository storage/temp logs
 
-# Copy entrypoint
-COPY docker-entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
-
 # Expose port
 EXPOSE 8001
 
-# Set entrypoint
-ENTRYPOINT ["docker-entrypoint.sh"]
-
-# Default command
+# Default command (can be overridden by docker-compose)
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8001"]

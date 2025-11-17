@@ -10,7 +10,7 @@ services:
       POSTGRES_USER: snals_user
       POSTGRES_PASSWORD: snals_password
     ports:
-      - "5432:5432"
+      - "5433:5432"  # Porta esterna modificata per evitare conflitti
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -26,7 +26,7 @@ services:
     image: redis:7-alpine
     container_name: snals-redis
     ports:
-      - "6379:6379"
+      - "6380:6379"  # Porta esterna modificata per evitare conflitti
     volumes:
       - redis_data:/data
     healthcheck:
@@ -37,7 +37,7 @@ services:
     networks:
       - snals-network
 
-  # Ollama (LLM locale)
+  # Ollama (LLM locale - CPU only, no GPU)
   ollama:
     image: ollama/ollama:latest
     container_name: snals-ollama
@@ -47,13 +47,7 @@ services:
       - ollama_data:/root/.ollama
     networks:
       - snals-network
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [gpu]
+    # GPU support removed - running on CPU
 
   # Backend FastAPI
   backend:
@@ -78,7 +72,7 @@ services:
         condition: service_healthy
     networks:
       - snals-network
-    command: uvicorn main:app --host 0.0.0.0 --port 8001 --reload
+    command: bash -c "alembic upgrade head && uvicorn main:app --host 0.0.0.0 --port 8001 --reload"
 
   # Celery Worker
   celery-worker:
@@ -100,7 +94,7 @@ services:
       - backend
     networks:
       - snals-network
-    command: celery -A app.tasks worker --loglevel=info
+    command: bash -c "sleep 5 && celery -A app.tasks worker --loglevel=info"
 
   # Celery Beat (Scheduler)
   celery-beat:
@@ -122,7 +116,7 @@ services:
       - backend
     networks:
       - snals-network
-    command: celery -A app.tasks beat --loglevel=info
+    command: bash -c "sleep 5 && celery -A app.tasks beat --loglevel=info"
 
   # Frontend React (opzionale)
   # frontend:

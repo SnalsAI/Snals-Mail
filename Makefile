@@ -10,8 +10,8 @@ up: ## Avvia tutti i servizi
 	docker-compose up -d
 	@echo "✅ Servizi avviati!"
 	@echo "   - Backend API: http://localhost:8001"
-	@echo "   - PostgreSQL: localhost:5432"
-	@echo "   - Redis: localhost:6379"
+	@echo "   - PostgreSQL: localhost:5433"
+	@echo "   - Redis: localhost:6380"
 	@echo "   - Ollama: http://localhost:11434"
 
 down: ## Ferma tutti i servizi

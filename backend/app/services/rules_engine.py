@@ -9,7 +9,7 @@ from typing import List, Dict, Any, Optional
 from sqlalchemy.orm import Session
 from datetime import datetime
 
-from app.models.regola import Regola, TipoCondizione, TipoAzioneRegola
+from app.models.regola import Regola
 from app.models.email import Email, EmailCategory
 from app.models.azione import Azione, TipoAzione, StatoAzione
 
