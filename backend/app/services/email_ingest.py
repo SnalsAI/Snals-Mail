@@ -49,6 +49,116 @@ class EmailIngestClient:
             logger.error(f"Errore connessione POP3 {self.account_type}: {e}")
             raise
 
+    def test_connection(self) -> Dict:
+        """
+        Test completo della configurazione email:
+        1. Test POP3: connessione e lettura prima email
+        2. Test SMTP: invio email di test a se stesso
+
+        Returns:
+            Dict con risultati dettagliati del test
+        """
+        results = {
+            'pop3': {'success': False, 'message': '', 'details': {}},
+            'smtp': {'success': False, 'message': '', 'details': {}},
+            'overall_success': False
+        }
+
+        # TEST POP3
+        logger.info(f"Inizio test POP3 per account {self.account_type}")
+        try:
+            conn = self.connect_pop3()
+
+            # Ottieni numero messaggi
+            num_messages = len(conn.list()[1])
+            results['pop3']['details']['num_messages'] = num_messages
+
+            if num_messages > 0:
+                # Leggi solo l'header della prima email (più veloce)
+                response, lines, octets = conn.top(1, 0)  # top(msg_num, num_lines_body)
+
+                # Parse header
+                raw_header = b'\n'.join(lines)
+                msg = email.message_from_bytes(raw_header)
+
+                subject = self._decode_header(msg.get('Subject', '(nessun oggetto)'))
+                from_addr = self._decode_header(msg.get('From', ''))
+
+                results['pop3']['details']['first_email_subject'] = subject[:100]
+                results['pop3']['details']['first_email_from'] = from_addr
+                results['pop3']['success'] = True
+                results['pop3']['message'] = f"✅ Connessione POP3 riuscita! Trovate {num_messages} email."
+            else:
+                results['pop3']['success'] = True
+                results['pop3']['message'] = "✅ Connessione POP3 riuscita! Nessuna email presente nella casella."
+
+            conn.quit()
+            logger.info(f"Test POP3 completato con successo per {self.account_type}")
+
+        except Exception as e:
+            results['pop3']['success'] = False
+            results['pop3']['message'] = f"❌ Errore POP3: {str(e)}"
+            logger.error(f"Test POP3 fallito per {self.account_type}: {e}")
+
+        # TEST SMTP
+        logger.info(f"Inizio test SMTP per account {self.account_type}")
+        try:
+            # Crea messaggio di test
+            msg = MIMEMultipart()
+            msg['From'] = self.smtp_user
+            msg['To'] = self.smtp_user  # Invia a se stesso
+            msg['Subject'] = f"Test SNALS Email Agent - {self.account_type.upper()}"
+
+            body = f"""
+Questo è un messaggio di test automatico generato da SNALS Email Agent.
+
+Account: {self.account_type.upper()}
+Server SMTP: {self.smtp_host}:{self.smtp_port}
+Data/Ora: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+
+Se ricevi questo messaggio, la configurazione SMTP è corretta! ✅
+
+---
+SNALS Email Agent - Sistema di gestione email automatizzato
+            """.strip()
+
+            msg.attach(MIMEText(body, 'plain', 'utf-8'))
+
+            # Connessione SMTP
+            server = smtplib.SMTP(self.smtp_host, self.smtp_port, timeout=30)
+            server.ehlo()
+
+            # Verifica se STARTTLS è supportato
+            if server.has_extn('STARTTLS'):
+                server.starttls()
+                server.ehlo()
+                results['smtp']['details']['starttls'] = True
+            else:
+                results['smtp']['details']['starttls'] = False
+
+            # Login
+            server.login(self.smtp_user, self.smtp_password)
+            results['smtp']['details']['auth'] = True
+
+            # Invia email
+            server.send_message(msg)
+            server.quit()
+
+            results['smtp']['success'] = True
+            results['smtp']['message'] = f"✅ Email di test inviata con successo a {self.smtp_user}"
+            results['smtp']['details']['recipient'] = self.smtp_user
+            logger.info(f"Test SMTP completato con successo per {self.account_type}")
+
+        except Exception as e:
+            results['smtp']['success'] = False
+            results['smtp']['message'] = f"❌ Errore SMTP: {str(e)}"
+            logger.error(f"Test SMTP fallito per {self.account_type}: {e}")
+
+        # Verifica successo complessivo
+        results['overall_success'] = results['pop3']['success'] and results['smtp']['success']
+
+        return results
+
     def fetch_emails(self, limit: int = 50) -> List[Dict]:
         """
         Scarica email dal server POP3 in modo SICURO.

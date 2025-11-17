@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { Save, Mail, Database, Cpu, Calendar as CalendarIcon, HardDrive } from 'lucide-react'
+import { Save, Mail, Database, Cpu, Calendar as CalendarIcon, HardDrive, PlayCircle, CheckCircle, XCircle, Loader } from 'lucide-react'
 import toast from 'react-hot-toast'
+import { settingsApi } from '../lib/api'
 
 interface SettingsData {
   // Email Normal
@@ -95,6 +96,56 @@ export default function Settings() {
   })
 
   const [saving, setSaving] = useState(false)
+  const [testingNormal, setTestingNormal] = useState(false)
+  const [testingPEC, setTestingPEC] = useState(false)
+  const [testResultNormal, setTestResultNormal] = useState<any>(null)
+  const [testResultPEC, setTestResultPEC] = useState<any>(null)
+
+  const handleTestEmailNormal = async () => {
+    setTestingNormal(true)
+    setTestResultNormal(null)
+    try {
+      const response = await settingsApi.testEmailNormal()
+      setTestResultNormal(response.data)
+      if (response.data.overall_success) {
+        toast.success('Test Email Normale completato con successo!')
+      } else {
+        toast.error('Test Email Normale completato con errori')
+      }
+    } catch (error: any) {
+      toast.error('Errore durante il test: ' + (error.response?.data?.detail || error.message))
+      setTestResultNormal({
+        overall_success: false,
+        pop3: { success: false, message: '❌ Errore di connessione' },
+        smtp: { success: false, message: '❌ Errore di connessione' }
+      })
+    } finally {
+      setTestingNormal(false)
+    }
+  }
+
+  const handleTestEmailPEC = async () => {
+    setTestingPEC(true)
+    setTestResultPEC(null)
+    try {
+      const response = await settingsApi.testEmailPEC()
+      setTestResultPEC(response.data)
+      if (response.data.overall_success) {
+        toast.success('Test Email PEC completato con successo!')
+      } else {
+        toast.error('Test Email PEC completato con errori')
+      }
+    } catch (error: any) {
+      toast.error('Errore durante il test: ' + (error.response?.data?.detail || error.message))
+      setTestResultPEC({
+        overall_success: false,
+        pop3: { success: false, message: '❌ Errore di connessione' },
+        smtp: { success: false, message: '❌ Errore di connessione' }
+      })
+    } finally {
+      setTestingPEC(false)
+    }
+  }
 
   const handleSave = async () => {
     setSaving(true)
@@ -117,6 +168,67 @@ export default function Settings() {
     { id: 'google' as const, name: 'Google', icon: HardDrive },
     { id: 'system' as const, name: 'Sistema', icon: Database },
   ]
+
+  // Componente per mostrare i risultati del test
+  const TestResults = ({ results }: { results: any }) => {
+    if (!results) return null
+
+    return (
+      <div className="mt-6 space-y-3">
+        <h3 className="text-sm font-semibold text-gray-700">Risultati Test</h3>
+
+        {/* POP3 Result */}
+        <div className={`p-4 rounded-lg border ${results.pop3.success ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
+          <div className="flex items-start gap-3">
+            {results.pop3.success ? (
+              <CheckCircle className="w-5 h-5 text-green-600 mt-0.5" />
+            ) : (
+              <XCircle className="w-5 h-5 text-red-600 mt-0.5" />
+            )}
+            <div className="flex-1">
+              <h4 className="font-medium text-sm text-gray-900">Test POP3 (Ricezione)</h4>
+              <p className="text-sm text-gray-700 mt-1">{results.pop3.message}</p>
+              {results.pop3.details?.num_messages !== undefined && (
+                <p className="text-xs text-gray-600 mt-2">
+                  Email trovate: {results.pop3.details.num_messages}
+                </p>
+              )}
+              {results.pop3.details?.first_email_subject && (
+                <p className="text-xs text-gray-600 mt-1">
+                  Prima email: "{results.pop3.details.first_email_subject}" da {results.pop3.details.first_email_from}
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* SMTP Result */}
+        <div className={`p-4 rounded-lg border ${results.smtp.success ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
+          <div className="flex items-start gap-3">
+            {results.smtp.success ? (
+              <CheckCircle className="w-5 h-5 text-green-600 mt-0.5" />
+            ) : (
+              <XCircle className="w-5 h-5 text-red-600 mt-0.5" />
+            )}
+            <div className="flex-1">
+              <h4 className="font-medium text-sm text-gray-900">Test SMTP (Invio)</h4>
+              <p className="text-sm text-gray-700 mt-1">{results.smtp.message}</p>
+              {results.smtp.details?.recipient && (
+                <p className="text-xs text-gray-600 mt-2">
+                  Email di test inviata a: {results.smtp.details.recipient}
+                </p>
+              )}
+              {results.smtp.details?.starttls !== undefined && (
+                <p className="text-xs text-gray-600 mt-1">
+                  STARTTLS: {results.smtp.details.starttls ? '✓ Supportato' : '✗ Non supportato'}
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="space-y-6">
@@ -253,6 +365,33 @@ export default function Settings() {
                 </div>
               </div>
             </div>
+
+            {/* Test Button */}
+            <div className="border-t border-gray-200 pt-6">
+              <button
+                onClick={handleTestEmailNormal}
+                disabled={testingNormal}
+                className="btn-secondary flex items-center gap-2"
+              >
+                {testingNormal ? (
+                  <>
+                    <Loader className="w-4 h-4 animate-spin" />
+                    Test in corso...
+                  </>
+                ) : (
+                  <>
+                    <PlayCircle className="w-4 h-4" />
+                    Test Connessione Email
+                  </>
+                )}
+              </button>
+              <p className="mt-2 text-xs text-gray-500">
+                Verifica la connessione POP3/SMTP e invia un'email di test a se stesso
+              </p>
+            </div>
+
+            {/* Test Results */}
+            <TestResults results={testResultNormal} />
           </div>
         )}
 
@@ -346,6 +485,33 @@ export default function Settings() {
                 </div>
               </div>
             </div>
+
+            {/* Test Button */}
+            <div className="border-t border-gray-200 pt-6">
+              <button
+                onClick={handleTestEmailPEC}
+                disabled={testingPEC}
+                className="btn-secondary flex items-center gap-2"
+              >
+                {testingPEC ? (
+                  <>
+                    <Loader className="w-4 h-4 animate-spin" />
+                    Test in corso...
+                  </>
+                ) : (
+                  <>
+                    <PlayCircle className="w-4 h-4" />
+                    Test Connessione Email PEC
+                  </>
+                )}
+              </button>
+              <p className="mt-2 text-xs text-gray-500">
+                Verifica la connessione POP3/SMTP PEC e invia un'email di test a se stesso
+              </p>
+            </div>
+
+            {/* Test Results */}
+            <TestResults results={testResultPEC} />
           </div>
         )}
 
