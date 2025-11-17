@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Save, Mail, Database, Cpu, Calendar as CalendarIcon, HardDrive, PlayCircle, CheckCircle, XCircle, Loader } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { settingsApi } from '../lib/api'
@@ -34,9 +34,10 @@ interface SettingsData {
   openai_model: string
 
   // Google
-  google_credentials_path: string
-  google_drive_folder_id: string
+  google_credentials_file: string
   google_calendar_id: string
+  google_drive_folder_ust: string
+  google_drive_folder_snals: string
 
   // System
   email_poll_interval: number
@@ -52,23 +53,23 @@ export default function Settings() {
   const [activeTab, setActiveTab] = useState<'email_normal' | 'email_pec' | 'llm' | 'google' | 'system'>('email_normal')
   const [settings, setSettings] = useState<SettingsData>({
     // Email Normal
-    email_normal_pop3_host: 'pop.example.com',
+    email_normal_pop3_host: '',
     email_normal_pop3_port: 995,
-    email_normal_pop3_user: 'user@example.com',
+    email_normal_pop3_user: '',
     email_normal_pop3_password: '',
-    email_normal_smtp_host: 'smtp.example.com',
+    email_normal_smtp_host: '',
     email_normal_smtp_port: 587,
-    email_normal_smtp_user: 'user@example.com',
+    email_normal_smtp_user: '',
     email_normal_smtp_password: '',
 
     // Email PEC
-    email_pec_pop3_host: 'pop.pec.example.com',
+    email_pec_pop3_host: '',
     email_pec_pop3_port: 995,
-    email_pec_pop3_user: 'user@pec.it',
+    email_pec_pop3_user: '',
     email_pec_pop3_password: '',
-    email_pec_smtp_host: 'smtp.pec.example.com',
+    email_pec_smtp_host: '',
     email_pec_smtp_port: 587,
-    email_pec_smtp_user: 'user@pec.it',
+    email_pec_smtp_user: '',
     email_pec_smtp_password: '',
 
     // LLM
@@ -81,9 +82,10 @@ export default function Settings() {
     openai_model: 'gpt-4',
 
     // Google
-    google_credentials_path: '/app/credentials.json',
-    google_drive_folder_id: '',
+    google_credentials_file: '',
     google_calendar_id: 'primary',
+    google_drive_folder_ust: '',
+    google_drive_folder_snals: '',
 
     // System
     email_poll_interval: 120,
@@ -95,11 +97,29 @@ export default function Settings() {
     log_level: 'INFO',
   })
 
+  const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [testingNormal, setTestingNormal] = useState(false)
   const [testingPEC, setTestingPEC] = useState(false)
   const [testResultNormal, setTestResultNormal] = useState<any>(null)
   const [testResultPEC, setTestResultPEC] = useState<any>(null)
+
+  // Carica le configurazioni all'avvio
+  useEffect(() => {
+    const loadSettings = async () => {
+      try {
+        const response = await settingsApi.getAll()
+        setSettings(response.data)
+      } catch (error: any) {
+        console.error('Errore caricamento configurazioni:', error)
+        toast.error('Errore nel caricamento delle configurazioni')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadSettings()
+  }, [])
 
   const handleTestEmailNormal = async () => {
     setTestingNormal(true)
@@ -150,12 +170,15 @@ export default function Settings() {
   const handleSave = async () => {
     setSaving(true)
     try {
-      // Simula salvataggio (in produzione chiamerà settingsApi.update)
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      toast.success('Configurazione salvata con successo')
-      toast('⚠️ Riavvia i servizi per applicare le modifiche', { duration: 5000 })
-    } catch (error) {
-      toast.error('Errore nel salvataggio della configurazione')
+      const response = await settingsApi.update(settings)
+      toast.success(response.data.message)
+      toast('⚠️ Riavvia i servizi: docker-compose restart backend celery-worker celery-beat', {
+        duration: 8000,
+        icon: '🔄'
+      })
+    } catch (error: any) {
+      console.error('Errore salvataggio configurazioni:', error)
+      toast.error('Errore nel salvataggio: ' + (error.response?.data?.detail || error.message))
     } finally {
       setSaving(false)
     }
@@ -226,6 +249,14 @@ export default function Settings() {
             </div>
           </div>
         </div>
+      </div>
+    )
+  }
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <Loader className="w-8 h-8 animate-spin text-primary-600" />
       </div>
     )
   }
@@ -613,8 +644,8 @@ export default function Settings() {
                 <input
                   type="text"
                   className="input"
-                  value={settings.google_credentials_path}
-                  onChange={(e) => setSettings({ ...settings, google_credentials_path: e.target.value })}
+                  value={settings.google_credentials_file}
+                  onChange={(e) => setSettings({ ...settings, google_credentials_file: e.target.value })}
                   placeholder="/app/credentials.json"
                 />
                 <p className="mt-1 text-sm text-gray-500">
@@ -623,16 +654,30 @@ export default function Settings() {
               </div>
 
               <div>
-                <label className="label">ID Cartella Google Drive</label>
+                <label className="label">ID Cartella Google Drive UST</label>
                 <input
                   type="text"
                   className="input"
-                  value={settings.google_drive_folder_id}
-                  onChange={(e) => setSettings({ ...settings, google_drive_folder_id: e.target.value })}
+                  value={settings.google_drive_folder_ust}
+                  onChange={(e) => setSettings({ ...settings, google_drive_folder_ust: e.target.value })}
                   placeholder="1a2b3c4d5e6f7g8h9i0j"
                 />
                 <p className="mt-1 text-sm text-gray-500">
-                  ID della cartella dove salvare gli allegati (opzionale)
+                  ID della cartella Google Drive per documenti UST
+                </p>
+              </div>
+
+              <div>
+                <label className="label">ID Cartella Google Drive SNALS</label>
+                <input
+                  type="text"
+                  className="input"
+                  value={settings.google_drive_folder_snals}
+                  onChange={(e) => setSettings({ ...settings, google_drive_folder_snals: e.target.value })}
+                  placeholder="1a2b3c4d5e6f7g8h9i0j"
+                />
+                <p className="mt-1 text-sm text-gray-500">
+                  ID della cartella Google Drive per documenti SNALS
                 </p>
               </div>
 

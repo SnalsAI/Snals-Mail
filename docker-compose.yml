@@ -80,6 +80,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     container_name: snals-celery-worker
+    entrypoint: []
     environment:
       - DATABASE_URL=postgresql://snals_user:snals_password@postgres:5432/snals_email_agent
       - REDIS_URL=redis://redis:6379/0
@@ -102,6 +103,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     container_name: snals-celery-beat
+    entrypoint: []
     environment:
       - DATABASE_URL=postgresql://snals_user:snals_password@postgres:5432/snals_email_agent
       - REDIS_URL=redis://redis:6379/0

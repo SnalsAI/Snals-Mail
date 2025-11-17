@@ -67,3 +67,4 @@ htmlcov/
 backend/dist/
 frontend/dist/
 frontend/build/
+backend/celerybeat-schedule
