@@ -111,7 +111,7 @@ class TestEmailResponse(BaseModel):
 
 
 @router.get("/", response_model=SettingsResponse)
-async def get_settings():
+async def get_settings_endpoint():
     """
     Recupera tutte le configurazioni correnti.
     """
