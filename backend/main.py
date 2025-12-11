@@ -56,6 +56,8 @@ async def health_check():
 # Include API routers
 from app.api.routes import emails, azioni, regole, calendario, google_auth, schools, system_settings, delegati, rag, spam, interpelli, classi_concorso, knowledge, debug, ricevute_pec, verification, training, bug_reports
 from app.api.routes import settings as settings_routes
+# Modulo Prenotazioni (NUOVO - completamente separato dal calendario esistente)
+from app.api.routes.booking import router as booking_router
 
 app.include_router(emails.router, prefix="/api")
 app.include_router(azioni.router, prefix="/api")
@@ -76,6 +78,11 @@ app.include_router(debug.router, prefix="/api")  # Debug/monitoring endpoints
 app.include_router(verification.router, prefix="/api")  # OpenAI verification endpoints
 app.include_router(training.router, prefix="/api")  # NLP Training with ChatGPT
 app.include_router(bug_reports.router, prefix="/api")  # Bug reporting system
+
+# === MODULO PRENOTAZIONI (NUOVO) ===
+# Endpoint: /api/booking/public/*, /api/booking/staff/*, /api/booking/admin/*
+# Completamente separato dal calendario esistente (/api/calendario)
+app.include_router(booking_router, prefix="/api", tags=["booking"])
 
 if __name__ == "__main__":
     import uvicorn
