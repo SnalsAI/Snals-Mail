@@ -1,24 +1,24 @@
 {
-  "total_calls": 128,
-  "total_input_tokens": 323086,
-  "total_output_tokens": 30075,
+  "total_calls": 130,
+  "total_input_tokens": 324352,
+  "total_output_tokens": 29973,
   "calls_by_provider": {
     "openai": 37,
-    "ollama": 91
+    "ollama": 93
   },
   "calls_by_model": {
     "gpt-4o-mini": 37,
-    "llama3.2:1b": 63,
-    "llama3.2:3b": 28
+    "llama3.2:1b": 66,
+    "llama3.2:3b": 27
   },
   "calls_by_type": {
     "training_interpello": 2,
     "training_calendario": 33,
-    "validation": 46,
-    "interpretation": 33,
+    "validation": 47,
+    "interpretation": 32,
     "categorization": 3,
     "training_generico": 2,
-    "generation": 9
+    "generation": 11
   },
   "tokens_by_provider": {
     "openai": {
@@ -26,33 +26,13 @@
       "output": 26939
     },
     "ollama": {
-      "input": 266735,
-      "output": 3136
+      "input": 268001,
+      "output": 3034
     }
   },
   "errors": 32,
   "last_reset": "2025-11-28T09:03:51.791281",
   "recent_calls": [
-    {
-      "timestamp": "2025-11-30T07:57:55.257761",
-      "provider": "ollama",
-      "model": "llama3.2:1b",
-      "type": "validation",
-      "input_tokens": 4096,
-      "output_tokens": 41,
-      "duration_ms": 152882.2376728058,
-      "success": true
-    },
-    {
-      "timestamp": "2025-11-30T07:58:08.400527",
-      "provider": "ollama",
-      "model": "llama3.2:1b",
-      "type": "interpretation",
-      "input_tokens": 197,
-      "output_tokens": 83,
-      "duration_ms": 11121.872901916504,
-      "success": true
-    },
     {
       "timestamp": "2025-11-30T07:59:02.375986",
       "provider": "ollama",
@@ -1024,13 +1004,33 @@
       "success": true
     },
     {
-      "timestamp": "2025-12-11T08:54:53.026103",
+      "timestamp": "2025-12-11T09:53:00.662987",
       "provider": "ollama",
-      "model": "llama3.2:3b",
-      "type": "interpretation",
-      "input_tokens": 422,
-      "output_tokens": 186,
-      "duration_ms": 35272.80688285828,
+      "model": "llama3.2:1b",
+      "type": "generation",
+      "input_tokens": 377,
+      "output_tokens": 41,
+      "duration_ms": 14661.139965057373,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-11T09:53:28.558703",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 705,
+      "output_tokens": 27,
+      "duration_ms": 15019.945621490479,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-11T09:53:40.385186",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "generation",
+      "input_tokens": 606,
+      "output_tokens": 16,
+      "duration_ms": 11754.696369171143,
       "success": true
     }
   ],
@@ -1068,8 +1068,8 @@
       "tokens": 8562
     },
     "2025-12-11": {
-      "calls": 1,
-      "tokens": 608
+      "calls": 3,
+      "tokens": 1772
     }
   }
 }
