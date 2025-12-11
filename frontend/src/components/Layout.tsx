@@ -24,7 +24,8 @@ import {
   Users,
   BarChart3,
   Brain,
-  Terminal
+  Terminal,
+  CalendarPlus
 } from 'lucide-react'
 import { usePWA } from '../hooks/usePWA'
 import BugReporter from './BugReporter'
@@ -34,6 +35,7 @@ const mainNavigation = [
   { name: 'Email', href: '/', icon: Mail },
   { name: 'Azioni', href: '/actions', icon: ListChecks },
   { name: 'Calendario', href: '/calendar', icon: CalendarIcon },
+  { name: 'Prenotazioni', href: '/booking/admin', icon: CalendarPlus },
   { name: 'Interpelli', href: '/interpelli', icon: Briefcase },
   { name: 'Chat RAG', href: '/chat-rag', icon: MessageSquare },
   { name: 'Spam', href: '/spam', icon: Shield },

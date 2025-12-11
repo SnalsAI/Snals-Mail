@@ -237,3 +237,194 @@ export interface KnowledgeStats {
   indicizzati_in_rag: number
   by_tipo: Record<string, number>
 }
+
+// ============================================================================
+// BOOKING MODULE TYPES
+// ============================================================================
+
+export enum StatoSlot {
+  LIBERO = 'libero',
+  PRENOTATO = 'prenotato',
+  BLOCCATO = 'bloccato',
+}
+
+export enum StatoPrenotazione {
+  CONFERMATA = 'confermata',
+  ANNULLATA_UTENTE = 'annullata_utente',
+  ANNULLATA_UFFICIO = 'annullata_ufficio',
+  COMPLETATA = 'completata',
+  NO_SHOW = 'no_show',
+}
+
+export interface BookingSede {
+  id: number
+  nome: string
+  indirizzo?: string
+  citta?: string
+  cap?: string
+  telefono?: string
+  email?: string
+  attivo: boolean
+  created_at: string
+  updated_at: string
+}
+
+export interface BookingStaff {
+  id: number
+  nome: string
+  cognome: string
+  email: string
+  telefono?: string
+  ruolo?: string
+  attivo: boolean
+  utente_id?: number
+  created_at: string
+  updated_at: string
+}
+
+export interface BookingTipoAppuntamento {
+  id: number
+  nome: string
+  descrizione?: string
+  durata_default_minuti: number
+  attivo: boolean
+  colore?: string
+  richiede_documenti?: boolean
+  documenti_richiesti?: string[]
+  created_at: string
+  updated_at: string
+}
+
+export interface BookingStaffCompetenza {
+  id: number
+  staff_id: number
+  tipo_appuntamento_id: number
+  durata_minuti?: number
+  attivo: boolean
+  tipo_appuntamento?: BookingTipoAppuntamento
+}
+
+export interface BookingCampagna {
+  id: number
+  nome: string
+  descrizione?: string
+  data_inizio: string
+  data_fine: string
+  attiva: boolean
+  tipi_appuntamento?: BookingTipoAppuntamento[]
+  created_at: string
+  updated_at: string
+}
+
+export interface BookingDisponibilita {
+  id: number
+  staff_id: number
+  sede_id: number
+  data: string
+  ora_inizio: string
+  ora_fine: string
+  note?: string
+  attivo: boolean
+  staff?: BookingStaff
+  sede?: BookingSede
+  created_at: string
+  updated_at: string
+}
+
+export interface BookingSlot {
+  id: number
+  disponibilita_id: number
+  staff_id: number
+  sede_id: number
+  tipo_appuntamento_id: number
+  data_ora_inizio: string
+  data_ora_fine: string
+  stato: StatoSlot
+  note?: string
+  staff?: BookingStaff
+  sede?: BookingSede
+  tipo_appuntamento?: BookingTipoAppuntamento
+  created_at: string
+  updated_at: string
+}
+
+export interface BookingContatto {
+  id: number
+  email: string
+  nome: string
+  cognome: string
+  telefono?: string
+  codice_fiscale?: string
+  tipologia_contratto?: string
+  scuola_attuale?: string
+  privacy_accettata: boolean
+  privacy_version?: string
+  privacy_accettata_at?: string
+  email_verificata: boolean
+  created_at: string
+  updated_at: string
+}
+
+export interface BookingPrenotazione {
+  id: number
+  contatto_id: number
+  slot_id: number
+  campagna_id?: number
+  token_pubblico: string
+  stato: StatoPrenotazione
+  note_utente?: string
+  note_admin?: string
+  motivo?: string
+  allegati_paths?: string[]
+  annullato_at?: string
+  annullato_da?: string
+  motivo_annullamento?: string
+  completato_at?: string
+  esito?: string
+  ip_prenotazione?: string
+  user_agent?: string
+  contatto?: BookingContatto
+  slot?: BookingSlot
+  campagna?: BookingCampagna
+  created_at: string
+  updated_at: string
+}
+
+export interface BookingStats {
+  totale_prenotazioni: number
+  prenotazioni_oggi: number
+  prenotazioni_settimana: number
+  per_stato: Record<string, number>
+  per_tipo_appuntamento: Record<string, number>
+  per_sede: Record<string, number>
+}
+
+// Request/Response types for API
+export interface PrenotazioneCreatePublic {
+  slot_id: number
+  campagna_id?: number
+  nome: string
+  cognome: string
+  email: string
+  telefono?: string
+  codice_fiscale?: string
+  tipologia_contratto?: string
+  scuola_attuale?: string
+  note?: string
+  motivo?: string
+  privacy_accettata: boolean
+}
+
+export interface PrenotazioneResponse {
+  prenotazione: BookingPrenotazione
+  token: string
+  message: string
+}
+
+export interface SlotDisponibiliParams {
+  campagna_id?: number
+  sede_id?: number
+  tipo_appuntamento_id?: number
+  data_da?: string
+  data_a?: string
+}

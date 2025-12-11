@@ -19,6 +19,10 @@ import Delegati from './pages/Delegati'
 import Reports from './pages/Reports'
 import NLPTraining from './pages/NLPTraining'
 import Bugs from './pages/Bugs'
+// Booking module pages
+import BookingPublic from './pages/BookingPublic'
+import BookingAdmin from './pages/BookingAdmin'
+import BookingStaff from './pages/BookingStaff'
 import PWAInstallBanner from './components/PWAInstallBanner'
 import { usePWA } from './hooks/usePWA'
 
@@ -60,6 +64,10 @@ function App() {
           <Route path="settings" element={<Settings />} />
           <Route path="nlp-training" element={<NLPTraining />} />
           <Route path="bugs" element={<Bugs />} />
+          {/* Booking module routes */}
+          <Route path="booking" element={<BookingPublic />} />
+          <Route path="booking/admin" element={<BookingAdmin />} />
+          <Route path="booking/staff" element={<BookingStaff />} />
         </Route>
       </Routes>
 
