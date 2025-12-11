@@ -15,7 +15,35 @@ from app.models.interpello import Interpello, StatoInterpello
 from app.models.knowledge_document import KnowledgeDocument, TipoDocumento
 from app.models.llm_queue import RichiestaLLM, StatoRichiestaLLM
 
+# Modulo Prenotazioni (NUOVO - completamente separato dal calendario esistente)
+from app.models.booking import (
+    # Enums
+    StatoSlot,
+    StatoPrenotazione,
+    TipoNotifica,
+    StatoNotifica,
+    AzioneAudit,
+    TipoUtenteAudit,
+    # Models
+    BookingSede,
+    BookingStaff,
+    BookingTipoAppuntamento,
+    BookingStaffCompetenza,
+    BookingCampagna,
+    BookingCampagnaTipoAppuntamento,
+    BookingDisponibilita,
+    BookingSlot,
+    BookingContatto,
+    BookingPrenotazione,
+    BookingNotifica,
+    BookingAuditLog,
+    BookingConfig,
+    # Config defaults
+    DEFAULT_BOOKING_CONFIG,
+)
+
 __all__ = [
+    # Email
     "Email",
     "AccountType",
     "EmailCategory",
@@ -24,7 +52,9 @@ __all__ = [
     "Azione",
     "TipoAzione",
     "StatoAzione",
+    # Calendario esistente
     "EventoCalendario",
+    # Regole e sistema
     "Regola",
     "Utente",
     "RuoloUtente",
@@ -39,4 +69,27 @@ __all__ = [
     "TipoDocumento",
     "RichiestaLLM",
     "StatoRichiestaLLM",
+    # === MODULO PRENOTAZIONI (NUOVO) ===
+    # Enums
+    "StatoSlot",
+    "StatoPrenotazione",
+    "TipoNotifica",
+    "StatoNotifica",
+    "AzioneAudit",
+    "TipoUtenteAudit",
+    # Models
+    "BookingSede",
+    "BookingStaff",
+    "BookingTipoAppuntamento",
+    "BookingStaffCompetenza",
+    "BookingCampagna",
+    "BookingCampagnaTipoAppuntamento",
+    "BookingDisponibilita",
+    "BookingSlot",
+    "BookingContatto",
+    "BookingPrenotazione",
+    "BookingNotifica",
+    "BookingAuditLog",
+    "BookingConfig",
+    "DEFAULT_BOOKING_CONFIG",
 ]
