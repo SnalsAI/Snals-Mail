@@ -9,12 +9,15 @@
 }
 
 @layer components {
+  /* ============================================
+     BUTTONS
+     ============================================ */
   .btn {
-    @apply px-4 py-2 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2;
+    @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 inline-flex items-center justify-center gap-2;
   }
 
   .btn-primary {
-    @apply btn bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500;
+    @apply btn bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500 hover:-translate-y-0.5;
   }
 
   .btn-secondary {
@@ -25,18 +28,105 @@
     @apply btn bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
   }
 
-  .card {
-    @apply bg-white rounded-lg shadow-sm border border-gray-200 p-6;
+  .btn-success {
+    @apply btn bg-green-600 text-white hover:bg-green-700 focus:ring-green-500;
   }
 
+  .btn-warning {
+    @apply btn bg-yellow-500 text-white hover:bg-yellow-600 focus:ring-yellow-400;
+  }
+
+  .btn-ghost {
+    @apply btn bg-transparent text-gray-600 hover:bg-gray-100 focus:ring-gray-400;
+  }
+
+  .btn-outline {
+    @apply btn bg-transparent border-2 border-primary-600 text-primary-600 hover:bg-primary-50 focus:ring-primary-500;
+  }
+
+  .btn-sm {
+    @apply px-3 py-1.5 text-sm;
+  }
+
+  .btn-lg {
+    @apply px-6 py-3 text-lg;
+  }
+
+  .btn-icon {
+    @apply p-2 rounded-lg;
+  }
+
+  /* Gradient buttons */
+  .btn-gradient {
+    @apply btn bg-gradient-to-r from-primary-600 to-primary-700 text-white hover:from-primary-700 hover:to-primary-800 hover:-translate-y-0.5 hover:shadow-lg;
+  }
+
+  .btn-gradient-accent {
+    @apply btn bg-gradient-to-r from-primary-600 to-accent-600 text-white hover:from-primary-700 hover:to-accent-700 hover:-translate-y-0.5 hover:shadow-lg;
+  }
+
+  /* ============================================
+     CARDS
+     ============================================ */
+  .card {
+    @apply bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6;
+  }
+
+  .card-hover {
+    @apply card transition-all duration-200 hover:shadow-md hover:-translate-y-0.5;
+  }
+
+  .card-header {
+    @apply bg-gradient-to-r from-primary-600 to-primary-700 text-white p-4 sm:p-6 rounded-t-lg -mx-4 -mt-4 sm:-mx-6 sm:-mt-6 mb-4 sm:mb-6;
+  }
+
+  .card-header-accent {
+    @apply bg-gradient-to-r from-primary-600 to-accent-600 text-white p-4 sm:p-6 rounded-t-lg -mx-4 -mt-4 sm:-mx-6 sm:-mt-6 mb-4 sm:mb-6;
+  }
+
+  /* ============================================
+     FORM ELEMENTS
+     ============================================ */
   .input {
-    @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent;
+    @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors;
+  }
+
+  .input-error {
+    @apply input border-red-500 focus:ring-red-500;
+  }
+
+  .select {
+    @apply input appearance-none bg-white cursor-pointer;
+  }
+
+  .textarea {
+    @apply input min-h-[100px] resize-y;
   }
 
   .label {
     @apply block text-sm font-medium text-gray-700 mb-1;
   }
 
+  .label-required::after {
+    content: '*';
+    @apply text-red-500 ml-1;
+  }
+
+  .form-group {
+    @apply mb-4;
+  }
+
+  .form-hint {
+    @apply text-xs text-gray-500 mt-1;
+  }
+
+  .form-error {
+    @apply text-xs text-red-600 mt-1;
+  }
+
+  /* ============================================
+     BADGES
+     ============================================ */
   .badge {
     @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
   }
@@ -60,4 +150,280 @@
   .badge-gray {
     @apply badge bg-gray-100 text-gray-800;
   }
+
+  .badge-purple {
+    @apply badge bg-purple-100 text-purple-800;
+  }
+
+  .badge-blue {
+    @apply badge bg-blue-100 text-blue-800;
+  }
+
+  .badge-outline {
+    @apply badge bg-transparent border border-current;
+  }
+
+  /* ============================================
+     BORDER ACCENTS
+     ============================================ */
+  .border-l-accent {
+    @apply border-l-4 border-l-primary-500;
+  }
+
+  .border-l-success {
+    @apply border-l-4 border-l-green-500;
+  }
+
+  .border-l-danger {
+    @apply border-l-4 border-l-red-500;
+  }
+
+  .border-l-warning {
+    @apply border-l-4 border-l-yellow-500;
+  }
+
+  .border-l-info {
+    @apply border-l-4 border-l-blue-500;
+  }
+
+  /* ============================================
+     STATUS INDICATORS
+     ============================================ */
+  .status-dot {
+    @apply w-2 h-2 rounded-full inline-block;
+  }
+
+  .status-dot-success {
+    @apply status-dot bg-green-500;
+  }
+
+  .status-dot-warning {
+    @apply status-dot bg-yellow-500;
+  }
+
+  .status-dot-danger {
+    @apply status-dot bg-red-500;
+  }
+
+  .status-dot-info {
+    @apply status-dot bg-blue-500;
+  }
+
+  .status-dot-pulse {
+    @apply status-dot animate-pulse;
+  }
+
+  /* ============================================
+     CHAT COMPONENTS (ChatRAG compatible)
+     ============================================ */
+  .chat-container {
+    @apply flex flex-col h-screen max-w-5xl mx-auto bg-gray-100;
+  }
+
+  .chat-header {
+    @apply bg-gradient-to-r from-primary-600 to-accent-600 text-white p-6 sm:p-8 text-center shadow-md;
+  }
+
+  .chat-messages {
+    @apply flex-1 overflow-y-auto p-4 sm:p-6 bg-white;
+  }
+
+  .chat-message {
+    @apply flex mb-4 animate-fade-in;
+  }
+
+  .chat-message-user {
+    @apply chat-message flex-row-reverse;
+  }
+
+  .chat-message-content {
+    @apply max-w-[70%] p-4 rounded-2xl;
+  }
+
+  .chat-message-user .chat-message-content {
+    @apply bg-gradient-to-r from-primary-600 to-accent-600 text-white;
+  }
+
+  .chat-message-assistant .chat-message-content {
+    @apply bg-gray-100 border border-gray-200 text-gray-800;
+  }
+
+  .chat-input-wrapper {
+    @apply flex gap-3 p-4 bg-white border-t border-gray-200 shadow-lg;
+  }
+
+  .chat-input {
+    @apply flex-1 px-5 py-3 border-2 border-gray-200 rounded-full focus:border-primary-500 focus:ring-0 transition-colors;
+  }
+
+  .chat-send-btn {
+    @apply btn-gradient-accent px-6 py-3 rounded-full;
+  }
+
+  /* Typing indicator */
+  .typing-indicator {
+    @apply flex gap-1;
+  }
+
+  .typing-indicator span {
+    @apply w-2 h-2 rounded-full bg-gray-400 animate-typing;
+  }
+
+  .typing-indicator span:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .typing-indicator span:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+
+  /* ============================================
+     TABLES
+     ============================================ */
+  .table-container {
+    @apply overflow-x-auto rounded-lg border border-gray-200;
+  }
+
+  .table {
+    @apply min-w-full divide-y divide-gray-200;
+  }
+
+  .table th {
+    @apply px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider bg-gray-50;
+  }
+
+  .table td {
+    @apply px-4 py-3 text-sm text-gray-900 bg-white;
+  }
+
+  .table tbody tr {
+    @apply border-b border-gray-100 hover:bg-gray-50 transition-colors;
+  }
+
+  /* ============================================
+     MODALS
+     ============================================ */
+  .modal-overlay {
+    @apply fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4;
+  }
+
+  .modal-content {
+    @apply bg-white rounded-xl shadow-xl max-w-lg w-full max-h-[90vh] overflow-hidden animate-slide-up;
+  }
+
+  .modal-header {
+    @apply px-6 py-4 border-b border-gray-200 flex items-center justify-between;
+  }
+
+  .modal-body {
+    @apply p-6 overflow-y-auto;
+  }
+
+  .modal-footer {
+    @apply px-6 py-4 border-t border-gray-200 flex justify-end gap-3;
+  }
+
+  /* ============================================
+     ALERTS
+     ============================================ */
+  .alert {
+    @apply p-4 rounded-lg border;
+  }
+
+  .alert-success {
+    @apply alert bg-green-50 border-green-200 text-green-800;
+  }
+
+  .alert-warning {
+    @apply alert bg-yellow-50 border-yellow-200 text-yellow-800;
+  }
+
+  .alert-danger {
+    @apply alert bg-red-50 border-red-200 text-red-800;
+  }
+
+  .alert-info {
+    @apply alert bg-blue-50 border-blue-200 text-blue-800;
+  }
+
+  /* ============================================
+     PROGRESS
+     ============================================ */
+  .progress-bar {
+    @apply h-2 bg-gray-200 rounded-full overflow-hidden;
+  }
+
+  .progress-bar-fill {
+    @apply h-full bg-primary-600 rounded-full transition-all duration-300;
+  }
+
+  .progress-bar-success .progress-bar-fill {
+    @apply bg-green-500;
+  }
+
+  .progress-bar-warning .progress-bar-fill {
+    @apply bg-yellow-500;
+  }
+
+  .progress-bar-danger .progress-bar-fill {
+    @apply bg-red-500;
+  }
+
+  /* ============================================
+     LOADING STATES
+     ============================================ */
+  .skeleton {
+    @apply bg-gray-200 animate-pulse rounded;
+  }
+
+  .skeleton-text {
+    @apply skeleton h-4 w-full;
+  }
+
+  .skeleton-avatar {
+    @apply skeleton h-10 w-10 rounded-full;
+  }
+
+  .skeleton-card {
+    @apply skeleton h-32 w-full;
+  }
+
+  /* ============================================
+     EMPTY STATES
+     ============================================ */
+  .empty-state {
+    @apply flex flex-col items-center justify-center py-12 text-center;
+  }
+
+  .empty-state-icon {
+    @apply w-16 h-16 text-gray-300 mb-4;
+  }
+
+  .empty-state-title {
+    @apply text-lg font-medium text-gray-900 mb-2;
+  }
+
+  .empty-state-text {
+    @apply text-sm text-gray-500 max-w-md;
+  }
+}
+
+/* ============================================
+   SCROLLBAR STYLING (outside layer)
+   ============================================ */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400;
 }

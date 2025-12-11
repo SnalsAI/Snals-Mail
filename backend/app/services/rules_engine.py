@@ -12,6 +12,7 @@ from datetime import datetime
 from app.models.regola import Regola
 from app.models.email import Email, EmailCategory
 from app.models.azione import Azione, TipoAzione, StatoAzione
+from app.models.delegato import Zona
 
 logger = logging.getLogger(__name__)
 
@@ -40,7 +41,7 @@ class RulesEngine:
         """
         # Recupera regole attive
         regole_attive = self.db.query(Regola).filter(
-            Regola.attiva == True
+            Regola.attivo == True
         ).order_by(Regola.priorita.desc()).all()
 
         if not regole_attive:
@@ -74,6 +75,10 @@ class RulesEngine:
         """
         Valuta se le condizioni di una regola sono soddisfatte.
 
+        Supporta due formati:
+        1. Formato semplice: {"categoria": "valore"}
+        2. Formato avanzato: {"operator": "AND", "rules": [...]}
+
         Args:
             email: Email da valutare
             condizioni: Dict con condizioni da valutare
@@ -84,6 +89,22 @@ class RulesEngine:
         if not condizioni:
             return True
 
+        # FORMATO SEMPLICE (database attuale): {"categoria": "valore", "mittente": "xyz"}
+        if 'rules' not in condizioni and 'operator' not in condizioni:
+            # Valuta ogni chiave come condizione uguale
+            for field, value in condizioni.items():
+                email_value = self._get_email_field_value(email, field)
+
+                # Confronto case-insensitive per stringhe
+                if isinstance(value, str) and isinstance(email_value, str):
+                    if email_value.lower() != value.lower():
+                        return False
+                elif email_value != value:
+                    return False
+
+            return True
+
+        # FORMATO AVANZATO: {"operator": "AND", "rules": [...]}
         operator = condizioni.get('operator', 'AND')
         rules = condizioni.get('rules', [])
 
@@ -127,6 +148,13 @@ class RulesEngine:
         Returns:
             bool: True se condizione soddisfatta
         """
+        # Condizioni speciali che non richiedono un campo specifico
+        # devono essere gestite PRIMA del check del valore del campo
+        if condition == 'scuola_in_zona':
+            # Verifica se la scuola mittente appartiene a una zona specifica
+            # Questa condizione usa sempre il mittente, indipendentemente dal field
+            return self._check_school_in_zona(email.mittente, value)
+
         # Estrai valore campo dall'email
         email_value = self._get_email_field_value(email, field)
 
@@ -197,7 +225,8 @@ class RulesEngine:
             'destinatario': email.destinatario,
             'oggetto': email.oggetto,
             'corpo': email.corpo_testo,
-            'categoria': email.categoria.value if email.categoria else None,
+            'categoria': email.get_categoria_value(),
+            'sottocategoria': email.sottocategoria,
             'account_type': email.account_type.value if email.account_type else None,
             'has_allegati': len(email.allegati) > 0 if email.allegati else False,
             'num_allegati': len(email.allegati) if email.allegati else 0,
@@ -211,9 +240,82 @@ class RulesEngine:
 
         return field_map.get(field)
 
+    def _check_school_in_zona(self, mittente: str, zona_nome: str) -> bool:
+        """
+        Verifica se la scuola mittente appartiene alla zona specificata.
+
+        Args:
+            mittente: Email mittente (es: taic12345@istruzione.it)
+            zona_nome: Nome della zona da verificare
+
+        Returns:
+            bool: True se la scuola appartiene alla zona
+        """
+        try:
+            import re
+
+            # Prima prova a estrarre mittente reale da "Per conto di:" nelle PEC
+            per_conto_match = re.search(r'per conto di:\s*([^\s<>"]+@[^\s<>"]+)', mittente.lower())
+            if per_conto_match:
+                real_sender = per_conto_match.group(1)
+                logger.debug(f"Estratto mittente reale da 'Per conto di:': {real_sender}")
+                mittente = real_sender
+
+            # Estrai codice scuola dal mittente (formato: codice meccanografico)
+            # 4 lettere + 6 caratteri alfanumerici (es: taic858004 o taic84300a)
+            match = re.search(r'([a-z]{4}[a-z0-9]{6})@(pec\.)?istruzione\.it', mittente.lower())
+            if not match:
+                logger.debug(f"Mittente {mittente} non è una scuola valida")
+                return False
+
+            school_code = match.group(1).upper()
+
+            # Identifica la scuola e ottieni il comune
+            from app.services.school_identifier import get_school_identifier
+            school_identifier = get_school_identifier()
+            school_info = school_identifier.get_school_info(school_code)
+
+            if not school_info:
+                logger.debug(f"Scuola {school_code} non trovata nel database")
+                return False
+
+            comune = school_info.get('comune', '').upper()
+            if not comune:
+                logger.debug(f"Comune non disponibile per scuola {school_code}")
+                return False
+
+            # Cerca la zona specificata
+            zona = self.db.query(Zona).filter(
+                Zona.nome == zona_nome,
+                Zona.attiva == True
+            ).first()
+
+            if not zona:
+                logger.warning(f"Zona '{zona_nome}' non trovata nel database")
+                return False
+
+            # Verifica se il comune è nella zona
+            comuni_zona = [c.upper() for c in zona.get_comuni()]
+            is_in_zona = comune in comuni_zona
+
+            if is_in_zona:
+                logger.info(f"✅ Scuola {school_code} ({comune}) appartiene alla zona '{zona_nome}'")
+            else:
+                logger.debug(f"Scuola {school_code} ({comune}) NON appartiene alla zona '{zona_nome}'")
+
+            return is_in_zona
+
+        except Exception as e:
+            logger.error(f"Errore verifica scuola in zona: {e}")
+            return False
+
     def _execute_rule_actions(self, email: Email, regola: Regola) -> List[Azione]:
         """
         Esegue le azioni specificate da una regola.
+
+        Supporta due formati:
+        1. Formato database: lista diretta [{"tipo": "BOZZA_RISPOSTA", "params": {...}}]
+        2. Formato avanzato: {"actions": [{"type": "crea_bozza_risposta", "params": {...}}]}
 
         Args:
             email: Email su cui eseguire azioni
@@ -228,21 +330,62 @@ class RulesEngine:
 
         azioni_create = []
 
-        for azione_config in azioni_dict.get('actions', []):
-            tipo = azione_config.get('type')
+        # Determina formato
+        if isinstance(azioni_dict, list):
+            # FORMATO DATABASE: lista diretta
+            azioni_list = azioni_dict
+        else:
+            # FORMATO AVANZATO: dict con chiave "actions"
+            azioni_list = azioni_dict.get('actions', [])
+
+        for azione_config in azioni_list:
+            # Supporta entrambi i formati: "tipo" e "type"
+            tipo = azione_config.get('tipo') or azione_config.get('type')
             params = azione_config.get('params', {})
 
             try:
                 azione = None
 
-                if tipo == 'crea_bozza_risposta':
-                    azione = self._create_draft_action(email, params)
+                # Mappatura tipi azione database → handler
+                if tipo in ['BOZZA_RISPOSTA', 'crea_bozza_risposta']:
+                    azione = self._create_draft_response_action(email, params)
 
-                elif tipo == 'crea_evento_calendario':
-                    azione = self._create_calendar_action(email, params)
+                elif tipo in ['BOZZA_APPUNTAMENTO', 'crea_bozza_appuntamento']:
+                    azione = self._create_draft_appointment_action(email, params)
 
-                elif tipo == 'carica_allegati_drive':
-                    azione = self._create_drive_action(email, params)
+                elif tipo in ['BOZZA_TESSERAMENTO', 'crea_bozza_tesseramento']:
+                    azione = self._create_draft_membership_action(email, params)
+
+                elif tipo in ['EVENTO_CALENDARIO', 'crea_evento_calendario']:
+                    azione = self._create_calendar_event_action(email, params)
+
+                # Google Drive upload disabilitato - non disponibile con account Gmail personale
+                # elif tipo in ['UPLOAD_DRIVE', 'carica_allegati_drive']:
+                #     azione = self._create_drive_upload_action(email, params)
+
+                elif tipo in ['SINTESI', 'genera_sintesi']:
+                    azione = self._create_summary_action(email, params)
+
+                elif tipo in ['INDICIZZA_RAG', 'indicizza_rag']:
+                    azione = self._create_rag_index_action(email, params)
+
+                elif tipo in ['PARSE_INTERPELLO', 'parse_interpello']:
+                    azione = self._create_parse_interpello_action(email, params)
+
+                elif tipo in ['ARCHIVIA', 'archivia']:
+                    azione = self._create_archive_action(email, params)
+
+                elif tipo in ['SEGNA_IMPORTANTE', 'marca_importante']:
+                    azione = self._create_mark_important_action(email, params)
+
+                elif tipo in ['INOLTRA', 'INOLTRA_EMAIL', 'inoltra_a']:
+                    azione = self._create_forward_action(email, params)
+
+                elif tipo in ['INOLTRA_DELEGATI_ZONA', 'inoltra_delegati_zona']:
+                    azione = self._create_forward_delegati_zona_action(email, params)
+
+                elif tipo in ['INVIA_NOTIFICA', 'NOTIFICA', 'invia_notifica', 'notifica']:
+                    azione = self._create_notify_action(email, params)
 
                 elif tipo == 'assegna_categoria':
                     self._assign_category(email, params)
@@ -250,91 +393,264 @@ class RulesEngine:
                 elif tipo == 'aggiungi_tag':
                     self._add_tag(email, params)
 
-                elif tipo == 'inoltra_a':
-                    azione = self._create_forward_action(email, params)
-
                 elif tipo == 'marca_come_letto':
                     email.letto = True
 
-                elif tipo == 'marca_priorita_alta':
-                    # Aggiungere campo priorita al model se necessario
-                    pass
+                elif tipo in ['SPAM', 'spam']:
+                    azione = self._create_spam_action(email, params)
 
                 else:
                     logger.warning(f"Tipo azione non riconosciuto: {tipo}")
 
                 if azione:
-                    self.db.add(azione)
-                    azioni_create.append(azione)
+                    # Controlla se esiste già un'azione dello stesso tipo per questa email
+                    existing = self.db.query(Azione).filter(
+                        Azione.email_id == email.id,
+                        Azione.tipo == azione.tipo
+                    ).first()
+
+                    if existing:
+                        logger.info(f"Azione {azione.tipo.value} già esistente per email {email.id}, skip")
+                    else:
+                        self.db.add(azione)
+                        azioni_create.append(azione)
 
             except Exception as e:
-                logger.error(f"Errore esecuzione azione regola '{tipo}': {e}")
+                logger.error(f"Errore esecuzione azione regola '{tipo}': {e}", exc_info=True)
+
+        # Aggiorna statistiche regola
+        regola.volte_applicata = (regola.volte_applicata or 0) + 1
+        regola.ultima_applicazione = datetime.now()
 
         self.db.commit()
+        logger.info(f"✅ Regola '{regola.nome}' applicata → {len(azioni_create)} azioni create")
         return azioni_create
 
-    def _create_draft_action(self, email: Email, params: Dict) -> Azione:
-        """Crea azione bozza risposta."""
-        template = params.get('template', 'Risposta automatica...')
+    def _create_draft_response_action(self, email: Email, params: Dict) -> Azione:
+        """Crea azione bozza risposta generica o con LLM."""
+        parametri = {
+            'to': email.mittente,
+            'subject': f"Re: {email.oggetto}",
+            'reply_to': email.message_id,
+            'from_rule': True
+        }
 
-        # Sostituisci variabili nel template
-        body = self._replace_variables(template, email)
+        # Se usa LLM, non serve body predefinito
+        if params.get('usa_llm'):
+            parametri['usa_llm'] = True
+            parametri['destinazione'] = params.get('destinazione', 'webmail_bozze')
+        else:
+            # Usa template se fornito
+            template = params.get('template', 'Risposta automatica...')
+            parametri['body'] = self._replace_variables(template, email)
 
         return Azione(
             email_id=email.id,
-            tipo_azione=TipoAzione.BOZZA_RISPOSTA,
-            stato=StatoAzione.PENDING,
-            parametri={
-                'to': email.mittente,
-                'subject': f"Re: {email.oggetto}",
-                'body': body,
-                'reply_to': email.message_id,
-                'from_rule': True
-            }
+            tipo=TipoAzione.BOZZA_RISPOSTA,
+            stato=StatoAzione.IN_CODA,
+            dettagli={'parametri': parametri, 'from_rule': True}
         )
 
-    def _create_calendar_action(self, email: Email, params: Dict) -> Azione:
+    def _create_draft_appointment_action(self, email: Email, params: Dict) -> Azione:
+        """Crea azione bozza appuntamento."""
+        parametri = {
+            'to': email.mittente,
+            'subject': f"Re: {email.oggetto}",
+            'reply_to': email.message_id,
+            'piattaforma': params.get('piattaforma', 'calendario_snals'),
+            'include_link': params.get('include_link', True),
+            'from_rule': True
+        }
+
+        return Azione(
+            email_id=email.id,
+            tipo=TipoAzione.BOZZA_APPUNTAMENTO,
+            stato=StatoAzione.IN_CODA,
+            dettagli={'parametri': parametri, 'from_rule': True}
+        )
+
+    def _create_draft_membership_action(self, email: Email, params: Dict) -> Azione:
+        """Crea azione bozza tesseramento."""
+        parametri = {
+            'to': email.mittente,
+            'subject': f"Re: {email.oggetto}",
+            'reply_to': email.message_id,
+            'repository': params.get('repository', 'moduli_tesseramento'),
+            'include_moduli': params.get('include_moduli', True),
+            'from_rule': True
+        }
+
+        return Azione(
+            email_id=email.id,
+            tipo=TipoAzione.BOZZA_TESSERAMENTO,
+            stato=StatoAzione.IN_CODA,
+            dettagli={'parametri': parametri, 'from_rule': True}
+        )
+
+    def _create_calendar_event_action(self, email: Email, params: Dict) -> Azione:
         """Crea azione evento calendario."""
+        parametri = {
+            'analizza_documento': params.get('analizza_documento', False),
+            'estrai_data_ora': params.get('estrai_data_ora', False),
+            'calendario': params.get('calendario', 'primary'),
+            'from_rule': True
+        }
+
+        # Se forniti manualmente, usa quelli
+        if params.get('summary'):
+            parametri['summary'] = params.get('summary')
+        if params.get('date'):
+            parametri['date'] = params.get('date')
+        if params.get('time'):
+            parametri['time'] = params.get('time')
+        if params.get('location'):
+            parametri['location'] = params.get('location')
+
         return Azione(
             email_id=email.id,
-            tipo_azione=TipoAzione.CREA_EVENTO_CALENDARIO,
-            stato=StatoAzione.PENDING,
-            parametri={
-                'summary': params.get('title', email.oggetto),
-                'date': params.get('date'),
-                'time': params.get('time'),
-                'location': params.get('location'),
-                'description': email.corpo_testo[:500],
-                'from_rule': True
-            }
+            tipo=TipoAzione.EVENTO_CALENDARIO,
+            stato=StatoAzione.IN_CODA,
+            dettagli={'parametri': parametri, 'from_rule': True}
         )
 
-    def _create_drive_action(self, email: Email, params: Dict) -> Optional[Azione]:
-        """Crea azione upload Drive."""
-        if not email.allegati:
-            return None
+    # Google Drive upload disabilitato - non disponibile con account Gmail personale
+    # def _create_drive_upload_action(self, email: Email, params: Dict) -> Optional[Azione]:
+    #     """Crea azione upload Drive."""
+    #     pass  # Metodo disabilitato
+
+    def _create_summary_action(self, email: Email, params: Dict) -> Azione:
+        """Crea azione genera sintesi."""
+        parametri = {
+            'tipo_sintesi': params.get('tipo_sintesi', 'giornaliera'),
+            'frequenza': params.get('frequenza', 'daily'),
+            'salva_su': params.get('salva_su', 'archivio'),
+            'from_rule': True
+        }
 
         return Azione(
             email_id=email.id,
-            tipo_azione=TipoAzione.CARICA_SU_DRIVE,
-            stato=StatoAzione.PENDING,
-            parametri={
-                'folder_name': params.get('folder_name', 'SNALS Allegati'),
-                'from_rule': True
-            }
+            tipo=TipoAzione.SINTESI,
+            stato=StatoAzione.IN_CODA,
+            dettagli={'parametri': parametri, 'from_rule': True}
+        )
+
+    def _create_rag_index_action(self, email: Email, params: Dict) -> Azione:
+        """Crea azione indicizza documenti nel RAG."""
+        parametri = {
+            'mantieni_metadati': params.get('mantieni_metadati', True),
+            'from_rule': True
+        }
+
+        return Azione(
+            email_id=email.id,
+            tipo=TipoAzione.INDICIZZA_RAG,
+            stato=StatoAzione.IN_CODA,
+            dettagli={'parametri': parametri, 'from_rule': True}
+        )
+
+    def _create_archive_action(self, email: Email, params: Dict) -> Azione:
+        """Crea azione archivia."""
+        parametri = {
+            'folder': params.get('folder', 'archivio'),
+            'from_rule': True
+        }
+
+        return Azione(
+            email_id=email.id,
+            tipo=TipoAzione.ARCHIVIA,
+            stato=StatoAzione.IN_CODA,
+            dettagli={'parametri': parametri, 'from_rule': True}
+        )
+
+    def _create_mark_important_action(self, email: Email, params: Dict) -> Azione:
+        """Crea azione segna importante."""
+        return Azione(
+            email_id=email.id,
+            tipo=TipoAzione.SEGNA_IMPORTANTE,
+            stato=StatoAzione.IN_CODA,
+            dettagli={'parametri': {}, 'from_rule': True}
         )
 
     def _create_forward_action(self, email: Email, params: Dict) -> Azione:
         """Crea azione inoltra email."""
         return Azione(
             email_id=email.id,
-            tipo_azione=TipoAzione.INOLTRA_EMAIL,
-            stato=StatoAzione.PENDING,
-            parametri={
-                'to': params.get('to'),
-                'cc': params.get('cc'),
-                'note': params.get('note', ''),
-                'from_rule': True
+            tipo=TipoAzione.INOLTRA_EMAIL,
+            stato=StatoAzione.IN_CODA,
+            dettagli={
+                'parametri': {
+                    'to': params.get('to'),
+                    'cc': params.get('cc'),
+                    'note': params.get('note', ''),
+                    'from_rule': True
+                }
+            }
+        )
+
+    def _create_forward_delegati_zona_action(self, email: Email, params: Dict) -> Azione:
+        """
+        Crea azione inoltra ai delegati della zona.
+        Identifica automaticamente la zona della scuola mittente e inoltra ai delegati.
+        """
+        return Azione(
+            email_id=email.id,
+            tipo=TipoAzione.INOLTRA_DELEGATI_ZONA,
+            stato=StatoAzione.IN_CODA,
+            dettagli={
+                'parametri': {
+                    'zone': params.get('zone', []),
+                    'note': params.get('note', 'Email inoltrata automaticamente ai delegati della zona.'),
+                    'from_rule': True
+                }
+            }
+        )
+
+    def _create_parse_interpello_action(self, email: Email, params: Dict) -> Azione:
+        """Crea azione parsing interpello."""
+        parametri = {
+            'strategy': params.get('strategy', 'smart'),
+            'from_rule': True
+        }
+
+        return Azione(
+            email_id=email.id,
+            tipo=TipoAzione.PARSE_INTERPELLO,
+            stato=StatoAzione.IN_CODA,
+            dettagli={'parametri': parametri, 'from_rule': True}
+        )
+
+    def _create_notify_action(self, email: Email, params: Dict) -> Azione:
+        """Crea azione invio notifica."""
+        parametri = {
+            'destinatari': params.get('destinatari', []),
+            'messaggio': params.get('messaggio', ''),
+            'canale': params.get('canale', 'email'),  # email, telegram, webhook
+            'priorita': params.get('priorita', 'normale'),
+            'from_rule': True
+        }
+
+        return Azione(
+            email_id=email.id,
+            tipo=TipoAzione.INVIA_NOTIFICA,
+            stato=StatoAzione.IN_CODA,
+            dettagli={'parametri': parametri, 'from_rule': True}
+        )
+
+    def _create_spam_action(self, email: Email, params: Dict) -> Azione:
+        """Crea azione SPAM (senza sintesi, solo marcatura)."""
+        return Azione(
+            email_id=email.id,
+            tipo=TipoAzione.SPAM,
+            stato=StatoAzione.COMPLETATA,  # Già completata, non richiede elaborazione
+            dettagli={
+                'from_rule': True,
+                'categoria': 'SPAM',
+                'motivo': params.get('motivo', 'Email identificata come spam')
+            },
+            risultato={
+                'status': 'completed',
+                'message': 'Email marcata come SPAM',
+                'timestamp': datetime.now().isoformat()
             }
         )
 
@@ -343,7 +659,10 @@ class RulesEngine:
         categoria_str = params.get('categoria')
         if categoria_str:
             try:
-                email.categoria = EmailCategory(categoria_str)
+                # Valida che sia una categoria valida
+                EmailCategory(categoria_str)
+                # Assegna la stringa direttamente (categoria ora è String, non Enum)
+                email.categoria = categoria_str
                 logger.info(f"Categoria '{categoria_str}' assegnata a email {email.id}")
             except ValueError:
                 logger.warning(f"Categoria non valida: {categoria_str}")

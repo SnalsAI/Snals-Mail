@@ -43,6 +43,8 @@ services:
     container_name: snals-ollama
     ports:
       - "11434:11434"
+    environment:
+      - OLLAMA_KEEP_ALIVE=-1  # Mantiene modelli sempre in memoria (evita cold start)
     volumes:
       - ollama_data:/root/.ollama
     networks:
@@ -57,14 +59,18 @@ services:
     container_name: snals-backend
     ports:
       - "8001:8001"
+    env_file:
+      - ./backend/.env
     environment:
       - DATABASE_URL=postgresql://snals_user:snals_password@postgres:5432/snals_email_agent
       - REDIS_URL=redis://redis:6379/0
       - OLLAMA_BASE_URL=http://ollama:11434
     volumes:
+      - .:/project  # Intero progetto per Claude Code
       - ./backend:/app
       - ./storage:/app/storage
       - ./logs:/app/logs
+      - /home/ubuntu/.claude:/root/.claude  # Credenziali Claude Pro/Max
     depends_on:
       postgres:
         condition: service_healthy
@@ -129,7 +135,7 @@ services:
     ports:
       - "3001:3001"
     environment:
-      - VITE_API_URL=http://51.83.33.167:8001
+      - VITE_API_URL=/api
     volumes:
       - ./frontend:/app
       - /app/node_modules

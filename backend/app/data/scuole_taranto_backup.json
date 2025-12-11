@@ -1,0 +1,536 @@
+{
+  "TAIC824001": {
+    "nome": "IC F. SURICO",
+    "comune": "CASTELLANETA",
+    "indirizzo": "VIA DELLE SPINELLE, 24",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "049",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "nome",
+        "nuovoNome": "IC F. SURICO",
+        "anticoNome": "TAIC824001"
+      },
+      {
+        "azione": "comune",
+        "nuovoComune": "CASTELLANETA"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-11-17"
+  },
+  "TAIC860004": {
+    "nome": "IC PASCOLI-GIOVINAZZI",
+    "comune": "CASTELLANETA",
+    "indirizzo": "VIA MAZZINI 25",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "049",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "nome cambiato",
+        "nuovoNome": "IC PASCOLI-GIOVINAZZI"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-11-17"
+  },
+  "TAIC80500G": {
+    "nome": "IC R. LEONE",
+    "comune": "GINOSA",
+    "indirizzo": "VIA PITAGORA, 11 - MARINA DI GINOSA",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "049"
+  },
+  "TAIC82600L": {
+    "nome": "IC CALO'",
+    "comune": "GINOSA",
+    "indirizzo": "VIALE MARTIRI D'UNGHERIA, 86",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "049"
+  },
+  "TAIC82700C": {
+    "nome": "IC G. DELEDDA",
+    "comune": "GINOSA",
+    "indirizzo": "VIA DELLA PACE, 62",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "049"
+  },
+  "TAIC82500R": {
+    "nome": "IC SAN G. BOSCO",
+    "comune": "GINOSA",
+    "indirizzo": "P.ZZA NUSCO 14",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "049"
+  },
+  "TAIC84300A": {
+    "nome": "IC DIAZ",
+    "comune": "LATERZA",
+    "indirizzo": "VIA ROMA 59",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "049"
+  },
+  "TAIC858004": {
+    "nome": "IC MARCONI-MICHELANGELO",
+    "comune": "LATERZA",
+    "indirizzo": "VIA SERRA SAN VITO, 2",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "049"
+  },
+  "TAIC808003": {
+    "nome": "IC MARCONI",
+    "comune": "PALAGIANELLO",
+    "indirizzo": "VIA MATTEOTTI, 52",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "049"
+  },
+  "TAIC849009": {
+    "nome": "IC DE AMICIS",
+    "comune": "MASSAFRA",
+    "indirizzo": "P.ZZA CORSICA 1",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "050"
+  },
+  "TAIC85000D": {
+    "nome": "IC PASCOLI",
+    "comune": "MASSAFRA",
+    "indirizzo": "C.SO ROMA",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "050"
+  },
+  "TAIC851009": {
+    "nome": "IC SAN G. BOSCO",
+    "comune": "MASSAFRA",
+    "indirizzo": "VIA NUOVA",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "050"
+  },
+  "TAIC852005": {
+    "nome": "IC MANZONI",
+    "comune": "MOTTOLA",
+    "indirizzo": "VIA GERLONI, 23",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "050"
+  },
+  "TAIC85600C": {
+    "nome": "IC GIANNI RODARI",
+    "comune": "PALAGIANO",
+    "indirizzo": "VIA BACHELET",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "050"
+  },
+  "TAIC85500L": {
+    "nome": "IC GIOVANNI XXIII",
+    "comune": "PALAGIANO",
+    "indirizzo": "VIALE STAZIONE 29",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "050"
+  },
+  "TAIC83400G": {
+    "nome": "IC SEVERI",
+    "comune": "CRISPIANO",
+    "indirizzo": "VIA BARI 15",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "051"
+  },
+  "TAIC86300G": {
+    "nome": "IC AOSTA",
+    "comune": "MARTINA FRANCA",
+    "indirizzo": "P.ZZA VITTORIO VENETO 6",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "051"
+  },
+  "TAIC86200Q": {
+    "nome": "IC CHIARELLI",
+    "comune": "MARTINA FRANCA",
+    "indirizzo": "VIA CARMINE, 4",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "051"
+  },
+  "TAIC865007": {
+    "nome": "IC GIOVANNI XXIII",
+    "comune": "MARTINA FRANCA",
+    "indirizzo": "PIAZZA SAN FRANCESCO DA PAOLA, 3",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "051"
+  },
+  "TAIC86100X": {
+    "nome": "IC GRASSI",
+    "comune": "MARTINA FRANCA",
+    "indirizzo": "VIALE STAZIONE",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "051"
+  },
+  "TAIC86400B": {
+    "nome": "IC MARCONI",
+    "comune": "MARTINA FRANCA",
+    "indirizzo": "P.ZZA MARCONI 4",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "051"
+  },
+  "TAIC802004": {
+    "nome": "IC G. GALILEI",
+    "comune": "TARANTO",
+    "indirizzo": "VICO CARDUCCI 9",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "052"
+  },
+  "TAIC80300X": {
+    "nome": "IC PIRANDELLO",
+    "comune": "TARANTO",
+    "indirizzo": "VIA PASTORE - Q.RE PAOLO VI",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "052"
+  },
+  "TAIC85400R": {
+    "nome": "IC GIOVANNI XXIII",
+    "comune": "STATTE",
+    "indirizzo": "VIA BAINSIZZA",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "052"
+  },
+  "TAIC81100V": {
+    "nome": "IC A. MORO",
+    "comune": "CAROSINO",
+    "indirizzo": "VIA ALFIERI 14",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "054"
+  },
+  "TAIC84200E": {
+    "nome": "IC DE AMICIS",
+    "comune": "GROTTAGLIE",
+    "indirizzo": "VIA V. CALO, 37",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "054"
+  },
+  "TAIC84100P": {
+    "nome": "IC DON BOSCO",
+    "comune": "GROTTAGLIE",
+    "indirizzo": "VIA OBERDAN N. 2",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "054"
+  },
+  "TAIC85900X": {
+    "nome": "IC PIGNATELLI",
+    "comune": "GROTTAGLIE",
+    "indirizzo": "VIA CAMPOBASSO - CAMPUS CAMPITELLI",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "054"
+  },
+  "TAIC815006": {
+    "nome": "IC PADRE GEMELLI",
+    "comune": "LEPORANO",
+    "indirizzo": "VIA DANTE, 41",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "054"
+  },
+  "TAIC810003": {
+    "nome": "IC L. DA VINCI",
+    "comune": "MONTEIASI",
+    "indirizzo": "VIA LEONARDO DA VINCI 21",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "054"
+  },
+  "TAIC81200P": {
+    "nome": "IC MADONNA DELLA CAMERA",
+    "comune": "MONTEPARANO",
+    "indirizzo": "VIA SANTA MARIA DI CAMERA",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "054"
+  },
+  "TAIC86700V": {
+    "nome": "IC DE NICOLA",
+    "comune": "PULSANO",
+    "indirizzo": "VIA DEGLI ORTI, 45",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "054"
+  },
+  "TAIC80400Q": {
+    "nome": "IC G. PASCOLI",
+    "comune": "SAN GIORGIO IONICO",
+    "indirizzo": "VIA IV NOVEMBRE S.N.",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "054"
+  },
+  "TAIC807007": {
+    "nome": "IC MORLEO",
+    "comune": "AVETRANA",
+    "indirizzo": "VIA KENNEDY, 40",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "055"
+  },
+  "TAIC844006": {
+    "nome": "IC MANZONI",
+    "comune": "LIZZANO",
+    "indirizzo": "PIAZZA MATTEOTTI, 11",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "055"
+  },
+  "TAIC84700N": {
+    "nome": "IC DON BOSCO",
+    "comune": "MANDURIA",
+    "indirizzo": "VIA DEL MACELLO",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "055"
+  },
+  "TAIC84800D": {
+    "nome": "IC MICHELE GRECO",
+    "comune": "MANDURIA",
+    "indirizzo": "VIA MESCHINELLA, 2",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "055"
+  },
+  "TAIC84600T": {
+    "nome": "IC PRUDENZANO",
+    "comune": "MANDURIA",
+    "indirizzo": "VIALE MANCINI 3",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "055"
+  },
+  "TAIC80600B": {
+    "nome": "IC DEL BENE",
+    "comune": "MARUGGIO",
+    "indirizzo": "P.ZZA MARCONI 17",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "055"
+  },
+  "TAIC822009": {
+    "nome": "IC CASALINI",
+    "comune": "SAN MARZANO DI SAN GIUSEPPE",
+    "indirizzo": "VIA LAZIO 3",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "055"
+  },
+  "TAIC82100D": {
+    "nome": "IC G. CASTRIOTA",
+    "comune": "SAN MARZANO DI SAN GIUSEPPE",
+    "indirizzo": "VIA MANDURIA, 7",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "055"
+  },
+  "TAIC857008": {
+    "nome": "IC BONSEGNA",
+    "comune": "SAVA",
+    "indirizzo": "P.ZZA RISORGIMENTO, 7",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "055"
+  },
+  "TAIC853001": {
+    "nome": "IC GIOVANNI XXIII",
+    "comune": "SAVA",
+    "indirizzo": "CORSO ITALIA",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "055"
+  },
+  "TAIC83900P": {
+    "nome": "IC BETTOLO-XXV LUGLIO",
+    "comune": "TARANTO",
+    "indirizzo": "VIA PITAGORA 73",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "053"
+  },
+  "TAIC831004": {
+    "nome": "IC D. ALIGHIERI",
+    "comune": "TARANTO",
+    "indirizzo": "VIA DANTE, 139",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "053"
+  },
+  "TAIC83800V": {
+    "nome": "IC DE AMICIS",
+    "comune": "TARANTO",
+    "indirizzo": "VIA D. SAVINO 59/A - TALSANO",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "053"
+  },
+  "TAIC830008": {
+    "nome": "IC FRASCOLLA",
+    "comune": "TARANTO",
+    "indirizzo": "VIALE JONIO 513 - S.VITO",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "053"
+  },
+  "TAIC829004": {
+    "nome": "IC G. SALVEMINI",
+    "comune": "TARANTO",
+    "indirizzo": "VIA GREGORIO VII N. 2 - TALSANO",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "053"
+  },
+  "TAIC83200X": {
+    "nome": "IC LEONARDO SCIASCIA",
+    "comune": "TARANTO",
+    "indirizzo": "VIA MARTINI 2/4 - TALSANO",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "053"
+  },
+  "TAIC81900D": {
+    "nome": "IC MARTELLOTTA",
+    "comune": "TARANTO",
+    "indirizzo": "VIA SCOGLIO DEL TONNO, 4",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "053"
+  },
+  "TAIC84000V": {
+    "nome": "IC RENATO MORO",
+    "comune": "TARANTO",
+    "indirizzo": "VIA UMBRIA 261",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "053"
+  },
+  "TAIC866003": {
+    "nome": "IC SAN G. BOSCO",
+    "comune": "TARANTO",
+    "indirizzo": "VIA POLIBIO 46",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "053"
+  },
+  "TAIC81700T": {
+    "nome": "IC V. ALFIERI",
+    "comune": "TARANTO",
+    "indirizzo": "CORSO ITALIA, 159",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "053"
+  },
+  "TAIC845002": {
+    "nome": "IC VIOLA",
+    "comune": "TARANTO",
+    "indirizzo": "VIA ZARA 35",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "053"
+  },
+  "TAMM128006": {
+    "nome": "Istituto Comprensivo Italiano di Stato",
+    "comune": "Torino",
+    "indirizzo": "Via Torre del Lago 1, I-10122 Torino",
+    "tipo": "istituto comprensivo",
+    "distretto": "numero distretto 2",
+    "last_verified": "2025-11-20"
+  },
+  "TARH070002": {
+    "nome": "I.P.S.E.O.A. MEDITERRANEO",
+    "comune": "PULSANO",
+    "indirizzo": "Via Chiesa, 49",
+    "tipo": "Istituto Professionale",
+    "distretto": "074",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "correzione",
+        "data": "2025-11-21",
+        "note": "Corretto dati errati (era 'MAIUSCOLO' e indirizzo Roma)"
+      }
+    ],
+    "confidence": 1.0,
+    "last_verified": "2025-11-21"
+  },
+  "TAIC87700D": {
+    "nome": "I.C. PASCOLI-GIOVINAZZI-F.SURI",
+    "comune": "CASTELLANETA",
+    "indirizzo": "Via Mazzini 25, 74011",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "",
+    "source": "allegati",
+    "last_verified": "2025-12-02"
+  },
+  "TAIC88300R": {
+    "nome": "IC MARCONI",
+    "comune": "PALAGIANELLO",
+    "indirizzo": "Via Matteotti",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "049"
+  },
+  "TAIS024005": {
+    "nome": "I.I.S.S. ARCHIMEDE",
+    "comune": "TARANTO",
+    "indirizzo": "Via Lago Trasimeno 10, 74100",
+    "tipo": "Istituto Superiore",
+    "distretto": "",
+    "source": "allegati",
+    "last_verified": "2025-12-02"
+  },
+  "TAPS20000Q": {
+    "nome": "LICEO DE SANCTIS-GALILEI",
+    "comune": "MANDURIA",
+    "indirizzo": "Via Di Vittorio",
+    "tipo": "Liceo",
+    "distretto": "055"
+  },
+  "TAIS03600B": {
+    "nome": "IIS MONDELLI-DE GASPERI",
+    "comune": "GROTTAGLIE",
+    "indirizzo": "Via Campitelli",
+    "tipo": "Istituto Istruzione Superiore",
+    "distretto": "054"
+  },
+  "TAIC880009": {
+    "nome": "I.C. A. MANZONI - SAN GIOVANNI BOSCO",
+    "comune": "MOTTOLA",
+    "indirizzo": "Via Gerloni 23, 74017",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "",
+    "source": "allegati",
+    "last_verified": "2025-12-02"
+  },
+  "TAPC070005": {
+    "nome": "LICEO ARISTOSSENO",
+    "comune": "TARANTO",
+    "indirizzo": "Viale Virgilio 15, 74100",
+    "tipo": "Liceo",
+    "distretto": "",
+    "source": "allegati",
+    "last_verified": "2025-12-02"
+  },
+  "TAIS037007": {
+    "nome": "I.I.S.S. MAJORANA (Majorana2)",
+    "comune": "MASSAFRA",
+    "indirizzo": "Via Chiatona - Contrada Amendolecchia, 74016",
+    "tipo": "Istituto Superiore",
+    "distretto": "",
+    "source": "online",
+    "last_verified": "2025-12-02"
+  },
+  "TAPS19000A": {
+    "nome": "LICEO GALILEO FERRARIS",
+    "comune": "TARANTO",
+    "indirizzo": "Via Abruzzo 13, 74100",
+    "tipo": "Liceo",
+    "distretto": "",
+    "source": "allegati",
+    "last_verified": "2025-12-02"
+  },
+  "TAIC874002": {
+    "nome": "I.C. F. SEVERI - MANCINI",
+    "comune": "CRISPIANO",
+    "indirizzo": "Via Bari, 15",
+    "cap": "74012",
+    "provincia": "TA",
+    "tipo": "IC",
+    "distretto": "",
+    "email": "TAIC874002@istruzione.it",
+    "pec": "TAIC874002@pec.istruzione.it",
+    "telefono": "099616078",
+    "source": "manual",
+    "verified": true,
+    "last_verified": "2025-12-03"
+  },
+  "TATD08000P": {
+    "nome": "ISTITUTO COMPRENSIVO GIOVANNI XXIII",
+    "comune": "TARANTO",
+    "indirizzo": "indirizzo se presente, altrimenti stringa vuota",
+    "tipo": "IC",
+    "distretto": "",
+    "source": "allegati",
+    "last_verified": "2025-12-03"
+  },
+  "TAIC878009": {
+    "nome": "ISTITUTO COMPRENSIVO GIOVANNI XXIII",
+    "comune": "GINOSA (TA)",
+    "indirizzo": "www.scuolacalo.edu.it",
+    "tipo": "IC",
+    "distretto": "",
+    "source": "allegati",
+    "last_verified": "2025-12-09"
+  }
+}

@@ -1,24 +1,51 @@
-import { useState } from 'react'
-import { X } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { X, Users } from 'lucide-react'
 import { ActionType } from '../types'
 import type { Action } from '../types'
+import { useQuery } from '@tanstack/react-query'
+import axios from 'axios'
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8001/api'
 
 interface ActionFormProps {
   emailId?: number
+  emailMittente?: string
   onSave: (action: Partial<Action>) => void
   onClose: () => void
 }
 
-export default function ActionForm({ emailId, onSave, onClose }: ActionFormProps) {
+export default function ActionForm({ emailId, emailMittente, onSave, onClose }: ActionFormProps) {
   const [tipoAzione, setTipoAzione] = useState<ActionType | ''>('')
   const [params, setParams] = useState<Record<string, any>>({})
+  const [selectedDelegati, setSelectedDelegati] = useState<number[]>([])
+  const [schoolCode, setSchoolCode] = useState<string | null>(null)
 
+  // Estrai codice scuola dal mittente
+  useEffect(() => {
+    if (emailMittente) {
+      const match = emailMittente.match(/([a-z]{4}\d{6}[a-z]?)@istruzione\.it/i)
+      setSchoolCode(match ? match[1].toUpperCase() : null)
+    }
+  }, [emailMittente])
+
+  // Carica delegati se è una scuola
+  const { data: delegatiData } = useQuery({
+    queryKey: ['delegati-by-school', schoolCode],
+    queryFn: async () => {
+      const response = await axios.get(`${API_URL}/delegati/zone/by-school/${schoolCode}`)
+      return response.data
+    },
+    enabled: !!schoolCode && tipoAzione === ActionType.INOLTRA_EMAIL
+  })
+
+  // Azioni disponibili in ordine alfabetico
   const actionTypes = [
     { value: ActionType.BOZZA_RISPOSTA, label: 'Crea Bozza Risposta' },
-    { value: ActionType.CREA_EVENTO_CALENDARIO, label: 'Crea Evento Calendario' },
-    { value: ActionType.CARICA_SU_DRIVE, label: 'Carica Allegati su Drive' },
+    { value: ActionType.EVENTO_CALENDARIO, label: 'Crea Evento Calendario' },
+    // Google Drive rimosso - non disponibile con account Gmail personale
+    // { value: ActionType.UPLOAD_DRIVE, label: 'Carica Allegati su Drive' },
     { value: ActionType.INOLTRA_EMAIL, label: 'Inoltra Email' },
-  ]
+  ].sort((a, b) => a.label.localeCompare(b.label, 'it'))
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -74,7 +101,7 @@ export default function ActionForm({ emailId, onSave, onClose }: ActionFormProps
           </div>
         )
 
-      case ActionType.CREA_EVENTO_CALENDARIO:
+      case ActionType.EVENTO_CALENDARIO:
         return (
           <div className="space-y-4">
             <div>
@@ -130,44 +157,77 @@ export default function ActionForm({ emailId, onSave, onClose }: ActionFormProps
           </div>
         )
 
-      case ActionType.CARICA_SU_DRIVE:
-        return (
-          <div className="space-y-4">
-            <div>
-              <label className="label">Nome Cartella Drive *</label>
-              <input
-                type="text"
-                className="input"
-                value={params.folder_name || ''}
-                onChange={(e) => setParams({ ...params, folder_name: e.target.value })}
-                required
-                placeholder="SNALS Allegati"
-              />
-            </div>
-            <p className="text-sm text-gray-500">
-              Gli allegati dell'email verranno caricati nella cartella specificata
-            </p>
-          </div>
-        )
+      // Google Drive rimosso - non disponibile con account Gmail personale
+      // case ActionType.CARICA_SU_DRIVE:
+      //   return (...)
 
       case ActionType.INOLTRA_EMAIL:
         return (
           <div className="space-y-4">
+            {/* Delegati della zona (se disponibili) */}
+            {delegatiData?.found && delegatiData.delegati?.length > 0 && (
+              <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <div className="flex items-center gap-2 mb-3">
+                  <Users className="w-5 h-5 text-blue-600" />
+                  <h4 className="font-semibold text-blue-900">
+                    Delegati Zona: {delegatiData.zona.nome}
+                  </h4>
+                </div>
+                <p className="text-sm text-blue-700 mb-3">
+                  Scuola di {delegatiData.comune} - Seleziona i delegati da notificare:
+                </p>
+                <div className="space-y-2">
+                  {delegatiData.delegati.map((delegato: any) => (
+                    <label key={delegato.id} className="flex items-center gap-3 p-2 bg-white rounded border cursor-pointer hover:bg-blue-50">
+                      <input
+                        type="checkbox"
+                        checked={selectedDelegati.includes(delegato.id)}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setSelectedDelegati([...selectedDelegati, delegato.id])
+                            // Aggiungi email ai parametri
+                            const emails = params.to ? params.to.split(',').map((e: string) => e.trim()) : []
+                            if (!emails.includes(delegato.email)) {
+                              emails.push(delegato.email)
+                              setParams({ ...params, to: emails.join(', ') })
+                            }
+                          } else {
+                            setSelectedDelegati(selectedDelegati.filter(id => id !== delegato.id))
+                            // Rimuovi email dai parametri
+                            const emails = params.to ? params.to.split(',').map((e: string) => e.trim()) : []
+                            setParams({ ...params, to: emails.filter((e: string) => e !== delegato.email).join(', ') })
+                          }
+                        }}
+                        className="w-4 h-4"
+                      />
+                      <div className="flex-1">
+                        <p className="font-medium text-gray-900">{delegato.nome_completo}</p>
+                        <p className="text-sm text-gray-600">{delegato.email}</p>
+                      </div>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div>
               <label className="label">Inoltra a (Email) *</label>
               <input
-                type="email"
+                type="text"
                 className="input"
                 value={params.to || ''}
                 onChange={(e) => setParams({ ...params, to: e.target.value })}
                 required
-                placeholder="destinatario@example.com"
+                placeholder="destinatario@example.com, altro@example.com"
               />
+              <p className="text-xs text-gray-500 mt-1">
+                Puoi inserire più email separate da virgola
+              </p>
             </div>
             <div>
               <label className="label">CC (opzionale)</label>
               <input
-                type="email"
+                type="text"
                 className="input"
                 value={params.cc || ''}
                 onChange={(e) => setParams({ ...params, cc: e.target.value })}

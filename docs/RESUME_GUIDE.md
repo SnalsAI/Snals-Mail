@@ -1,152 +1,272 @@
 # Guida Ripresa Sviluppo - SNALS Email Agent
 
-## 🎯 Stato Attuale: FASI 1-3 COMPLETE
+## Stato Attuale: v1.4.0 (Dicembre 2025)
 
-### ✅ Cosa È Stato Fatto
+Sistema **COMPLETO e IN PRODUZIONE** con tutte le funzionalità core implementate.
 
-**FASE 1: Setup Iniziale**
-- Struttura progetto completa con tutte le directory
-- Virtual environment Python + dipendenze installate
-- Configurazione con Pydantic Settings (.env)
-- 7 database models definiti con SQLAlchemy 2.0
-- Alembic configurato per migrations
-- FastAPI base con endpoints `/` e `/health`
+---
 
-**FASE 2: Ingest Email**
-- Client POP3/SMTP per email normale e PEC
-- Celery app configurato con Redis
-- Beat schedule per polling periodico (ogni 120s)
-- Task `poll_email_normal` e `poll_email_pec`
+## Panoramica Rapida
 
-**FASE 3: LLM Categorizzazione/Interpretazione**
-- Client LLM unificato (supporta Ollama e OpenAI)
-- Servizio categorizzazione (8 categorie)
-- Servizio interpretazione con estrazione dati
-- Integrazione completa nei task di polling
+### Cosa Fa il Sistema
 
-### 📁 File Chiave Creati
+1. **Email Processing** - Riceve email via POP3 (normale + PEC) ogni 2 minuti
+2. **Classificazione** - Categorizza con ML/LLM (8 categorie + sottocategorie)
+3. **Automazione** - Crea eventi calendario, estrae interpelli, genera bozze
+4. **Integrazioni** - Google Calendar, Google Drive, RAG chat
+
+### Funzionalità Recenti (v1.4.0)
+
+- Gestione rinvii/annullamenti eventi calendario
+- Eliminazione email spam dal server
+- Rate limiting per prevenire blocchi IP
+- Sistema anomalie calendario
+
+---
+
+## Quick Start
+
+### 1. Avvia Servizi
+
+```bash
+cd /home/ubuntu/Snals-Mail
+
+# Avvia tutto con Docker Compose
+docker-compose up -d
+
+# Verifica stato
+docker-compose ps
+
+# Logs in tempo reale
+docker-compose logs -f backend
+```
+
+### 2. Verifica Funzionamento
+
+```bash
+# Health check
+curl http://localhost:8000/api/health
+
+# Lista email recenti
+curl http://localhost:8000/api/emails/?limit=5
+
+# Lista eventi calendario
+curl http://localhost:8000/api/calendario/
+
+# Anomalie calendario
+curl http://localhost:8000/api/calendario/report/anomalie
+```
+
+### 3. Accedi al Frontend
+
+- **URL**: http://snals-mail.local (o IP del server)
+- **Pagine principali**:
+  - `/` - Dashboard inbox
+  - `/calendar` - Calendario eventi
+  - `/reports` - Report + anomalie
+  - `/interpelli` - Lista interpelli
+  - `/chat-rag` - Chat con knowledge base
+
+---
+
+## Architettura File
 
 ```
-backend/
-├── main.py                                # FastAPI entry point
-├── requirements.txt                       # Dipendenze
-├── .env                                   # Config (da personalizzare)
-├── app/
-│   ├── config.py                         # Settings
-│   ├── database.py                       # DB setup
-│   ├── models/                           # 7 models (email, interpretazione, etc)
-│   ├── services/
-│   │   ├── email_ingest.py              # POP3/SMTP clients ✓
-│   │   ├── categorizer.py               # Categorizzazione LLM ✓
-│   │   └── interpreter.py               # Interpretazione LLM ✓
-│   ├── integrations/
-│   │   └── llm_client.py                # Client Ollama/OpenAI ✓
-│   └── tasks/
-│       ├── __init__.py                   # Celery setup ✓
-│       └── email_polling.py             # Task polling ✓
-├── alembic/                              # Migrations (configurato)
-└── docs/                                 # Documentazione completa
+/home/ubuntu/Snals-Mail/
+├── backend/
+│   ├── app/
+│   │   ├── models/
+│   │   │   ├── email.py              # Model email
+│   │   │   ├── evento.py             # Model evento calendario
+│   │   │   └── interpello.py         # Model interpello
+│   │   ├── services/
+│   │   │   ├── action_executor.py    # Esecuzione azioni (CORE)
+│   │   │   ├── categorizer.py        # Classificazione email
+│   │   │   ├── email_deletion.py     # Eliminazione da server
+│   │   │   ├── email_polling.py      # Polling POP3
+│   │   │   ├── email_rate_limiter.py # Rate limiting
+│   │   │   ├── unified_extractor.py  # Pipeline estrazione
+│   │   │   └── llm_queue_service.py  # Coda LLM singleton
+│   │   └── api/routes/
+│   │       ├── emails.py             # API email
+│   │       ├── calendario.py         # API calendario
+│   │       └── rag.py                # API RAG chat
+│   └── requirements.txt
+├── frontend/
+│   └── src/pages/
+│       ├── Inbox.tsx                 # Lista email
+│       ├── Calendar.tsx              # Calendario
+│       └── Reports.tsx               # Report + anomalie
+├── docs/
+│   ├── ARCHITECTURE.md               # Architettura completa
+│   ├── SISTEMA_CALENDARIO.md         # Sistema calendario
+│   ├── SISTEMA_EMAIL.md              # Sistema email
+│   ├── FLUSSI_ESTRAZIONE_DATI.md     # Pipeline estrazione
+│   └── RESUME_GUIDE.md               # Questa guida
+├── CHANGELOG.md                      # Log modifiche
+└── docker-compose.yml                # Orchestrazione
 ```
 
 ---
 
-## 🚀 Come Riprendere
+## Concetti Chiave
 
-### 1. Verifica Sistema
+### Stati Evento Calendario
 
-```bash
-# Naviga al progetto
-cd /home/user/Snals-Mail
+| Stato | Prefisso Titolo | Descrizione |
+|-------|-----------------|-------------|
+| `confermato` | (nessuno) | Evento attivo |
+| `rinviato` | `[RINVIATO]` | Rinviato senza nuova data |
+| `confermato` | `[POST RINVIO]` | Rinviato CON nuova data |
+| `annullato` | `[ANNULLATO]` | Cancellato |
+| `completato` | (nessuno) | Passato/avvenuto |
 
-# Verifica branch
-git status
-git log --oneline -5
+### Pipeline Estrazione Dati
 
-# Verifica file chiave
-ls -la backend/
-ls -la backend/app/services/
-ls -la backend/app/models/
+```
+1. REGEX (pattern matching veloce)
+   ↓
+2. NLP (spaCy entity extraction)
+   ↓
+3. Ollama (LLM locale)
+   ↓
+4. ChatGPT (fallback se completezza < 75%)
+   ↓
+5. Sanity Check (validazione date/ore/luoghi)
 ```
 
-### 2. Setup Ambiente
+### Eliminazione Email dal Server
 
-```bash
-cd backend
-
-# Attiva virtual environment
-source venv/bin/activate
-
-# Verifica dipendenze
-pip list | grep -E 'fastapi|sqlalchemy|celery|openai'
-
-# Verifica config
-cat .env | head -20
+```
+Database (soft delete) + Server IMAP (hard delete)
+                              ↓
+              _derive_imap_from_pop3()
+                              ↓
+              mail.truemail.it → mail.truemail.it (stesso!)
+              pop3s.pec.aruba.it → imaps.pec.aruba.it
 ```
 
-### 3. Verifica Servizi Esterni
+---
 
-**PostgreSQL:**
+## Troubleshooting Comune
+
+### Email non processate
+
 ```bash
-# Verifica connessione
-psql -U snals_user -d snals_email_agent -c "\dt"
+# Verifica polling
+docker-compose logs backend | grep "poll"
 
-# Se non esiste, crea:
-createdb snals_email_agent -O snals_user
+# Verifica azioni in coda
+curl http://localhost:8000/api/azioni/?stato=IN_CODA
 
-# Applica migrations
-alembic upgrade head
+# Forza reprocessing
+curl -X POST http://localhost:8000/api/emails/{id}/reprocess
 ```
 
-**Redis:**
+### Eventi non creati
+
 ```bash
-# Verifica Redis
-redis-cli ping
-# Output: PONG
+# Verifica azione specifica
+curl http://localhost:8000/api/azioni/{id}
+
+# Verifica log estrazione
+docker-compose logs backend | grep "SmartConvocazione"
+
+# Verifica anomalie
+curl http://localhost:8000/api/calendario/report/anomalie
 ```
 
-**Ollama:**
+### LLM non risponde
+
 ```bash
 # Verifica Ollama
 curl http://localhost:11434/api/tags
 
-# Scarica modelli se necessario
-ollama pull llama3.2:3b
-ollama pull mistral:7b
+# Verifica coda LLM
+curl http://localhost:8000/api/llm-queue/status
+
+# Riavvia Ollama
+docker-compose restart ollama
 ```
 
-### 4. Avvia Applicazione
+### Email non eliminate dal server
 
 ```bash
-# Terminal 1 - Backend API
-cd backend
-source venv/bin/activate
-python main.py
-# Output: Uvicorn running on http://0.0.0.0:8001
+# Verifica log
+docker-compose logs backend | grep "IMAP"
 
-# Terminal 2 - Celery Worker
-cd backend
-source venv/bin/activate
-celery -A app.tasks worker --loglevel=info
-
-# Terminal 3 - Celery Beat
-cd backend
-source venv/bin/activate
-celery -A app.tasks beat --loglevel=info
+# Il problema comune è mapping server errato
+# TrueMail: mail.truemail.it (stesso per POP3 e IMAP!)
 ```
 
-### 5. Test Funzionamento
+---
 
-```bash
-# Test health check
-curl http://localhost:8001/
-# Output: {"app":"SNALS Email Agent","version":"0.1.0","status":"running"}
+## Modifiche Frequenti
 
-curl http://localhost:8001/health
-# Output: {"status":"healthy",...}
+### Aggiungere nuova categoria email
 
-# Test manuale task (opzionale)
-cd backend
-source venv/bin/activate
-python << EOF
-from app.tasks.email_polling import poll_email_normal
-poll_email_normal()
+File: `backend/app/services/categorizer.py`
+
+```python
+# Aggiungi alla lista CATEGORIE
+CATEGORIE = [
+    "COMUNICAZIONE_SCUOLA",
+    "NUOVA_CATEGORIA",  # Aggiungi qui
+    ...
+]
+
+# Aggiungi pattern in rule_based_classifier.py
+```
+
+### Aggiungere nuovo tipo azione
+
+File: `backend/app/services/action_executor.py`
+
+```python
+# Aggiungi handler
+def _execute_nuova_azione(self, azione, email):
+    # Implementazione
+    pass
+
+# Registra in execute()
+if tipo == "NUOVA_AZIONE":
+    return self._execute_nuova_azione(azione, email)
+```
+
+### Modificare pattern estrazione
+
+File: `backend/app/services/action_executor.py`
+
+```python
+# Pattern per rilevare rinvii/annullamenti
+CANCELLATION_PATTERNS = [
+    r'\brinvio\b[\w\s]*del\s+(\d{1,2}[\./]\d{1,2})',
+    # Aggiungi nuovo pattern
+]
+```
+
+---
+
+## Documentazione Dettagliata
+
+| Documento | Quando Leggerlo |
+|-----------|-----------------|
+| [ARCHITECTURE.md](ARCHITECTURE.md) | Overview completo sistema |
+| [SISTEMA_CALENDARIO.md](SISTEMA_CALENDARIO.md) | Problemi con eventi |
+| [SISTEMA_EMAIL.md](SISTEMA_EMAIL.md) | Problemi con email/spam |
+| [FLUSSI_ESTRAZIONE_DATI.md](FLUSSI_ESTRAZIONE_DATI.md) | Dati non estratti correttamente |
+| [CHANGELOG.md](../CHANGELOG.md) | Vedere cosa è cambiato |
+
+---
+
+## Contatti e Risorse
+
+- **Repository**: /home/ubuntu/Snals-Mail
+- **Database**: PostgreSQL su localhost
+- **LLM**: Ollama locale + OpenAI fallback
+- **Google APIs**: Configurate in .env
+
+---
+
+**Ultimo aggiornamento:** 2025-12-01
+**Versione sistema:** 1.4.0

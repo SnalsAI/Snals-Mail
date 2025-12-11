@@ -54,13 +54,28 @@ async def health_check():
     }
 
 # Include API routers
-from app.api.routes import emails, azioni, regole, calendario, settings
+from app.api.routes import emails, azioni, regole, calendario, google_auth, schools, system_settings, delegati, rag, spam, interpelli, classi_concorso, knowledge, debug, ricevute_pec, verification, training, bug_reports
+from app.api.routes import settings as settings_routes
 
 app.include_router(emails.router, prefix="/api")
 app.include_router(azioni.router, prefix="/api")
 app.include_router(regole.router, prefix="/api")
 app.include_router(calendario.router, prefix="/api")
-app.include_router(settings.router, prefix="/api")
+app.include_router(settings_routes.router, prefix="/api")
+app.include_router(spam.router, prefix="/api")
+app.include_router(ricevute_pec.router, prefix="/api")
+app.include_router(system_settings.router, prefix="/api")
+app.include_router(delegati.router, prefix="/api")
+app.include_router(rag.router, prefix="/api")
+app.include_router(interpelli.router, prefix="/api")
+app.include_router(classi_concorso.router, prefix="/api")
+app.include_router(google_auth.router, prefix="/api/auth")
+app.include_router(schools.router, prefix="/api")
+app.include_router(knowledge.router, prefix="/api/knowledge", tags=["knowledge"])
+app.include_router(debug.router, prefix="/api")  # Debug/monitoring endpoints
+app.include_router(verification.router, prefix="/api")  # OpenAI verification endpoints
+app.include_router(training.router, prefix="/api")  # NLP Training with ChatGPT
+app.include_router(bug_reports.router, prefix="/api")  # Bug reporting system
 
 if __name__ == "__main__":
     import uvicorn

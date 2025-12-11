@@ -15,6 +15,10 @@ celery_app = Celery(
     include=[
         'app.tasks.email_polling',
         'app.tasks.action_tasks',
+        'app.tasks.auto_process',
+        'app.tasks.interpello_tasks',
+        'app.tasks.draft_tasks',
+        'app.tasks.recategorize',
     ]
 )
 
@@ -24,6 +28,9 @@ celery_app.conf.update(
     result_serializer='json',
     timezone='Europe/Rome',
     enable_utc=True,
+    # Memory leak prevention: restart worker after N tasks
+    worker_max_tasks_per_child=100,  # Ricrea worker dopo 100 task per evitare memory leak
+    worker_max_memory_per_child=512000,  # Ricrea worker se supera 512MB di RAM (in KB)
 )
 
 celery_app.conf.beat_schedule = {
@@ -42,5 +49,21 @@ celery_app.conf.beat_schedule = {
     'retry-failed-actions': {
         'task': 'app.tasks.action_tasks.retry_failed_actions',
         'schedule': 600.0,  # Ogni 10 minuti
+    },
+    'fetch-and-process': {
+        'task': 'app.tasks.auto_process.fetch_and_process',
+        'schedule': 600.0,  # Ogni 10 minuti (configurabile da UI)
+    },
+    'check-expired-interpelli': {
+        'task': 'app.tasks.interpello_tasks.check_expired_interpelli',
+        'schedule': crontab(hour=2, minute=0),  # Ogni giorno alle 2:00
+    },
+    'retry-failed-categorizations': {
+        'task': 'app.tasks.recategorize.retry_failed_categorizations',
+        'schedule': 300.0,  # Ogni 5 minuti - riprova email con categorizzazione fallita
+    },
+    'worker-health-check': {
+        'task': 'app.tasks.action_tasks.worker_health_check',
+        'schedule': 300.0,  # Ogni 5 minuti - monitora salute worker
     },
 }

@@ -3,8 +3,9 @@ API Routes per gestione Settings e Test Connessioni Email.
 """
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from typing import Dict, Optional
+from typing import Dict, Optional, List
 import os
+import json
 from pathlib import Path
 
 from app.services.email_ingest import EmailNormalClient, EmailPECClient
@@ -308,6 +309,34 @@ async def update_settings(data: SettingsUpdateRequest):
             for key in ['EMAIL_MARK_AS_READ', 'EMAIL_DELETE_FROM_SERVER', 'EMAIL_FETCH_LIMIT']:
                 if key in env_dict:
                     f.write(f"{key}={env_dict[key]}\n")
+            f.write("\n")
+
+            f.write("# Google Integration\n")
+            for key in ['GOOGLE_CREDENTIALS_FILE', 'GOOGLE_CALENDAR_ID', 'GOOGLE_DRIVE_FOLDER_UST', 'GOOGLE_DRIVE_FOLDER_SNALS']:
+                if key in env_dict:
+                    f.write(f"{key}={env_dict[key]}\n")
+            f.write("\n")
+
+            # Scrivi le altre variabili che potrebbero essere rimaste
+            written_keys = set()
+            for section in [['DATABASE_URL'], ['REDIS_URL'],
+                          ['LLM_PROVIDER', 'OLLAMA_BASE_URL', 'OLLAMA_MODEL_CATEGORIZATION', 'OLLAMA_MODEL_INTERPRETATION', 'OLLAMA_MODEL_GENERATION', 'OPENAI_API_KEY', 'OPENAI_MODEL'],
+                          ['EMAIL_NORMAL_POP3_HOST', 'EMAIL_NORMAL_POP3_PORT', 'EMAIL_NORMAL_POP3_USER', 'EMAIL_NORMAL_POP3_PASSWORD', 'EMAIL_NORMAL_SMTP_HOST', 'EMAIL_NORMAL_SMTP_PORT', 'EMAIL_NORMAL_SMTP_USER', 'EMAIL_NORMAL_SMTP_PASSWORD'],
+                          ['EMAIL_PEC_POP3_HOST', 'EMAIL_PEC_POP3_PORT', 'EMAIL_PEC_POP3_USER', 'EMAIL_PEC_POP3_PASSWORD', 'EMAIL_PEC_SMTP_HOST', 'EMAIL_PEC_SMTP_PORT', 'EMAIL_PEC_SMTP_USER', 'EMAIL_PEC_SMTP_PASSWORD'],
+                          ['WEBMAIL_IMAP_HOST', 'WEBMAIL_IMAP_PORT', 'WEBMAIL_IMAP_USER', 'WEBMAIL_IMAP_PASSWORD'],
+                          ['SECRET_KEY'],
+                          ['DEBUG', 'LOG_LEVEL', 'API_HOST', 'API_PORT'],
+                          ['STORAGE_PATH', 'ATTACHMENTS_PATH', 'REPOSITORY_PATH'],
+                          ['EMAIL_POLL_INTERVAL', 'DAILY_SUMMARY_HOUR'],
+                          ['EMAIL_MARK_AS_READ', 'EMAIL_DELETE_FROM_SERVER', 'EMAIL_FETCH_LIMIT'],
+                          ['GOOGLE_CREDENTIALS_FILE', 'GOOGLE_CALENDAR_ID', 'GOOGLE_DRIVE_FOLDER_UST', 'GOOGLE_DRIVE_FOLDER_SNALS']]:
+                for key in section:
+                    written_keys.add(key)
+
+            # Scrivi le variabili rimanenti
+            for key, value in env_dict.items():
+                if key not in written_keys:
+                    f.write(f"{key}={value}\n")
 
         return {
             "success": True,
@@ -355,4 +384,344 @@ async def test_email_pec():
         raise HTTPException(
             status_code=500,
             detail=f"Errore durante il test: {str(e)}"
+        )
+
+
+@router.post("/test-google-calendar")
+async def test_google_calendar():
+    """
+    Test della configurazione Google Calendar:
+    - Verifica credenziali
+    - Lista calendari disponibili
+    """
+    try:
+        from app.integrations.google_calendar_client import GoogleCalendarClient
+
+        client = GoogleCalendarClient()
+
+        # Test autenticazione
+        if not client.authenticate():
+            return {
+                "success": False,
+                "error": "Autenticazione fallita. Verifica il file credentials."
+            }
+
+        # Lista calendari
+        calendars = client.get_calendar_list()
+
+        return {
+            "success": True,
+            "message": "Connessione Google Calendar riuscita!",
+            "calendars": calendars[:5] if calendars else [],
+            "total_calendars": len(calendars) if calendars else 0
+        }
+
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e)
+        }
+
+
+@router.post("/test-google-drive")
+async def test_google_drive():
+    """
+    Test della configurazione Google Drive:
+    - Verifica credenziali
+    - Verifica/crea folder base
+    """
+    try:
+        from app.integrations.google_drive_client import GoogleDriveClient
+
+        client = GoogleDriveClient()
+
+        # Test autenticazione
+        if not client.authenticate():
+            return {
+                "success": False,
+                "error": "Autenticazione fallita. Verifica il file credentials."
+            }
+
+        # Crea/verifica folder base
+        folder_id = client.get_or_create_base_folder("SNALS Test Folder")
+
+        if folder_id:
+            return {
+                "success": True,
+                "message": "Connessione Google Drive riuscita!",
+                "test_folder_id": folder_id
+            }
+        else:
+            return {
+                "success": False,
+                "error": "Impossibile creare folder di test"
+            }
+
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e)
+        }
+
+
+# ==========================================
+# API STATS - Monitoraggio chiamate esterne
+# ==========================================
+
+@router.get("/api-stats")
+def get_api_stats():
+    """
+    Restituisce statistiche sulle chiamate API esterne.
+
+    Include:
+    - Chiamate LLM (Ollama, OpenAI)
+    - Token utilizzati
+    - Errori
+    - Statistiche giornaliere
+    """
+    from app.integrations.llm_client import llm_stats
+
+    stats = llm_stats.get_stats()
+
+    return {
+        "llm": stats,
+        "summary": {
+            "total_api_calls": stats["total_calls"],
+            "total_tokens": stats["total_tokens"],
+            "error_rate": stats["error_rate"],
+            "uptime_hours": round(stats["uptime_hours"], 2)
+        }
+    }
+
+
+@router.post("/api-stats/reset")
+def reset_api_stats():
+    """
+    Reset delle statistiche API.
+    Utile per iniziare un nuovo periodo di monitoraggio.
+    """
+    from app.integrations.llm_client import llm_stats
+
+    llm_stats.reset_stats()
+
+    return {
+        "success": True,
+        "message": "Statistiche API resettate"
+    }
+
+
+# ==========================================
+# CATEGORY MANAGEMENT
+# ==========================================
+
+class CategoryCharacteristics(BaseModel):
+    """Caratteristiche di una categoria"""
+    label: str  # Label visualizzato (es. "Comunicazione UST/USR")
+    icon: str  # Emoji icon (es. "🏛️")
+    description: str  # Descrizione categoria
+    keywords: List[str]  # Parole chiave caratteristiche
+    sender_patterns: List[str]  # Pattern per riconoscere mittenti (regex)
+    subject_patterns: List[str]  # Pattern per riconoscere oggetti (regex)
+    priority: int  # Priorità (più alto = più importante)
+    subcategories: List[str]  # Sottocategorie possibili
+
+
+class CategorySettings(BaseModel):
+    """Configurazione completa delle categorie"""
+    categories: Dict[str, CategoryCharacteristics]
+
+
+CATEGORIES_CONFIG_PATH = Path("/app/config/categories.json")
+
+
+def get_default_categories() -> Dict[str, CategoryCharacteristics]:
+    """Restituisce la configurazione di default delle categorie"""
+    return {
+        "info_generiche": CategoryCharacteristics(
+            label="Info Generiche",
+            icon="💬",
+            description="Informazioni generali, richieste di informazioni",
+            keywords=["info", "informazioni", "chiarimenti", "domanda"],
+            sender_patterns=[],
+            subject_patterns=["richiesta.*info", "info.*"],
+            priority=1,
+            subcategories=[]
+        ),
+        "richiesta_appuntamento": CategoryCharacteristics(
+            label="Richiesta Appuntamento",
+            icon="📅",
+            description="Richieste di appuntamento da iscritti o potenziali iscritti",
+            keywords=["appuntamento", "incontrare", "visita", "disponibilità"],
+            sender_patterns=[],
+            subject_patterns=["appuntamento", "incontro"],
+            priority=5,
+            subcategories=["Prima consulenza", "Follow-up", "Urgente"]
+        ),
+        "richiesta_tesseramento": CategoryCharacteristics(
+            label="Richiesta Tesseramento",
+            icon="📋",
+            description="Richieste di iscrizione al sindacato",
+            keywords=["tesseramento", "iscrizione", "iscriversi", "modulo"],
+            sender_patterns=[],
+            subject_patterns=["tesseramento", "iscrizione"],
+            priority=6,
+            subcategories=["Nuovo iscritto", "Rinnovo", "Disdetta"]
+        ),
+        "comunicazione_scuola": CategoryCharacteristics(
+            label="Comunicazione Scuola",
+            icon="🏫",
+            description="Comunicazioni da scuole: convocazioni, contrattazione integrativa, comunicazioni generali",
+            keywords=["convocazione", "riunione RSU", "assemblea sindacale", "contrattazione integrativa", "invito sottoscrizione", "informativa"],
+            sender_patterns=[r"[a-z]{4}\d{5}[a-z]?@(pec\.)?istruzione\.it"],
+            subject_patterns=["convocazione", "riunione.*RSU", "assemblea", "contrattazione.*integrativa", "invito.*sottoscrizione"],
+            priority=10,
+            subcategories=["Convocazione", "Contrattazione Integrativa", "Comunicazione"]
+        ),
+        "comunicazione_ust_usr": CategoryCharacteristics(
+            label="Comunicazione UST/USR",
+            icon="🏛️",
+            description="Comunicazioni ufficiali da Uffici Scolastici Territoriali o Regionali",
+            keywords=["graduatoria", "GPS", "convocazione", "nomina", "incarico", "utilizzazione", "assegnazione provvisoria", "interpello"],
+            sender_patterns=[r"uspta@", r"usprpu@", r"usp\.ta@", r"usr\.puglia@", r"aoouspta@", r"aoousr@"],
+            subject_patterns=["GPS", "graduatoria", "convocazione.*supplenze", "utilizzazioni", "assegnazioni provvisorie", "interpello"],
+            priority=9,
+            subcategories=["Interpello", "Circolare", "Comunicazione"]
+        ),
+        "comunicazione_snals_centrale": CategoryCharacteristics(
+            label="Comunicazione SNALS Centrale",
+            icon="🏢",
+            description="Comunicazioni dalla sede centrale SNALS",
+            keywords=["circolare", "comunicazione", "aggiornamento"],
+            sender_patterns=[r"info@snals\.it"],
+            subject_patterns=[],
+            priority=8,
+            subcategories=["Circolare", "Comunicazione", "Aggiornamento normativo"]
+        ),
+        "spam": CategoryCharacteristics(
+            label="Spam",
+            icon="🚫",
+            description="Email indesiderate, phishing, tentativi di truffa",
+            keywords=["phishing", "truffa", "virus", "malware", "sospetto"],
+            sender_patterns=[],
+            subject_patterns=["phishing", "virus", "malware"],
+            priority=0,
+            subcategories=[]
+        ),
+        "pubblicita": CategoryCharacteristics(
+            label="Pubblicità",
+            icon="📢",
+            description="Materiale promozionale, pubblicità commerciale",
+            keywords=["pubblicità", "offerta", "sconto", "vinci", "premio", "promozione"],
+            sender_patterns=[],
+            subject_patterns=["pubblicità", "offerta.*speciale", "sconto", "promozione"],
+            priority=0,
+            subcategories=[]
+        ),
+        "varie": CategoryCharacteristics(
+            label="Varie",
+            icon="📦",
+            description="Email che non rientrano in altre categorie specifiche",
+            keywords=[],
+            sender_patterns=[],
+            subject_patterns=[],
+            priority=2,
+            subcategories=[]
+        )
+    }
+
+
+def load_categories_config() -> Dict[str, CategoryCharacteristics]:
+    """Carica la configurazione delle categorie da file o restituisce default"""
+    try:
+        if CATEGORIES_CONFIG_PATH.exists():
+            with open(CATEGORIES_CONFIG_PATH, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+                return {
+                    key: CategoryCharacteristics(**value)
+                    for key, value in data.items()
+                }
+    except Exception as e:
+        print(f"Errore caricamento categorie, uso default: {e}")
+
+    return get_default_categories()
+
+
+def save_categories_config(categories: Dict[str, CategoryCharacteristics]):
+    """Salva la configurazione delle categorie su file"""
+    try:
+        # Crea directory se non esiste
+        CATEGORIES_CONFIG_PATH.parent.mkdir(parents=True, exist_ok=True)
+
+        # Converti in dict serializzabile
+        data = {
+            key: value.model_dump()
+            for key, value in categories.items()
+        }
+
+        with open(CATEGORIES_CONFIG_PATH, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Errore salvataggio categorie: {str(e)}"
+        )
+
+
+@router.get("/categories", response_model=CategorySettings)
+async def get_categories():
+    """
+    Recupera tutte le categorie con le loro caratteristiche.
+    """
+    categories = load_categories_config()
+    return CategorySettings(categories=categories)
+
+
+@router.put("/categories/{category_key}")
+async def update_category(category_key: str, characteristics: CategoryCharacteristics):
+    """
+    Aggiorna le caratteristiche di una categoria.
+
+    - **category_key**: Chiave della categoria (es. "comunicazione_ust_usr")
+    - **characteristics**: Nuove caratteristiche della categoria
+    """
+    try:
+        # Carica configurazione corrente
+        categories = load_categories_config()
+
+        # Aggiorna categoria
+        categories[category_key] = characteristics
+
+        # Salva
+        save_categories_config(categories)
+
+        return {
+            "success": True,
+            "message": f"Categoria '{category_key}' aggiornata con successo",
+            "category": characteristics
+        }
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Errore aggiornamento categoria: {str(e)}"
+        )
+
+
+@router.post("/categories/reset")
+async def reset_categories_to_default():
+    """
+    Resetta tutte le categorie ai valori di default.
+    """
+    try:
+        default_categories = get_default_categories()
+        save_categories_config(default_categories)
+
+        return {
+            "success": True,
+            "message": "Categorie resettate ai valori di default",
+            "categories": default_categories
+        }
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Errore reset categorie: {str(e)}"
         )

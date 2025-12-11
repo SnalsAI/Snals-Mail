@@ -1,7 +1,7 @@
 import axios from 'axios'
 import type { Email, Action, Rule, CalendarEvent, Stats } from '../types'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8001'
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8001/api'
 
 export const api = axios.create({
   baseURL: API_URL,
@@ -21,19 +21,45 @@ export const emailsApi = {
   updateCategoria: (id: number, categoria: string) =>
     api.put(`/emails/${id}/categoria`, { categoria }),
 
+  update: (id: number, data: { categoria?: string; sottocategoria?: string; letto?: boolean; note?: string }) =>
+    api.put(`/emails/${id}`, data),
+
   markAsRead: (id: number) =>
     api.put(`/emails/${id}/revisiona`),
+
+  reprocess: (id: number) =>
+    api.post(`/emails/${id}/reprocess`),
 
   delete: (id: number) =>
     api.delete(`/emails/${id}`),
 
   getStats: () =>
     api.get<Stats>('/emails/stats'),
+
+  fetchManual: () =>
+    api.post('/emails/fetch'),
+
+  // Subcategory proposals
+  getProposals: (params?: { skip?: number; limit?: number }) =>
+    api.get('/emails/proposals', { params }),
+
+  approveSubcategory: (id: number) =>
+    api.post(`/emails/${id}/approve-subcategory`),
+
+  rejectSubcategory: (id: number) =>
+    api.post(`/emails/${id}/reject-subcategory`),
+
+  // Email interpretation and actions
+  getInterpretazione: (id: number) =>
+    api.get(`/emails/${id}/interpretazione`),
+
+  getAzioni: (id: number) =>
+    api.get(`/emails/${id}/azioni`),
 }
 
 // Actions endpoints
 export const actionsApi = {
-  getAll: (params?: { skip?: number; limit?: number; stato?: string }) =>
+  getAll: (params?: { skip?: number; limit?: number; stato?: string; email_id?: number }) =>
     api.get<Action[]>('/azioni/', { params }),
 
   getById: (id: number) =>
@@ -47,6 +73,31 @@ export const actionsApi = {
 
   delete: (id: number) =>
     api.delete(`/azioni/${id}`),
+
+  processEmail: (emailId: number) =>
+    api.post(`/azioni/process-email/${emailId}`),
+
+  getDailyReports: (days: number = 7) =>
+    api.get('/azioni/reports/daily', { params: { days } }),
+
+  getEmailSummaries: (days: number = 7, limit: number = 50) =>
+    api.get('/azioni/reports/summaries', { params: { days, limit } }),
+
+  getForwardsReport: (days: number = 7) =>
+    api.get('/azioni/reports/forwards', { params: { days } }),
+
+  getIssuesReport: (days: number = 7) =>
+    api.get('/azioni/reports/issues', { params: { days } }),
+
+  getSummariesBySender: (days: number = 7) =>
+    api.get('/azioni/reports/summaries-by-sender', { params: { days } }),
+
+  // Issue resolution workflow
+  getIssueDetails: (azioneId: number) =>
+    api.get(`/azioni/issues/${azioneId}/details`),
+
+  resolveIssue: (azioneId: number, data: Record<string, any>) =>
+    api.post(`/azioni/issues/${azioneId}/resolve`, data),
 }
 
 // Rules endpoints
@@ -92,21 +143,365 @@ export const calendarApi = {
 
   syncWithGoogle: (id: number) =>
     api.post(`/calendario/${id}/sync-google`),
+
+  // Report anomalie calendario
+  getAnomalies: (params?: { data_da?: string }) =>
+    api.get('/calendario/report/anomalie', { params }),
+
+  // Risolvi anomalie automaticamente
+  resolveAnomaliesAuto: () =>
+    api.post('/calendario/report/anomalie/risolvi-auto'),
+
+  // Risolvi singola anomalia
+  resolveAnomaly: (eventoId: number, azione: string = 'completato') =>
+    api.delete(`/calendario/report/anomalie/${eventoId}`, { params: { azione } }),
 }
 
 // Settings endpoints (configuration)
 export const settingsApi = {
   getAll: () =>
-    api.get('/api/settings/'),
+    api.get('/settings/'),
 
   update: (data: Record<string, any>) =>
-    api.put('/api/settings/', data),
+    api.put('/settings/', data),
 
   testEmailNormal: () =>
-    api.post('/api/settings/test-email-normal'),
+    api.post('/settings/test-email-normal'),
 
   testEmailPEC: () =>
-    api.post('/api/settings/test-email-pec'),
+    api.post('/settings/test-email-pec'),
+
+  testGoogleCalendar: () =>
+    api.post('/settings/test-google-calendar'),
+
+  testGoogleDrive: () =>
+    api.post('/settings/test-google-drive'),
+
+  // Category management
+  getCategories: () =>
+    api.get('/settings/categories'),
+
+  updateCategory: (categoryKey: string, data: any) =>
+    api.put(`/settings/categories/${categoryKey}`, data),
+
+  resetCategories: () =>
+    api.post('/settings/categories/reset'),
+
+  // API Stats - Monitoraggio chiamate esterne
+  getApiStats: () =>
+    api.get('/settings/api-stats'),
+
+  resetApiStats: () =>
+    api.post('/settings/api-stats/reset'),
+}
+
+// Knowledge Base endpoints
+export const knowledgeApi = {
+  getAll: (params?: {
+    tipo_documento?: string
+    categoria_email?: string
+    tags?: string
+    ente_emittente?: string
+    solo_attivi?: boolean
+    skip?: number
+    limit?: number
+  }) =>
+    api.get('/knowledge/documents', { params }),
+
+  getById: (id: number) =>
+    api.get(`/knowledge/documents/${id}`),
+
+  upload: (formData: FormData) =>
+    api.post('/knowledge/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }),
+
+  delete: (id: number) =>
+    api.delete(`/knowledge/documents/${id}`),
+
+  index: (id: number) =>
+    api.post(`/knowledge/documents/${id}/index`),
+
+  getStats: () =>
+    api.get('/knowledge/stats'),
+}
+
+// Spam endpoints
+export const spamApi = {
+  getAll: () =>
+    api.get('/spam/'),
+
+  getDeleted: (params?: { skip?: number; limit?: number }) =>
+    api.get('/spam/deleted', { params }),
+
+  getStats: () =>
+    api.get('/spam/stats'),
+
+  deleteFromServer: (id: number) =>
+    api.delete(`/spam/${id}/from-server`),
+
+  deleteAllFromServer: () =>
+    api.delete('/spam/bulk/from-server?confirm=true'),
+
+  markAsSpam: (id: number) =>
+    api.post(`/spam/${id}/mark`),
+
+  unmarkAsSpam: (id: number, newCategoria: string = 'altro') =>
+    api.post(`/spam/${id}/unmark?new_categoria=${newCategoria}`),
+}
+
+// Ricevute PEC endpoints
+export const ricevutePecApi = {
+  getAll: (params?: { skip?: number; limit?: number; tipo?: string }) =>
+    api.get('/ricevute-pec/', { params }),
+
+  getStats: () =>
+    api.get('/ricevute-pec/stats'),
+
+  getOne: (id: number) =>
+    api.get(`/ricevute-pec/${id}`),
+}
+
+// Schools endpoints
+export const schoolsApi = {
+  getAll: () =>
+    api.get('/schools/'),
+
+  getStats: () =>
+    api.get('/schools/stats'),
+
+  add: (code: string) =>
+    api.post('/schools/add', { school_code: code }),
+
+  update: (code: string) =>
+    api.post(`/schools/update/${code}?force_online=true`),
+
+  delete: (code: string) =>
+    api.delete(`/schools/${code}`),
+
+  // Pending schools
+  getPending: () =>
+    api.get('/schools/pending/list'),
+
+  approvePending: (code: string, data: { nome?: string; comune?: string; indirizzo?: string; tipo?: string }) =>
+    api.post(`/schools/pending/${code}/approve`, data),
+
+  rejectPending: (code: string) =>
+    api.delete(`/schools/pending/${code}/reject`),
+
+  generateProposal: (code: string) =>
+    api.post(`/schools/pending/${code}/generate`),
+}
+
+// System Settings endpoints
+export const systemSettingsApi = {
+  getAll: () =>
+    api.get('/system-settings/'),
+
+  update: (key: string, value: string) =>
+    api.put(`/system-settings/${key}`, { value }),
+}
+
+// Interpelli endpoints
+export const interpelliApi = {
+  getAll: (params?: { skip?: number; limit?: number }) =>
+    api.get('/interpelli/', { params }),
+
+  getById: (id: number) =>
+    api.get(`/interpelli/${id}`),
+
+  perClasse: (params?: { solo_aperti?: boolean }) =>
+    api.get('/interpelli/per-classe', { params }),
+
+  delete: (id: number) =>
+    api.delete(`/interpelli/${id}`),
+
+  markProcessed: (id: number) =>
+    api.put(`/interpelli/${id}/mark-processed`),
+
+  sendNotification: (id: number) =>
+    api.post(`/interpelli/${id}/notify`),
+}
+
+// Classi Concorso endpoints
+export const classiConcorsoApi = {
+  getAll: (params?: { search?: string; grado?: string }) =>
+    api.get('/classi-concorso/', { params }),
+
+  getStats: () =>
+    api.get('/classi-concorso/stats'),
+
+  search: (query: string) =>
+    api.get('/classi-concorso/search', { params: { q: query } }),
+}
+
+// Debug endpoints
+export const debugApi = {
+  getSystemInfo: () =>
+    api.get('/debug/system-info'),
+
+  getLogs: (lines?: number) =>
+    api.get('/debug/logs', { params: { lines } }),
+
+  testOllama: () =>
+    api.post('/debug/test-ollama'),
+
+  testEmail: () =>
+    api.post('/debug/test-email'),
+
+  getEmails: (params?: { limit?: number; skip?: number; categoria?: string; con_azioni?: string; con_interpelli?: string }) =>
+    api.get('/debug/emails', { params }),
+
+  reparseInterpello: (interpelloId: number, strategy: string) =>
+    api.post(`/debug/interpelli/${interpelloId}/reparse`, null, { params: { strategy } }),
+}
+
+// Delegati endpoints
+export const delegatiApi = {
+  getAll: () =>
+    api.get('/delegati/'),
+
+  create: (data: any) =>
+    api.post('/delegati/', data),
+
+  update: (id: number, data: any) =>
+    api.put(`/delegati/${id}`, data),
+
+  delete: (id: number) =>
+    api.delete(`/delegati/${id}`),
+
+  // Zone
+  getZone: () =>
+    api.get('/delegati/zone/'),
+
+  createZona: (data: any) =>
+    api.post('/delegati/zone/', data),
+
+  updateZona: (id: number, data: any) =>
+    api.put(`/delegati/zone/${id}`, data),
+
+  deleteZona: (id: number) =>
+    api.delete(`/delegati/zone/${id}`),
+}
+
+// RAG endpoints
+export const ragApi = {
+  getDocuments: (params?: {
+    limit?: number;
+    offset?: number;
+    filter_categoria?: string;
+    filter_sottocategoria?: string;
+    filter_mittente?: string;
+  }) =>
+    api.get('/rag/documents', { params }),
+
+  query: (data: {
+    query: string;
+    n_results?: number;
+    filter_categoria?: string;
+    filter_sottocategoria?: string;
+    filter_mittente?: string;
+  }) =>
+    api.post('/rag/query', data),
+
+  chat: (data: {
+    query: string;
+    n_results?: number;
+    filter_categoria?: string;
+    filter_sottocategoria?: string;
+    filter_mittente?: string;
+    use_openai?: boolean;
+  }) =>
+    api.post('/rag/chat', data),
+
+  getStatistics: () =>
+    api.get('/rag/statistics'),
+
+  indexEmail: (emailId: number) =>
+    api.post('/rag/index-email', { email_id: emailId }),
+
+  deleteEmailDocuments: (emailId: number) =>
+    api.delete(`/rag/email/${emailId}`),
+
+  updateMetadata: (docId: string, metadata: any) =>
+    api.put(`/rag/document/${docId}/metadata`, { document_id: docId, metadata }),
+
+  deleteDocument: (docId: string) =>
+    api.delete(`/rag/document/${docId}`),
+
+  reset: (confirm: string) =>
+    api.post('/rag/reset', null, { params: { confirm } }),
+}
+
+// Verification API - Confronto locale vs OpenAI
+export const verificationApi = {
+  // Status del servizio
+  getStatus: () =>
+    api.get('/verification/status'),
+
+  // Verifica singolo interpello
+  verifyInterpello: (testo: string, model?: string) =>
+    api.post('/verification/interpello', { testo, tipo: 'interpello' }, { params: { model } }),
+
+  // Verifica singolo evento calendario
+  verifyCalendario: (testo: string, model?: string) =>
+    api.post('/verification/calendario', { testo, tipo: 'calendario' }, { params: { model } }),
+
+  // Verifica categorizzazione
+  verifyCategorizzazione: (oggetto: string, corpo: string, model?: string) =>
+    api.post('/verification/categorizzazione', null, { params: { oggetto, corpo, model } }),
+
+  // Verifica email specifica
+  verifyEmail: (emailId: number, tipo?: string, model?: string) =>
+    api.get(`/verification/email/${emailId}`, { params: { tipo: tipo || 'auto', model } }),
+
+  // Batch verifica interpelli
+  verifyInterpelliBatch: (limit?: number, model?: string) =>
+    api.get('/verification/interpelli/batch', { params: { limit: limit || 5, model } }),
+
+  // Batch verifica calendari
+  verifyCalendariBatch: (limit?: number, model?: string) =>
+    api.get('/verification/calendari/batch', { params: { limit: limit || 5, model } }),
+}
+
+// Bug Reports endpoints
+export const bugsApi = {
+  create: (bug: {
+    descrizione: string
+    pagina?: string
+    componente?: string
+    browser?: string
+    viewport?: string
+    console_errors?: any[]
+    network_errors?: any[]
+    email_id?: number
+    azione_id?: number
+  }) => api.post('/bugs/', bug),
+
+  getAll: (params?: { stato?: string; priorita?: string; limit?: number }) =>
+    api.get('/bugs/', { params }),
+
+  getOpen: () =>
+    api.get('/bugs/open'),
+
+  getSummary: () =>
+    api.get('/bugs/summary'),
+
+  getById: (id: number) =>
+    api.get(`/bugs/${id}`),
+
+  update: (id: number, data: {
+    stato?: string
+    priorita?: string
+    note_tecniche?: string
+    file_coinvolti?: string[]
+    soluzione_proposta?: string
+  }) => api.patch(`/bugs/${id}`, data),
+
+  delete: (id: number) =>
+    api.delete(`/bugs/${id}`),
 }
 
 // Health check

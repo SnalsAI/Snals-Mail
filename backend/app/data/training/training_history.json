@@ -1,0 +1,30 @@
+[
+  {
+    "version_id": "v1_20251129_113704",
+    "timestamp": "2025-11-29T11:37:04.476615",
+    "patterns_added": 6,
+    "total_patterns": 11,
+    "samples_used": 3,
+    "pattern_types": {
+      "CLASSE_CONCORSO": 0,
+      "MECCANOGRAFICO": 1,
+      "ISTITUTO": 2,
+      "MOTIVO": 3
+    },
+    "status": "applied"
+  },
+  {
+    "version_id": "v2_20251204_081336",
+    "timestamp": "2025-12-04T08:13:36.747130",
+    "patterns_added": 26,
+    "total_patterns": 31,
+    "samples_used": 11,
+    "pattern_types": {
+      "CLASSE_CONCORSO": 0,
+      "MECCANOGRAFICO": 7,
+      "ISTITUTO": 8,
+      "MOTIVO": 11
+    },
+    "status": "applied"
+  }
+]

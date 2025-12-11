@@ -1,25 +1,31 @@
 export enum EmailCategory {
-  INFO_GENERICHE = 'info_generiche',
+  COMUNICAZIONE_SCUOLA = 'comunicazione_scuola',
+  COMUNICAZIONE_UST_USR = 'comunicazione_ust_usr',
+  COMUNICAZIONE_SNALS_CENTRALE = 'comunicazione_snals_centrale',
   RICHIESTA_APPUNTAMENTO = 'richiesta_appuntamento',
   RICHIESTA_TESSERAMENTO = 'richiesta_tesseramento',
-  CONVOCAZIONE_SCUOLA = 'convocazione_scuola',
-  COMUNICAZIONE_UST_USR = 'comunicazione_ust_usr',
-  COMUNICAZIONE_SCUOLA = 'comunicazione_scuola',
-  COMUNICAZIONE_SNALS_CENTRALE = 'comunicazione_snals_centrale',
+  REVOCA_SINDACALE = 'revoca_sindacale',
+  RICEVUTA_PEC = 'ricevuta_pec',
+  ERRORE_INVIO = 'errore_invio',
+  SPAM = 'spam',
+  INFO_GENERICHE = 'info_generiche',
   VARIE = 'varie',
+  DA_CATEGORIZZARE = 'da_categorizzare',
 }
 
 export enum EmailStatus {
-  RAW = 'RAW',
-  CATEGORIZZATA = 'CATEGORIZZATA',
-  INTERPRETATA = 'INTERPRETATA',
-  PROCESSATA = 'PROCESSATA',
-  ERRORE = 'ERRORE',
+  RICEVUTA = 'ricevuta',
+  IN_ELABORAZIONE = 'in_elaborazione',
+  CATEGORIZZATA = 'categorizzata',
+  INTERPRETATA = 'interpretata',
+  AZIONE_ESEGUITA = 'azione_eseguita',
+  ERRORE = 'errore',
+  COMPLETATA = 'completata',
 }
 
 export enum AccountType {
-  NORMALE = 'NORMALE',
-  PEC = 'PEC',
+  NORMALE = 'normale',
+  PEC = 'pec',
 }
 
 export interface Email {
@@ -30,16 +36,27 @@ export interface Email {
   destinatario: string
   oggetto: string
   corpo: string
+  corpo_testo?: string
+  corpo_html?: string
   data_ricezione: string
   data_elaborazione?: string
   allegati_path?: string[]
   allegati_nomi?: string[]
-  categoria?: EmailCategory
+  allegati_testo?: Record<string, string>
+  categoria?: EmailCategory | string
+  sottocategoria?: string
+  sottocategoria_proposta?: string
+  motivo_proposta?: string
   categoria_confidence?: number
+  confidence_score?: number
   stato: EmailStatus
+  letto?: boolean
   richiede_revisione: boolean
   revisionata: boolean
   priorita: number
+  note?: string
+  interpretazione?: any
+  azioni?: any[]
   created_at: string
   updated_at: string
 }
@@ -54,30 +71,58 @@ export interface EmailInterpretation {
 }
 
 export enum ActionType {
+  // Azioni di risposta
   BOZZA_RISPOSTA = 'BOZZA_RISPOSTA',
-  CREA_EVENTO_CALENDARIO = 'CREA_EVENTO_CALENDARIO',
-  CARICA_SU_DRIVE = 'CARICA_SU_DRIVE',
-  INOLTRA_EMAIL = 'INOLTRA_EMAIL',
+  INVIA_RISPOSTA_AUTOMATICA = 'invia_risposta_automatica',
+
+  // Azioni di gestione
+  BOZZA_APPUNTAMENTO = 'BOZZA_APPUNTAMENTO',
+  BOZZA_TESSERAMENTO = 'BOZZA_TESSERAMENTO',
+  CREA_TASK = 'crea_task',
+
+  // Azioni di calendario
+  EVENTO_CALENDARIO = 'EVENTO_CALENDARIO',
+
+  // Azioni di comunicazione
+  INOLTRA = 'INOLTRA',
+  INOLTRA_EMAIL = 'inoltra_email',
+  INOLTRA_DELEGATI_ZONA = 'INOLTRA_DELEGATI_ZONA',
+  NOTIFICA = 'NOTIFICA',
+  INVIA_NOTIFICA = 'invia_notifica',
+
+  // Azioni di archiviazione e organizzazione
+  ARCHIVIA = 'archivia',
+  SEGNA_IMPORTANTE = 'segna_importante',
+  PUBBLICA_SU_SITO = 'pubblica_su_sito',
+
+  // Azioni di elaborazione
+  SINTESI = 'SINTESI',
+  INDICIZZA_RAG = 'INDICIZZA_RAG',
+  PARSE_INTERPELLO = 'PARSE_INTERPELLO',
+
+  // Azioni di moderazione
+  ELIMINA = 'elimina',
+  SPAM = 'SPAM',
 }
 
 export enum ActionStatus {
-  PENDING = 'PENDING',
-  IN_PROGRESS = 'IN_PROGRESS',
-  COMPLETED = 'COMPLETED',
-  FAILED = 'FAILED',
+  IN_CODA = 'IN_CODA',
+  IN_ESECUZIONE = 'IN_ESECUZIONE',
+  COMPLETATA = 'COMPLETATA',
+  FALLITA = 'FALLITA',
+  ANNULLATA = 'ANNULLATA',
 }
 
 export interface Action {
   id: number
   email_id: number
-  tipo_azione: ActionType
-  stato: ActionStatus
-  parametri: Record<string, any>
+  tipo: string
+  stato: string
+  dettagli: Record<string, any>
   risultato?: Record<string, any>
   errore?: string
-  created_at: string
-  updated_at: string
-  executed_at?: string
+  timestamp_inizio: string
+  timestamp_fine?: string
 }
 
 export interface Rule {
@@ -95,9 +140,16 @@ export interface Rule {
     }>
     stop_on_match?: boolean
   }
-  azioni: {
+  // Supporta entrambi i formati: array diretto o oggetto con actions
+  azioni: Array<{
+    tipo?: string
+    type?: string
+    descrizione?: string
+    params: Record<string, any>
+  }> | {
     actions: Array<{
       type: string
+      tipo?: string
       params: Record<string, any>
     }>
   }
@@ -114,13 +166,21 @@ export interface CalendarEvent {
   descrizione?: string
   data_inizio: string
   data_fine?: string
+  all_day?: boolean
   luogo?: string
+  link_videocall?: string
   scuola?: string
-  partecipanti?: string[]
+  tipo_convocazione?: string
+  assegnatario_id?: number
+  google_calendar_id?: string
   google_event_id?: string
-  stato: string
+  sincronizzato?: boolean
+  allegati?: any[]
   created_at: string
   updated_at: string
+  // Legacy fields (kept for backward compatibility)
+  partecipanti?: string[]
+  stato?: string
 }
 
 export interface Stats {
@@ -130,4 +190,50 @@ export interface Stats {
   pending_actions: number
   categories_distribution: Record<string, number>
   emails_by_account: Record<string, number>
+}
+
+export enum TipoDocumento {
+  NORMATIVA = 'normativa',
+  CIRCOLARE = 'circolare',
+  FAQ = 'faq',
+  MODELLO = 'modello',
+  CONTRATTO = 'contratto',
+  PRASSI = 'prassi',
+  GUIDA = 'guida',
+  INTERPELLO_TIPO = 'interpello_tipo',
+  ALTRO = 'altro',
+}
+
+export interface KnowledgeDocument {
+  id: number
+  titolo: string
+  descrizione?: string
+  tipo_documento: TipoDocumento
+  categoria_email?: string
+  tags: string[]
+  ente_emittente?: string
+  data_emissione?: string
+  numero_protocollo?: string
+  anno_riferimento?: string
+  file_name: string
+  file_path: string
+  file_size: number
+  file_size_mb: number
+  file_type: string
+  testo_length: number
+  indexed_in_rag: boolean
+  rag_document_ids?: string[]
+  rag_indexed_at?: string
+  created_at: string
+  updated_at: string
+  caricato_da: string
+  note_interne?: string
+  attivo: boolean
+  verificato: boolean
+}
+
+export interface KnowledgeStats {
+  total_documenti: number
+  indicizzati_in_rag: number
+  by_tipo: Record<string, number>
 }

@@ -1,6 +1,11 @@
 import { useState } from 'react'
 import { X, Plus, Trash2 } from 'lucide-react'
+import { useQuery } from '@tanstack/react-query'
+import axios from 'axios'
 import type { Rule } from '../types'
+import { EmailCategory } from '../types'
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8001/api'
 
 interface RuleBuilderProps {
   rule?: Rule
@@ -32,6 +37,17 @@ export default function RuleBuilder({ rule, onSave, onClose }: RuleBuilderProps)
   )
   const [stopOnMatch, setStopOnMatch] = useState(rule?.condizioni.stop_on_match || false)
 
+  // Carica zone disponibili
+  const { data: zoneData } = useQuery({
+    queryKey: ['zone'],
+    queryFn: async () => {
+      const response = await axios.get(`${API_URL}/delegati/zone/`)
+      return response.data
+    },
+  })
+
+  const zone = zoneData?.zone || []
+
   const fieldOptions = [
     { value: 'mittente', label: 'Mittente' },
     { value: 'destinatario', label: 'Destinatario' },
@@ -55,17 +71,28 @@ export default function RuleBuilder({ rule, onSave, onClose }: RuleBuilderProps)
     { value: 'minore', label: 'Minore di' },
     { value: 'vuoto', label: 'È vuoto' },
     { value: 'non_vuoto', label: 'Non è vuoto' },
+    { value: 'scuola_in_zona', label: 'Scuola appartiene a zona' },
   ]
 
   const actionTypeOptions = [
-    { value: 'crea_bozza_risposta', label: 'Crea Bozza Risposta' },
-    { value: 'crea_evento_calendario', label: 'Crea Evento Calendario' },
-    { value: 'carica_allegati_drive', label: 'Carica Allegati su Drive' },
-    { value: 'inoltra_a', label: 'Inoltra Email' },
+    { value: 'BOZZA_RISPOSTA', label: 'Crea Bozza Risposta' },
+    { value: 'BOZZA_APPUNTAMENTO', label: 'Crea Bozza Appuntamento' },
+    { value: 'BOZZA_TESSERAMENTO', label: 'Crea Bozza Tesseramento' },
+    { value: 'EVENTO_CALENDARIO', label: 'Crea Evento Calendario' },
+    // Google Drive rimosso - non disponibile con account Gmail personale
+    // { value: 'UPLOAD_DRIVE', label: 'Carica Allegati su Drive' },
+    { value: 'SINTESI', label: 'Genera Sintesi' },
+    { value: 'INDICIZZA_RAG', label: 'Indicizza nel RAG' },
+    { value: 'PARSE_INTERPELLO', label: 'Parse Interpello' },
+    { value: 'ARCHIVIA', label: 'Archivia Email' },
+    { value: 'SEGNA_IMPORTANTE', label: 'Segna Importante' },
+    { value: 'INOLTRA', label: 'Inoltra Email' },
+    { value: 'INOLTRA_DELEGATI_ZONA', label: 'Inoltra a Delegati Zona' },
+    { value: 'INVIA_NOTIFICA', label: 'Invia Notifica' },
     { value: 'assegna_categoria', label: 'Assegna Categoria' },
     { value: 'aggiungi_tag', label: 'Aggiungi Tag' },
     { value: 'marca_come_letto', label: 'Marca come Letto' },
-  ]
+  ].sort((a, b) => a.label.localeCompare(b.label, 'it'))
 
   const addCondition = () => {
     setConditions([...conditions, { field: '', condition: '', value: '' }])
@@ -104,6 +131,15 @@ export default function RuleBuilder({ rule, onSave, onClose }: RuleBuilderProps)
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
+    // Converti azioni al formato backend (array con campo "tipo" invece di "type")
+    const azioniBackend = actions
+      .filter(a => a.type)
+      .map(a => ({
+        tipo: a.type,
+        descrizione: '', // Può essere vuoto
+        params: a.params
+      }))
+
     const ruleData: Partial<Rule> = {
       nome,
       descrizione,
@@ -114,9 +150,7 @@ export default function RuleBuilder({ rule, onSave, onClose }: RuleBuilderProps)
         rules: conditions.filter(c => c.field && c.condition),
         stop_on_match: stopOnMatch,
       },
-      azioni: {
-        actions: actions.filter(a => a.type),
-      },
+      azioni: azioniBackend,
     }
 
     onSave(ruleData)
@@ -125,6 +159,7 @@ export default function RuleBuilder({ rule, onSave, onClose }: RuleBuilderProps)
   const renderActionParams = (action: Action, index: number) => {
     switch (action.type) {
       case 'crea_bozza_risposta':
+      case 'BOZZA_RISPOSTA':
         return (
           <div className="space-y-2">
             <textarea
@@ -137,6 +172,7 @@ export default function RuleBuilder({ rule, onSave, onClose }: RuleBuilderProps)
           </div>
         )
       case 'crea_evento_calendario':
+      case 'EVENTO_CALENDARIO':
         return (
           <div className="grid grid-cols-2 gap-2">
             <input
@@ -153,16 +189,8 @@ export default function RuleBuilder({ rule, onSave, onClose }: RuleBuilderProps)
             />
           </div>
         )
-      case 'carica_allegati_drive':
-        return (
-          <input
-            placeholder="Nome cartella Drive"
-            className="input"
-            value={action.params.folder_name || ''}
-            onChange={(e) => updateActionParam(index, 'folder_name', e.target.value)}
-          />
-        )
       case 'inoltra_a':
+      case 'INOLTRA':
         return (
           <input
             placeholder="Indirizzo email destinatario"
@@ -180,10 +208,17 @@ export default function RuleBuilder({ rule, onSave, onClose }: RuleBuilderProps)
             onChange={(e) => updateActionParam(index, 'categoria', e.target.value)}
           >
             <option value="">Seleziona categoria</option>
-            <option value="info_generiche">Info Generiche</option>
-            <option value="richiesta_appuntamento">Richiesta Appuntamento</option>
-            <option value="convocazione_scuola">Convocazione Scuola</option>
+            <option value="comunicazione_scuola">Comunicazione Scuola</option>
             <option value="comunicazione_ust_usr">Comunicazione UST/USR</option>
+            <option value="comunicazione_snals_centrale">Comunicazione SNALS Centrale</option>
+            <option value="richiesta_appuntamento">Richiesta Appuntamento</option>
+            <option value="richiesta_tesseramento">Richiesta Tesseramento</option>
+            <option value="revoca_sindacale">Revoca Sindacale</option>
+            <option value="ricevuta_pec">Ricevuta PEC</option>
+            <option value="fattura">Fattura Elettronica</option>
+            <option value="spam">Spam</option>
+            <option value="info_generiche">Info Generiche</option>
+            <option value="varie">Varie</option>
           </select>
         )
       case 'aggiungi_tag':
@@ -194,6 +229,107 @@ export default function RuleBuilder({ rule, onSave, onClose }: RuleBuilderProps)
             value={action.params.tag || ''}
             onChange={(e) => updateActionParam(index, 'tag', e.target.value)}
           />
+        )
+      case 'INOLTRA_DELEGATI_ZONA':
+        const selectedZone = action.params.zone || []
+        return (
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-700">Seleziona Zone (scelta multipla)</label>
+            <div className="border border-gray-300 rounded-lg p-3 max-h-48 overflow-y-auto bg-gray-50">
+              {zone.length > 0 ? (
+                zone.map((z: any) => (
+                  <label key={z.id} className="flex items-center gap-2 p-2 hover:bg-white rounded cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={selectedZone.includes(z.nome)}
+                      onChange={(e) => {
+                        const newZone = e.target.checked
+                          ? [...selectedZone, z.nome]
+                          : selectedZone.filter((n: string) => n !== z.nome)
+                        updateActionParam(index, 'zone', newZone)
+                      }}
+                      className="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
+                    />
+                    <span className="text-sm text-gray-700">
+                      {z.nome}
+                      <span className="text-gray-400 ml-1">
+                        ({z.num_delegati || 0} delegati, {z.comuni?.length || 0} comuni)
+                      </span>
+                    </span>
+                  </label>
+                ))
+              ) : (
+                <p className="text-sm text-gray-500 italic">Nessuna zona configurata. Vai su Configurazioni → Zone per crearne.</p>
+              )}
+            </div>
+            {selectedZone.length > 0 && (
+              <p className="text-sm text-primary-600">
+                Zone selezionate: {selectedZone.join(', ')}
+              </p>
+            )}
+          </div>
+        )
+      case 'INVIA_NOTIFICA':
+        return (
+          <div className="space-y-2">
+            <input
+              placeholder="Destinatari (separati da virgola)"
+              className="input"
+              value={action.params.destinatari?.join(', ') || ''}
+              onChange={(e) => updateActionParam(index, 'destinatari', e.target.value.split(',').map(s => s.trim()))}
+            />
+            <textarea
+              placeholder="Messaggio notifica"
+              className="input"
+              rows={2}
+              value={action.params.messaggio || ''}
+              onChange={(e) => updateActionParam(index, 'messaggio', e.target.value)}
+            />
+            <select
+              className="input"
+              value={action.params.canale || 'email'}
+              onChange={(e) => updateActionParam(index, 'canale', e.target.value)}
+            >
+              <option value="email">Email</option>
+              <option value="telegram">Telegram</option>
+              <option value="webhook">Webhook</option>
+            </select>
+          </div>
+        )
+      case 'SINTESI':
+        return (
+          <div className="space-y-2">
+            <select
+              className="input"
+              value={action.params.tipo_sintesi || 'giornaliera'}
+              onChange={(e) => updateActionParam(index, 'tipo_sintesi', e.target.value)}
+            >
+              <option value="giornaliera">Giornaliera</option>
+              <option value="per_comunicazione">Per Comunicazione</option>
+              <option value="settimanale">Settimanale</option>
+            </select>
+          </div>
+        )
+      case 'INDICIZZA_RAG':
+      case 'indicizza_rag':
+        return (
+          <div className="text-sm text-gray-600 italic">
+            Nessun parametro richiesto - indicizza automaticamente documenti e allegati
+          </div>
+        )
+      case 'PARSE_INTERPELLO':
+        return (
+          <div className="text-sm text-gray-600 italic">
+            Nessun parametro richiesto - estrae automaticamente dati interpello
+          </div>
+        )
+      case 'ARCHIVIA':
+      case 'SEGNA_IMPORTANTE':
+      case 'marca_come_letto':
+        return (
+          <div className="text-sm text-gray-600 italic">
+            Nessun parametro richiesto
+          </div>
         )
       default:
         return null
@@ -303,13 +439,52 @@ export default function RuleBuilder({ rule, onSave, onClose }: RuleBuilderProps)
                     ))}
                   </select>
 
-                  <input
-                    type="text"
-                    className="input flex-1"
-                    placeholder="Valore..."
-                    value={condition.value}
-                    onChange={(e) => updateCondition(index, 'value', e.target.value)}
-                  />
+                  {/* Campo valore - select per categoria/account_type/zona, input per altri */}
+                  {condition.field === 'categoria' ? (
+                    <select
+                      className="input flex-1"
+                      value={condition.value}
+                      onChange={(e) => updateCondition(index, 'value', e.target.value)}
+                    >
+                      <option value="">Seleziona categoria...</option>
+                      {Object.values(EmailCategory).map((cat) => (
+                        <option key={cat} value={cat}>
+                          {cat.replace(/_/g, ' ')}
+                        </option>
+                      ))}
+                    </select>
+                  ) : condition.field === 'account_type' ? (
+                    <select
+                      className="input flex-1"
+                      value={condition.value}
+                      onChange={(e) => updateCondition(index, 'value', e.target.value)}
+                    >
+                      <option value="">Seleziona tipo account...</option>
+                      <option value="NORMALE">Normale</option>
+                      <option value="PEC">PEC</option>
+                    </select>
+                  ) : condition.condition === 'scuola_in_zona' ? (
+                    <select
+                      className="input flex-1"
+                      value={condition.value}
+                      onChange={(e) => updateCondition(index, 'value', e.target.value)}
+                    >
+                      <option value="">Seleziona zona...</option>
+                      {zone.map((zona: any) => (
+                        <option key={zona.id} value={zona.nome}>
+                          {zona.nome} ({zona.comuni?.length || 0} comuni)
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    <input
+                      type="text"
+                      className="input flex-1"
+                      placeholder="Valore..."
+                      value={condition.value}
+                      onChange={(e) => updateCondition(index, 'value', e.target.value)}
+                    />
+                  )}
 
                   <button
                     type="button"

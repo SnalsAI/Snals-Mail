@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test API - SNALS</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 { color: #0ea5e9; margin-top: 0; }
+        h2 { color: #333; font-size: 18px; }
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+        .status.ok { background: #10b981; color: white; }
+        .status.error { background: #ef4444; color: white; }
+        button {
+            background: #0ea5e9;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+        button:hover { background: #0284c7; }
+        pre {
+            background: #1e293b;
+            color: #22c55e;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            max-height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        .info { color: #666; font-size: 14px; line-height: 1.6; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Test API - SNALS Mail</h1>
+
+    <div class="card">
+        <h2>Connessione API <span id="api-status" class="status">Testing...</span></h2>
+        <div class="info" id="api-info">Verificando...</div>
+        <button onclick="testAPI()">Riprova Connessione</button>
+        <button onclick="clearCache()">Cancella Cache Browser</button>
+    </div>
+
+    <div class="card">
+        <h2>Emails Ricevute</h2>
+        <div id="emails-count" class="info">Caricamento...</div>
+        <pre id="emails-data"></pre>
+    </div>
+
+    <div class="card">
+        <h2>Informazioni Sistema</h2>
+        <pre id="system-info"></pre>
+    </div>
+
+    <script>
+        const API_BASE = '/api';
+
+        function updateSystemInfo() {
+            const info = {
+                URL: window.location.href,
+                Protocol: window.location.protocol,
+                Host: window.location.host,
+                API_URL: API_BASE,
+                UserAgent: navigator.userAgent.substring(0, 100) + '...',
+                Online: navigator.onLine,
+                ServiceWorker: 'serviceWorker' in navigator ? 'Supportato' : 'Non Supportato'
+            };
+            document.getElementById('system-info').textContent = JSON.stringify(info, null, 2);
+        }
+
+        async function testAPI() {
+            document.getElementById('api-status').className = 'status';
+            document.getElementById('api-status').textContent = 'Testing...';
+            document.getElementById('api-info').textContent = 'Connettendo all\'API...';
+
+            try {
+                // Test 1: Connessione base
+                const response = await fetch(`${API_BASE}/emails/`, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+
+                // Successo
+                document.getElementById('api-status').className = 'status ok';
+                document.getElementById('api-status').textContent = 'Connessa!';
+                document.getElementById('api-info').innerHTML = `
+                    ✅ API funzionante!<br>
+                    Totale email: ${data.total}<br>
+                    Limite: ${data.limit}<br>
+                    Skip: ${data.skip}
+                `;
+
+                // Mostra emails
+                document.getElementById('emails-count').innerHTML = `
+                    <strong>${data.total} email trovate</strong><br>
+                    Mostrando le prime ${data.emails.length} email:
+                `;
+
+                const emailsPreview = data.emails.slice(0, 3).map(e => ({
+                    id: e.id,
+                    mittente: e.mittente,
+                    oggetto: e.oggetto,
+                    categoria: e.categoria,
+                    data: e.data_ricezione
+                }));
+
+                document.getElementById('emails-data').textContent = JSON.stringify(emailsPreview, null, 2);
+
+            } catch (error) {
+                // Errore
+                document.getElementById('api-status').className = 'status error';
+                document.getElementById('api-status').textContent = 'Errore!';
+                document.getElementById('api-info').innerHTML = `
+                    ❌ Errore connessione API:<br>
+                    <strong>${error.message}</strong><br><br>
+                    Possibili cause:<br>
+                    - Mixed Content (HTTP/HTTPS)<br>
+                    - CORS non configurato<br>
+                    - Backend non raggiungibile<br>
+                    - Firewall o proxy bloccante
+                `;
+
+                document.getElementById('emails-count').textContent = 'Impossibile caricare le email';
+                document.getElementById('emails-data').textContent = `Errore: ${error.message}\n\nStack: ${error.stack}`;
+            }
+        }
+
+        async function clearCache() {
+            if ('serviceWorker' in navigator) {
+                const registrations = await navigator.serviceWorker.getRegistrations();
+                for (let registration of registrations) {
+                    await registration.unregister();
+                    console.log('Service Worker rimosso');
+                }
+            }
+
+            if ('caches' in window) {
+                const cacheNames = await caches.keys();
+                for (let name of cacheNames) {
+                    await caches.delete(name);
+                    console.log('Cache rimossa:', name);
+                }
+            }
+
+            alert('✅ Cache e Service Worker cancellati!\n\nRicarica la pagina (pull-down) per applicare le modifiche.');
+            location.reload();
+        }
+
+        // Avvia test automaticamente
+        updateSystemInfo();
+        testAPI();
+    </script>
+</body>
+</html>

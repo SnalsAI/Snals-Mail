@@ -1,0 +1,1075 @@
+{
+  "total_calls": 128,
+  "total_input_tokens": 323086,
+  "total_output_tokens": 30075,
+  "calls_by_provider": {
+    "openai": 37,
+    "ollama": 91
+  },
+  "calls_by_model": {
+    "gpt-4o-mini": 37,
+    "llama3.2:1b": 63,
+    "llama3.2:3b": 28
+  },
+  "calls_by_type": {
+    "training_interpello": 2,
+    "training_calendario": 33,
+    "validation": 46,
+    "interpretation": 33,
+    "categorization": 3,
+    "training_generico": 2,
+    "generation": 9
+  },
+  "tokens_by_provider": {
+    "openai": {
+      "input": 56351,
+      "output": 26939
+    },
+    "ollama": {
+      "input": 266735,
+      "output": 3136
+    }
+  },
+  "errors": 32,
+  "last_reset": "2025-11-28T09:03:51.791281",
+  "recent_calls": [
+    {
+      "timestamp": "2025-11-30T07:57:55.257761",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 4096,
+      "output_tokens": 41,
+      "duration_ms": 152882.2376728058,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T07:58:08.400527",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "interpretation",
+      "input_tokens": 197,
+      "output_tokens": 83,
+      "duration_ms": 11121.872901916504,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T07:59:02.375986",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 1931,
+      "output_tokens": 27,
+      "duration_ms": 51958.057165145874,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T08:00:50.306776",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 4096,
+      "output_tokens": 27,
+      "duration_ms": 105910.82811355591,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T08:02:55.195543",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 4096,
+      "output_tokens": 55,
+      "duration_ms": 122866.41931533813,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T08:05:05.091275",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 4096,
+      "output_tokens": 42,
+      "duration_ms": 127875.19693374634,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T08:05:36.948347",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "interpretation",
+      "input_tokens": 1049,
+      "output_tokens": 50,
+      "duration_ms": 29828.882455825806,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T08:07:39.157534",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 4096,
+      "output_tokens": 42,
+      "duration_ms": 120185.19449234009,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T09:30:56.656258",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 4096,
+      "output_tokens": 27,
+      "duration_ms": 124185.8434677124,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T09:32:39.931195",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 4096,
+      "output_tokens": 42,
+      "duration_ms": 101253.1840801239,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T09:32:54.079754",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "interpretation",
+      "input_tokens": 212,
+      "output_tokens": 71,
+      "duration_ms": 12129.726648330688,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T09:33:37.735818",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 1907,
+      "output_tokens": 42,
+      "duration_ms": 41636.20376586914,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T09:35:11.145515",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 4096,
+      "output_tokens": 42,
+      "duration_ms": 91394.54221725464,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T14:04:04.918240",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 4096,
+      "output_tokens": 42,
+      "duration_ms": 118296.65517807007,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T14:05:38.044799",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 4096,
+      "output_tokens": 42,
+      "duration_ms": 91099.93577003479,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T14:51:26.045625",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 4096,
+      "output_tokens": 27,
+      "duration_ms": 130798.36535453796,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T14:53:37.251824",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 4096,
+      "output_tokens": 40,
+      "duration_ms": 129179.24284934998,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T15:21:04.046502",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 813,
+      "output_tokens": 27,
+      "duration_ms": 27125.812292099,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T17:01:09.662702",
+      "provider": "openai",
+      "model": "gpt-4o-mini",
+      "type": "training_calendario",
+      "input_tokens": 2112,
+      "output_tokens": 1390,
+      "duration_ms": 31262.972116470337,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T17:01:27.106321",
+      "provider": "openai",
+      "model": "gpt-4o-mini",
+      "type": "training_calendario",
+      "input_tokens": 2000,
+      "output_tokens": 739,
+      "duration_ms": 17433.75849723816,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T17:01:44.779707",
+      "provider": "openai",
+      "model": "gpt-4o-mini",
+      "type": "training_calendario",
+      "input_tokens": 1486,
+      "output_tokens": 691,
+      "duration_ms": 17665.780305862427,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T17:02:01.385555",
+      "provider": "openai",
+      "model": "gpt-4o-mini",
+      "type": "training_calendario",
+      "input_tokens": 1382,
+      "output_tokens": 784,
+      "duration_ms": 16598.879098892212,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T17:02:10.322955",
+      "provider": "openai",
+      "model": "gpt-4o-mini",
+      "type": "training_calendario",
+      "input_tokens": 940,
+      "output_tokens": 342,
+      "duration_ms": 8925.569772720337,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T17:02:23.407721",
+      "provider": "openai",
+      "model": "gpt-4o-mini",
+      "type": "training_calendario",
+      "input_tokens": 1065,
+      "output_tokens": 686,
+      "duration_ms": 13073.045492172241,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T17:02:36.396878",
+      "provider": "openai",
+      "model": "gpt-4o-mini",
+      "type": "training_calendario",
+      "input_tokens": 1378,
+      "output_tokens": 662,
+      "duration_ms": 12981.516361236572,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T17:02:51.394713",
+      "provider": "openai",
+      "model": "gpt-4o-mini",
+      "type": "training_calendario",
+      "input_tokens": 1648,
+      "output_tokens": 691,
+      "duration_ms": 14966.49146080017,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T17:02:58.786028",
+      "provider": "openai",
+      "model": "gpt-4o-mini",
+      "type": "training_calendario",
+      "input_tokens": 707,
+      "output_tokens": 300,
+      "duration_ms": 7378.575086593628,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T17:03:12.808399",
+      "provider": "openai",
+      "model": "gpt-4o-mini",
+      "type": "training_calendario",
+      "input_tokens": 1387,
+      "output_tokens": 741,
+      "duration_ms": 14012.857675552368,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T17:03:21.980224",
+      "provider": "openai",
+      "model": "gpt-4o-mini",
+      "type": "training_calendario",
+      "input_tokens": 1162,
+      "output_tokens": 401,
+      "duration_ms": 9163.281679153442,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T17:03:42.162591",
+      "provider": "openai",
+      "model": "gpt-4o-mini",
+      "type": "training_calendario",
+      "input_tokens": 1863,
+      "output_tokens": 805,
+      "duration_ms": 20169.01922225952,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T17:03:59.239560",
+      "provider": "openai",
+      "model": "gpt-4o-mini",
+      "type": "training_calendario",
+      "input_tokens": 1460,
+      "output_tokens": 736,
+      "duration_ms": 17049.898147583008,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T17:04:10.869094",
+      "provider": "openai",
+      "model": "gpt-4o-mini",
+      "type": "training_calendario",
+      "input_tokens": 1981,
+      "output_tokens": 577,
+      "duration_ms": 11618.069171905518,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T17:04:29.484339",
+      "provider": "openai",
+      "model": "gpt-4o-mini",
+      "type": "training_calendario",
+      "input_tokens": 1291,
+      "output_tokens": 1099,
+      "duration_ms": 18604.310750961304,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T17:20:51.465227",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 860,
+      "output_tokens": 40,
+      "duration_ms": 33448.981523513794,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T17:45:26.466518",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "type": "interpretation",
+      "input_tokens": 475,
+      "output_tokens": 72,
+      "duration_ms": 52690.93346595764,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T17:45:56.006589",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 660,
+      "output_tokens": 27,
+      "duration_ms": 27519.933938980103,
+      "success": true
+    },
+    {
+      "timestamp": "2025-11-30T20:39:31.875608",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "categorization",
+      "input_tokens": 272,
+      "output_tokens": 179,
+      "duration_ms": 30309.327125549316,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-01T08:33:24.528618",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 819,
+      "output_tokens": 27,
+      "duration_ms": 23604.570150375366,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-01T09:09:38.030966",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 775,
+      "output_tokens": 40,
+      "duration_ms": 35087.95666694641,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-01T09:30:40.736259",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 729,
+      "output_tokens": 40,
+      "duration_ms": 25447.85165786743,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-01T09:40:18.034878",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "type": "interpretation",
+      "input_tokens": 776,
+      "output_tokens": 60,
+      "duration_ms": 64137.31145858765,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-01T09:51:02.463774",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "type": "interpretation",
+      "input_tokens": 776,
+      "output_tokens": 70,
+      "duration_ms": 106835.30855178833,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-01T09:52:33.260655",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 747,
+      "output_tokens": 27,
+      "duration_ms": 53629.448890686035,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-01T10:00:24.306626",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "type": "interpretation",
+      "input_tokens": 776,
+      "output_tokens": 80,
+      "duration_ms": 70445.96910476685,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-02T09:19:16.572562",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 723,
+      "output_tokens": 27,
+      "duration_ms": 28723.40202331543,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-03T09:07:46.384659",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "type": "interpretation",
+      "input_tokens": 710,
+      "output_tokens": 62,
+      "duration_ms": 49072.4983215332,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-03T09:54:05.895727",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 736,
+      "output_tokens": 40,
+      "duration_ms": 11056.386232376099,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-03T09:57:59.038748",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 770,
+      "output_tokens": 40,
+      "duration_ms": 12320.877313613892,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-03T12:01:27.013476",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "type": "interpretation",
+      "input_tokens": 441,
+      "output_tokens": 0,
+      "duration_ms": 1116.112232208252,
+      "success": false
+    },
+    {
+      "timestamp": "2025-12-04T08:07:27.772104",
+      "provider": "openai",
+      "model": "gpt-4o-mini",
+      "type": "training_generico",
+      "input_tokens": 1314,
+      "output_tokens": 1133,
+      "duration_ms": 20852.304697036743,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-04T08:13:15.147202",
+      "provider": "openai",
+      "model": "gpt-4o-mini",
+      "type": "training_calendario",
+      "input_tokens": 1806,
+      "output_tokens": 1348,
+      "duration_ms": 28793.4787273407,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-04T08:13:20.860700",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "type": "interpretation",
+      "input_tokens": 1456,
+      "output_tokens": 0,
+      "duration_ms": 60084.89394187927,
+      "success": false
+    },
+    {
+      "timestamp": "2025-12-04T08:14:23.191681",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "type": "interpretation",
+      "input_tokens": 1073,
+      "output_tokens": 0,
+      "duration_ms": 60078.54199409485,
+      "success": false
+    },
+    {
+      "timestamp": "2025-12-04T08:15:26.326174",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "type": "interpretation",
+      "input_tokens": 1395,
+      "output_tokens": 0,
+      "duration_ms": 60082.000970840454,
+      "success": false
+    },
+    {
+      "timestamp": "2025-12-04T08:16:26.961261",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "type": "interpretation",
+      "input_tokens": 316,
+      "output_tokens": 0,
+      "duration_ms": 60089.03694152832,
+      "success": false
+    },
+    {
+      "timestamp": "2025-12-04T08:17:27.227016",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "type": "interpretation",
+      "input_tokens": 415,
+      "output_tokens": 0,
+      "duration_ms": 60080.079793930054,
+      "success": false
+    },
+    {
+      "timestamp": "2025-12-04T08:17:55.895733",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "type": "interpretation",
+      "input_tokens": 516,
+      "output_tokens": 53,
+      "duration_ms": 28608.49165916443,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-04T08:22:19.725354",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "generation",
+      "input_tokens": 1193,
+      "output_tokens": 0,
+      "duration_ms": 60082.04984664917,
+      "success": false
+    },
+    {
+      "timestamp": "2025-12-04T08:27:41.056062",
+      "provider": "openai",
+      "model": "gpt-4o-mini",
+      "type": "training_calendario",
+      "input_tokens": 1842,
+      "output_tokens": 518,
+      "duration_ms": 17779.45613861084,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-04T08:28:02.278840",
+      "provider": "openai",
+      "model": "gpt-4o-mini",
+      "type": "training_calendario",
+      "input_tokens": 1806,
+      "output_tokens": 921,
+      "duration_ms": 21210.669994354248,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-04T08:28:20.356194",
+      "provider": "openai",
+      "model": "gpt-4o-mini",
+      "type": "training_calendario",
+      "input_tokens": 1210,
+      "output_tokens": 903,
+      "duration_ms": 18066.24984741211,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-04T09:23:58.991879",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "categorization",
+      "input_tokens": 499,
+      "output_tokens": 38,
+      "duration_ms": 15634.520053863525,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-04T09:27:44.306440",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "type": "interpretation",
+      "input_tokens": 427,
+      "output_tokens": 71,
+      "duration_ms": 23411.071062088013,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-04T10:21:03.676076",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "generation",
+      "input_tokens": 390,
+      "output_tokens": 31,
+      "duration_ms": 16420.618295669556,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-04T10:24:38.949849",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "type": "interpretation",
+      "input_tokens": 1417,
+      "output_tokens": 0,
+      "duration_ms": 120119.77863311768,
+      "success": false
+    },
+    {
+      "timestamp": "2025-12-04T10:25:47.330996",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "generation",
+      "input_tokens": 265,
+      "output_tokens": 0,
+      "duration_ms": 60079.81514930725,
+      "success": false
+    },
+    {
+      "timestamp": "2025-12-04T10:27:01.005693",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 826,
+      "output_tokens": 40,
+      "duration_ms": 67080.6028842926,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-04T10:27:09.599851",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "generation",
+      "input_tokens": 593,
+      "output_tokens": 13,
+      "duration_ms": 8144.873857498169,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-04T14:19:29.147349",
+      "provider": "openai",
+      "model": "gpt-4o-mini",
+      "type": "training_generico",
+      "input_tokens": 1385,
+      "output_tokens": 1288,
+      "duration_ms": 32568.90082359314,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-04T14:57:42.204549",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "type": "interpretation",
+      "input_tokens": 1478,
+      "output_tokens": 0,
+      "duration_ms": 120137.31622695923,
+      "success": false
+    },
+    {
+      "timestamp": "2025-12-04T14:59:51.203279",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "type": "interpretation",
+      "input_tokens": 1444,
+      "output_tokens": 0,
+      "duration_ms": 120122.37119674683,
+      "success": false
+    },
+    {
+      "timestamp": "2025-12-04T15:01:42.417242",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "type": "interpretation",
+      "input_tokens": 1594,
+      "output_tokens": 218,
+      "duration_ms": 108435.07266044617,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-04T15:32:24.835228",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "type": "interpretation",
+      "input_tokens": 1467,
+      "output_tokens": 0,
+      "duration_ms": 77593.67632865906,
+      "success": false
+    },
+    {
+      "timestamp": "2025-12-04T15:32:24.848264",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "type": "interpretation",
+      "input_tokens": 1467,
+      "output_tokens": 0,
+      "duration_ms": 23854.496955871582,
+      "success": false
+    },
+    {
+      "timestamp": "2025-12-04T15:33:13.633544",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "categorization",
+      "input_tokens": 1803,
+      "output_tokens": 51,
+      "duration_ms": 48722.35679626465,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-04T15:33:24.613277",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "type": "interpretation",
+      "input_tokens": 1387,
+      "output_tokens": 0,
+      "duration_ms": 8568.558931350708,
+      "success": false
+    },
+    {
+      "timestamp": "2025-12-04T15:33:32.768883",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "type": "interpretation",
+      "input_tokens": 1390,
+      "output_tokens": 0,
+      "duration_ms": 987.3661994934082,
+      "success": false
+    },
+    {
+      "timestamp": "2025-12-04T15:35:30.336168",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "generation",
+      "input_tokens": 412,
+      "output_tokens": 26,
+      "duration_ms": 27715.848684310913,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-04T15:36:07.231382",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "generation",
+      "input_tokens": 868,
+      "output_tokens": 37,
+      "duration_ms": 36836.13133430481,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-04T20:30:24.965928",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 758,
+      "output_tokens": 40,
+      "duration_ms": 16038.276195526123,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-04T20:33:20.514472",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 545,
+      "output_tokens": 0,
+      "duration_ms": 1027.6250839233398,
+      "success": false
+    },
+    {
+      "timestamp": "2025-12-04T20:34:33.987395",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "generation",
+      "input_tokens": 453,
+      "output_tokens": 0,
+      "duration_ms": 1138.432502746582,
+      "success": false
+    },
+    {
+      "timestamp": "2025-12-04T21:03:48.110943",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 758,
+      "output_tokens": 40,
+      "duration_ms": 51631.462812423706,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-04T21:04:50.307491",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 826,
+      "output_tokens": 27,
+      "duration_ms": 18452.892541885376,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-09T11:24:07.668947",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "type": "interpretation",
+      "input_tokens": 599,
+      "output_tokens": 0,
+      "duration_ms": 1741.4703369140625,
+      "success": false
+    },
+    {
+      "timestamp": "2025-12-09T11:28:29.871258",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "type": "interpretation",
+      "input_tokens": 735,
+      "output_tokens": 0,
+      "duration_ms": 120126.44863128662,
+      "success": false
+    },
+    {
+      "timestamp": "2025-12-09T15:42:16.816136",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 784,
+      "output_tokens": 40,
+      "duration_ms": 17212.96763420105,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-09T15:42:47.875554",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "type": "interpretation",
+      "input_tokens": 240,
+      "output_tokens": 62,
+      "duration_ms": 24021.016120910645,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-09T15:43:26.502147",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 404,
+      "output_tokens": 27,
+      "duration_ms": 36610.93831062317,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-09T15:52:59.185867",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "type": "interpretation",
+      "input_tokens": 278,
+      "output_tokens": 45,
+      "duration_ms": 7138.824701309204,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-09T15:53:32.546239",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 428,
+      "output_tokens": 40,
+      "duration_ms": 31342.7152633667,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-09T15:54:04.347324",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "generation",
+      "input_tokens": 529,
+      "output_tokens": 64,
+      "duration_ms": 30169.793844223022,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-09T15:55:31.888526",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 496,
+      "output_tokens": 0,
+      "duration_ms": 61989.92562294006,
+      "success": false
+    },
+    {
+      "timestamp": "2025-12-09T15:55:33.584431",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "generation",
+      "input_tokens": 453,
+      "output_tokens": 0,
+      "duration_ms": 1321.3610649108887,
+      "success": false
+    },
+    {
+      "timestamp": "2025-12-09T15:56:54.576648",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 826,
+      "output_tokens": 40,
+      "duration_ms": 19685.211181640625,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-09T16:22:43.918499",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "type": "interpretation",
+      "input_tokens": 900,
+      "output_tokens": 44,
+      "duration_ms": 45682.00922012329,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-09T16:23:02.282050",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 755,
+      "output_tokens": 40,
+      "duration_ms": 16340.90518951416,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-09T16:23:28.338268",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "type": "interpretation",
+      "input_tokens": 240,
+      "output_tokens": 62,
+      "duration_ms": 24041.86177253723,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-09T16:23:43.071581",
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "type": "validation",
+      "input_tokens": 404,
+      "output_tokens": 27,
+      "duration_ms": 12720.03698348999,
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-11T08:54:53.026103",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "type": "interpretation",
+      "input_tokens": 422,
+      "output_tokens": 186,
+      "duration_ms": 35272.80688285828,
+      "success": true
+    }
+  ],
+  "daily_stats": {
+    "2025-11-28": {
+      "calls": 13,
+      "tokens": 27549
+    },
+    "2025-11-29": {
+      "calls": 3,
+      "tokens": 7761
+    },
+    "2025-11-30": {
+      "calls": 49,
+      "tokens": 255800
+    },
+    "2025-12-01": {
+      "calls": 7,
+      "tokens": 5742
+    },
+    "2025-12-02": {
+      "calls": 1,
+      "tokens": 750
+    },
+    "2025-12-03": {
+      "calls": 4,
+      "tokens": 2799
+    },
+    "2025-12-04": {
+      "calls": 35,
+      "tokens": 43590
+    },
+    "2025-12-09": {
+      "calls": 15,
+      "tokens": 8562
+    },
+    "2025-12-11": {
+      "calls": 1,
+      "tokens": 608
+    }
+  }
+}

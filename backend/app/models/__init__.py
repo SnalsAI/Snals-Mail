@@ -9,6 +9,11 @@ from app.models.evento import EventoCalendario
 from app.models.regola import Regola
 from app.models.utente import Utente, RuoloUtente
 from app.models.log_sistema import LogSistema, LivelloLog
+from app.models.system_settings import SystemSettings
+from app.models.delegato import Delegato, Zona
+from app.models.interpello import Interpello, StatoInterpello
+from app.models.knowledge_document import KnowledgeDocument, TipoDocumento
+from app.models.llm_queue import RichiestaLLM, StatoRichiestaLLM
 
 __all__ = [
     "Email",
@@ -25,4 +30,13 @@ __all__ = [
     "RuoloUtente",
     "LogSistema",
     "LivelloLog",
+    "SystemSettings",
+    "Delegato",
+    "Zona",
+    "Interpello",
+    "StatoInterpello",
+    "KnowledgeDocument",
+    "TipoDocumento",
+    "RichiestaLLM",
+    "StatoRichiestaLLM",
 ]

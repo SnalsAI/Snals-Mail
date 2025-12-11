@@ -131,7 +131,12 @@ GET    /api/calendario               # Lista eventi
 POST   /api/calendario               # Crea evento
 GET    /api/calendario/{id}          # Dettagli
 PUT    /api/calendario/{id}          # Aggiorna
-POST   /api/calendario/sync-google   # Import da Google
+DELETE /api/calendario/{id}          # Elimina evento
+DELETE /api/calendario/cleanup-all   # Elimina tutti gli eventi
+POST   /api/calendario/sync-google   # Import da Google Calendar
+GET    /api/calendario/report/anomalie           # Lista anomalie
+POST   /api/calendario/report/anomalie/risolvi-auto  # Risolvi automaticamente
+DELETE /api/calendario/report/anomalie/{id}      # Risolvi singola anomalia
 ```
 
 ### Swagger Docs
@@ -464,5 +469,5 @@ python
 
 ---
 
-**Ultimo aggiornamento:** 2025-11-13
-**Versione:** 0.3.0
+**Ultimo aggiornamento:** 2025-12-11
+**Versione:** 1.4.1

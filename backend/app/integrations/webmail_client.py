@@ -28,18 +28,17 @@ class WebmailClient:
         """
         self.account_type = account_type
 
+        # Per ora usa sempre WEBMAIL_IMAP per salvare le bozze
+        # TODO: Aggiungere configurazione IMAP specifica per ogni account
+        self.imap_host = settings.WEBMAIL_IMAP_HOST
+        self.imap_port = settings.WEBMAIL_IMAP_PORT
+        self.imap_user = settings.WEBMAIL_IMAP_USER
+        self.imap_password = settings.WEBMAIL_IMAP_PASSWORD
+
         if account_type == "pec":
-            self.imap_host = settings.EMAIL_PEC_IMAP_HOST
-            self.imap_port = settings.EMAIL_PEC_IMAP_PORT
-            self.imap_user = settings.EMAIL_PEC_IMAP_USER
-            self.imap_password = settings.EMAIL_PEC_IMAP_PASSWORD
             self.smtp_host = settings.EMAIL_PEC_SMTP_HOST
             self.smtp_port = settings.EMAIL_PEC_SMTP_PORT
         else:
-            self.imap_host = settings.EMAIL_NORMAL_IMAP_HOST
-            self.imap_port = settings.EMAIL_NORMAL_IMAP_PORT
-            self.imap_user = settings.EMAIL_NORMAL_IMAP_USER
-            self.imap_password = settings.EMAIL_NORMAL_IMAP_PASSWORD
             self.smtp_host = settings.EMAIL_NORMAL_SMTP_HOST
             self.smtp_port = settings.EMAIL_NORMAL_SMTP_PORT
 
@@ -89,7 +88,7 @@ class WebmailClient:
         try:
             # Crea messaggio MIME
             msg = MIMEMultipart('alternative')
-            msg['From'] = self.imap_user
+            msg['From'] = f"Segreteria Provinciale SNALS di Taranto <{self.imap_user}>"
             msg['To'] = to
             msg['Subject'] = subject
 

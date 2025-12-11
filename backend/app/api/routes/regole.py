@@ -20,27 +20,27 @@ class RegolaCreate(BaseModel):
     """Schema creazione regola."""
     nome: str
     descrizione: Optional[str] = None
-    condizioni: Dict[str, Any]
-    azioni: Dict[str, Any]
+    condizioni: Dict[str, Any]  # Supporta sia formato legacy {categoria: ...} che nuovo {operator:..., rules:...}
+    azioni: List[Dict[str, Any]]  # Array di azioni con formato {tipo:..., descrizione:..., params:...}
     priorita: int = 10
-    attiva: bool = True
+    attivo: bool = True
 
 
 class RegolaUpdate(BaseModel):
     """Schema aggiornamento regola."""
     nome: Optional[str] = None
     descrizione: Optional[str] = None
-    condizioni: Optional[Dict[str, Any]] = None
-    azioni: Optional[Dict[str, Any]] = None
+    condizioni: Optional[Dict[str, Any]] = None  # Supporta sia formato legacy che nuovo
+    azioni: Optional[List[Dict[str, Any]]] = None  # Array di azioni
     priorita: Optional[int] = None
-    attiva: Optional[bool] = None
+    attivo: Optional[bool] = None
 
 
 @router.get("/")
 def list_regole(
     skip: int = Query(0, ge=0),
     limit: int = Query(50, ge=1, le=100),
-    attiva: Optional[bool] = None,
+    attivo: Optional[bool] = None,
     db: Session = Depends(get_db)
 ):
     """
@@ -48,12 +48,12 @@ def list_regole(
 
     - **skip**: Numero regole da saltare
     - **limit**: Numero massimo regole da restituire
-    - **attiva**: Filtra per regole attive/disattive
+    - **attivo**: Filtra per regole attive/disattive
     """
     query = db.query(Regola)
 
-    if attiva is not None:
-        query = query.filter(Regola.attiva == attiva)
+    if attivo is not None:
+        query = query.filter(Regola.attivo == attivo)
 
     total = query.count()
     regole = query.order_by(desc(Regola.priorita)).offset(skip).limit(limit).all()
@@ -99,7 +99,7 @@ def create_regola(regola_data: RegolaCreate, db: Session = Depends(get_db)):
         ]
       },
       "priorita": 20,
-      "attiva": true
+      "attivo": true
     }
     ```
     """
@@ -109,7 +109,7 @@ def create_regola(regola_data: RegolaCreate, db: Session = Depends(get_db)):
         condizioni=regola_data.condizioni,
         azioni=regola_data.azioni,
         priorita=regola_data.priorita,
-        attiva=regola_data.attiva
+        attivo=regola_data.attivo
     )
 
     db.add(regola)
@@ -147,8 +147,8 @@ def update_regola(
     if regola_data.priorita is not None:
         regola.priorita = regola_data.priorita
 
-    if regola_data.attiva is not None:
-        regola.attiva = regola_data.attiva
+    if regola_data.attivo is not None:
+        regola.attivo = regola_data.attivo
 
     db.commit()
     db.refresh(regola)
@@ -172,18 +172,18 @@ def delete_regola(regola_id: int, db: Session = Depends(get_db)):
 
 @router.post("/{regola_id}/toggle")
 def toggle_regola(regola_id: int, db: Session = Depends(get_db)):
-    """Attiva/disattiva regola."""
+    """Attiva/disattivo regola."""
     regola = db.query(Regola).filter(Regola.id == regola_id).first()
 
     if not regola:
         raise HTTPException(status_code=404, detail="Regola non trovata")
 
-    regola.attiva = not regola.attiva
+    regola.attivo = not regola.attivo
     db.commit()
 
     return {
-        "message": f"Regola {'attivata' if regola.attiva else 'disattivata'}",
-        "attiva": regola.attiva
+        "message": f"Regola {'attivota' if regola.attivo else 'disattivota'}",
+        "attivo": regola.attivo
     }
 
 

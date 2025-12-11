@@ -5,6 +5,7 @@ FASE 4: Azioni Automatiche
 """
 import logging
 from sqlalchemy.orm import Session
+from celery.exceptions import SoftTimeLimitExceeded
 
 from app.tasks import celery_app
 from app.database import SessionLocal
@@ -14,7 +15,12 @@ from app.models.azione import Azione, StatoAzione
 logger = logging.getLogger(__name__)
 
 
-@celery_app.task(name='app.tasks.action_tasks.execute_pending_actions', bind=True)
+@celery_app.task(
+    name='app.tasks.action_tasks.execute_pending_actions',
+    bind=True,
+    soft_time_limit=1200,  # 20 minuti soft limit (per rate limiting email)
+    time_limit=1500        # 25 minuti hard limit
+)
 def execute_pending_actions(self):
     """
     Task periodico per eseguire azioni pending.
@@ -25,13 +31,13 @@ def execute_pending_actions(self):
 
     db = SessionLocal()
     try:
-        # Trova azioni pending
+        # Trova azioni in coda
         azioni_pending = db.query(Azione).filter(
-            Azione.stato == StatoAzione.PENDING
+            Azione.stato == StatoAzione.IN_CODA
         ).limit(10).all()
 
         if not azioni_pending:
-            logger.info("✅ Nessuna azione pending")
+            logger.info("✅ Nessuna azione in coda")
             return {
                 'status': 'success',
                 'azioni_processate': 0
@@ -43,7 +49,7 @@ def execute_pending_actions(self):
 
         for azione in azioni_pending:
             try:
-                logger.info(f"Esecuzione azione {azione.id} ({azione.tipo_azione.value})...")
+                logger.info(f"Esecuzione azione {azione.id} ({azione.tipo.value})...")
                 success = executor.execute_action(azione.id)
 
                 if success:
@@ -66,6 +72,15 @@ def execute_pending_actions(self):
             'failed': failed_count
         }
 
+    except SoftTimeLimitExceeded:
+        logger.error("⏰ TIMEOUT: execute_pending_actions ha superato il tempo limite!")
+        return {
+            'status': 'timeout',
+            'error': 'Task timeout - possibile blocco nelle azioni',
+            'azioni_processate': success_count + failed_count,
+            'success': success_count,
+            'failed': failed_count
+        }
     except Exception as e:
         logger.error(f"❌ Errore task execute_pending_actions: {e}")
         return {
@@ -76,7 +91,12 @@ def execute_pending_actions(self):
         db.close()
 
 
-@celery_app.task(name='app.tasks.action_tasks.create_actions_for_email', bind=True)
+@celery_app.task(
+    name='app.tasks.action_tasks.create_actions_for_email',
+    bind=True,
+    soft_time_limit=180,  # 3 minuti soft limit
+    time_limit=240        # 4 minuti hard limit
+)
 def create_actions_for_email(self, email_id: int):
     """
     Task per creare azioni per una email specifica.
@@ -114,7 +134,12 @@ def create_actions_for_email(self, email_id: int):
         db.close()
 
 
-@celery_app.task(name='app.tasks.action_tasks.retry_failed_actions', bind=True)
+@celery_app.task(
+    name='app.tasks.action_tasks.retry_failed_actions',
+    bind=True,
+    soft_time_limit=1200,  # 20 minuti soft limit (per rate limiting email)
+    time_limit=1500        # 25 minuti hard limit
+)
 def retry_failed_actions(self, max_retries: int = 3):
     """
     Task per ritentare azioni fallite.
@@ -147,8 +172,8 @@ def retry_failed_actions(self, max_retries: int = 3):
 
         for azione in azioni_fallite:
             try:
-                # Resetta stato a pending
-                azione.stato = StatoAzione.PENDING
+                # Resetta stato a in_coda
+                azione.stato = StatoAzione.IN_CODA
                 azione.errore = None
                 db.commit()
 
@@ -181,3 +206,67 @@ def retry_failed_actions(self, max_retries: int = 3):
         }
     finally:
         db.close()
+
+
+@celery_app.task(
+    name='app.tasks.action_tasks.worker_health_check',
+    bind=True,
+    soft_time_limit=30,
+    time_limit=60
+)
+def worker_health_check(self):
+    """
+    Task watchdog per monitorare la salute del worker.
+
+    Questo task viene eseguito ogni 5 minuti e:
+    1. Verifica che il worker risponda
+    2. Logga statistiche sul rate limiter
+    3. Rileva eventuali blocchi
+    """
+    from datetime import datetime
+    from app.services.email_rate_limiter import get_email_rate_limiter
+
+    logger.info("🔍 Health check worker...")
+
+    try:
+        # Check rate limiter status
+        rate_limiter = get_email_rate_limiter()
+        status = rate_limiter.get_status()
+
+        logger.info(
+            f"📊 Rate limiter: {status['emails_last_hour']}/{status['max_per_hour']} email/ora, "
+            f"{status['emails_last_minute']}/{status['max_per_minute']} email/min, "
+            f"consecutive: {status['consecutive_sends']}, can_send: {status['can_send']}"
+        )
+
+        # Check pending actions count
+        db = SessionLocal()
+        try:
+            pending_count = db.query(Azione).filter(
+                Azione.stato == StatoAzione.IN_CODA
+            ).count()
+
+            failed_count = db.query(Azione).filter(
+                Azione.stato == StatoAzione.FALLITA
+            ).count()
+
+            logger.info(f"📋 Azioni: {pending_count} in coda, {failed_count} fallite")
+
+        finally:
+            db.close()
+
+        return {
+            'status': 'healthy',
+            'timestamp': datetime.now().isoformat(),
+            'rate_limiter': status,
+            'azioni_pending': pending_count,
+            'azioni_failed': failed_count
+        }
+
+    except Exception as e:
+        logger.error(f"❌ Health check failed: {e}")
+        return {
+            'status': 'error',
+            'error': str(e),
+            'timestamp': datetime.now().isoformat()
+        }

@@ -12,23 +12,47 @@ from app.database import Base
 
 class TipoAzione(enum.Enum):
     """Tipi di azione automatica"""
-    BOZZA_RISPOSTA = "bozza_risposta"
-    BOZZA_APPUNTAMENTO = "bozza_appuntamento"
-    BOZZA_TESSERAMENTO = "bozza_tesseramento"
-    EVENTO_CALENDARIO = "evento_calendario"
-    UPLOAD_DRIVE = "upload_drive"
-    SINTESI = "sintesi"
-    INOLTRA = "inoltra"
-    NOTIFICA = "notifica"
+    # Azioni di risposta
+    BOZZA_RISPOSTA = "BOZZA_RISPOSTA"
+    INVIA_RISPOSTA_AUTOMATICA = "invia_risposta_automatica"
+
+    # Azioni di gestione
+    BOZZA_APPUNTAMENTO = "BOZZA_APPUNTAMENTO"
+    BOZZA_TESSERAMENTO = "BOZZA_TESSERAMENTO"
+    CREA_TASK = "crea_task"
+
+    # Azioni di calendario
+    EVENTO_CALENDARIO = "EVENTO_CALENDARIO"
+
+    # Azioni di comunicazione
+    INOLTRA = "INOLTRA"
+    INOLTRA_EMAIL = "inoltra_email"
+    INOLTRA_DELEGATI_ZONA = "INOLTRA_DELEGATI_ZONA"
+    NOTIFICA = "NOTIFICA"
+    INVIA_NOTIFICA = "invia_notifica"
+
+    # Azioni di archiviazione e organizzazione
+    ARCHIVIA = "archivia"
+    SEGNA_IMPORTANTE = "segna_importante"
+    PUBBLICA_SU_SITO = "pubblica_su_sito"
+
+    # Azioni di elaborazione
+    SINTESI = "SINTESI"
+    INDICIZZA_RAG = "INDICIZZA_RAG"
+    PARSE_INTERPELLO = "PARSE_INTERPELLO"
+
+    # Azioni di moderazione
+    ELIMINA = "elimina"
+    SPAM = "SPAM"
 
 
 class StatoAzione(enum.Enum):
     """Stato esecuzione azione"""
-    IN_CODA = "in_coda"
-    IN_ESECUZIONE = "in_esecuzione"
-    COMPLETATA = "completata"
-    FALLITA = "fallita"
-    ANNULLATA = "annullata"
+    IN_CODA = "IN_CODA"
+    IN_ESECUZIONE = "IN_ESECUZIONE"
+    COMPLETATA = "COMPLETATA"
+    FALLITA = "FALLITA"
+    ANNULLATA = "ANNULLATA"
 
 
 class Azione(Base):
@@ -40,8 +64,8 @@ class Azione(Base):
     email_id = Column(Integer, ForeignKey("emails.id"), nullable=False)
     
     # Tipo azione
-    tipo = Column(Enum(TipoAzione), nullable=False)
-    stato = Column(Enum(StatoAzione), default=StatoAzione.IN_CODA, index=True)
+    tipo = Column(Enum(TipoAzione, values_callable=lambda x: [e.value for e in x]), nullable=False)
+    stato = Column(Enum(StatoAzione, values_callable=lambda x: [e.value for e in x]), default=StatoAzione.IN_CODA, index=True)
     
     # Dettagli
     dettagli = Column(JSON)

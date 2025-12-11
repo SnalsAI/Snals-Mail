@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Email API</title>
+    <style>
+        body {
+            font-family: system-ui;
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 { color: #0ea5e9; }
+        .status {
+            padding: 8px 16px;
+            border-radius: 6px;
+            display: inline-block;
+            margin: 10px 0;
+            font-weight: 600;
+        }
+        .ok { background: #10b981; color: white; }
+        .error { background: #ef4444; color: white; }
+        pre {
+            background: #1e293b;
+            color: #22c55e;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 13px;
+        }
+        button {
+            background: #0ea5e9;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+        button:hover { background: #0284c7; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Test Email API</h1>
+
+    <div class="card">
+        <h2>Test 1: API Backend Diretta (localhost:8001)</h2>
+        <div id="test1-status">In attesa...</div>
+        <pre id="test1-result"></pre>
+        <button onclick="test1()">Testa</button>
+    </div>
+
+    <div class="card">
+        <h2>Test 2: API via Proxy Nginx (/api/emails/)</h2>
+        <div id="test2-status">In attesa...</div>
+        <pre id="test2-result"></pre>
+        <button onclick="test2()">Testa</button>
+    </div>
+
+    <div class="card">
+        <h2>Test 3: Variabile Ambiente VITE_API_URL</h2>
+        <div id="test3-result">
+            <code>import.meta.env.VITE_API_URL = <span id="vite-url">?</span></code>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Test 4: Lista Email (come fa React)</h2>
+        <div id="test4-status">In attesa...</div>
+        <div id="test4-count"></div>
+        <div id="test4-emails"></div>
+        <button onclick="test4()">Testa</button>
+    </div>
+
+    <script>
+        // Mostra variabile ambiente
+        document.getElementById('vite-url').textContent =
+            typeof import.meta !== 'undefined' && import.meta.env
+            ? import.meta.env.VITE_API_URL || 'undefined'
+            : 'N/A (import.meta non disponibile in HTML statico)';
+
+        async function test1() {
+            const status = document.getElementById('test1-status');
+            const result = document.getElementById('test1-result');
+
+            status.className = 'status';
+            status.textContent = 'Testing...';
+
+            try {
+                const response = await fetch('http://localhost:8001/api/emails/');
+                const data = await response.json();
+
+                status.className = 'status ok';
+                status.textContent = `✅ OK - ${data.total} email`;
+                result.textContent = JSON.stringify(data, null, 2).substring(0, 1000) + '...';
+            } catch (error) {
+                status.className = 'status error';
+                status.textContent = `❌ Errore: ${error.message}`;
+                result.textContent = error.stack;
+            }
+        }
+
+        async function test2() {
+            const status = document.getElementById('test2-status');
+            const result = document.getElementById('test2-result');
+
+            status.className = 'status';
+            status.textContent = 'Testing...';
+
+            try {
+                const response = await fetch('/api/emails/');
+                const data = await response.json();
+
+                status.className = 'status ok';
+                status.textContent = `✅ OK - ${data.total} email`;
+                result.textContent = JSON.stringify(data, null, 2).substring(0, 1000) + '...';
+            } catch (error) {
+                status.className = 'status error';
+                status.textContent = `❌ Errore: ${error.message}`;
+                result.textContent = error.stack;
+            }
+        }
+
+        async function test4() {
+            const status = document.getElementById('test4-status');
+            const count = document.getElementById('test4-count');
+            const emails = document.getElementById('test4-emails');
+
+            status.className = 'status';
+            status.textContent = 'Caricamento...';
+
+            try {
+                // Simula esattamente come fa React
+                const API_URL = '/api'; // Come configurato nel frontend
+                const response = await fetch(`${API_URL}/emails/`);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+
+                status.className = 'status ok';
+                status.textContent = `✅ OK`;
+                count.innerHTML = `<strong>Totale: ${data.total} email</strong>`;
+
+                let html = '<table style="width:100%; border-collapse: collapse; margin-top: 10px;">';
+                html += '<tr style="background: #f3f4f6;"><th style="padding:8px; text-align:left;">ID</th><th style="padding:8px; text-align:left;">Mittente</th><th style="padding:8px; text-align:left;">Oggetto</th><th style="padding:8px; text-align:left;">Categoria</th></tr>';
+
+                data.emails.slice(0, 10).forEach(email => {
+                    html += `<tr style="border-bottom: 1px solid #e5e7eb;">
+                        <td style="padding:8px;">${email.id}</td>
+                        <td style="padding:8px;">${email.mittente.substring(0, 30)}...</td>
+                        <td style="padding:8px;">${email.oggetto.substring(0, 40)}...</td>
+                        <td style="padding:8px;">${email.categoria}</td>
+                    </tr>`;
+                });
+
+                html += '</table>';
+                emails.innerHTML = html;
+
+            } catch (error) {
+                status.className = 'status error';
+                status.textContent = `❌ Errore: ${error.message}`;
+                count.textContent = '';
+                emails.innerHTML = `<pre style="color: #ef4444;">${error.stack}</pre>`;
+            }
+        }
+
+        // Auto-test all'avvio
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                test2();
+                setTimeout(() => test4(), 500);
+            }, 500);
+        });
+    </script>
+</body>
+</html>

@@ -63,15 +63,19 @@ def test_llm_categorizer():
             'corpo': 'Si convoca per il giorno 15 novembre alle ore 15:00 la riunione delle RSU.'
         }
         
-        categoria, confidence = categorizer.categorize(
+        categoria, confidence, sottocategoria, proposta_info = categorizer.categorize(
             mittente=test_email['mittente'],
             oggetto=test_email['oggetto'],
             corpo=test_email['corpo']
         )
-        
+
         print(f"   ✅ Categorizzazione completata:")
         print(f"      Categoria: {categoria.value}")
         print(f"      Confidence: {confidence:.2f}")
+        if sottocategoria:
+            print(f"      Sottocategoria: {sottocategoria}")
+        if proposta_info:
+            print(f"      ⚠️ Proposta: {proposta_info['proposta']}")
         return True
         
     except Exception as e:

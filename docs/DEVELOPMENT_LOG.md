@@ -190,3 +190,79 @@ find backend/app -type d -exec touch {}/__init__.py \;
 **Endpoint API:** 30+
 
 ---
+
+## [2025-11-28] - NLP Training con ChatGPT e Sistema Benchmark
+
+### Obiettivo
+Implementare sistema di training supervisionato per modelli NLP usando ChatGPT come "teacher" con workflow di approvazione manuale e benchmark per validare miglioramenti.
+
+### Implementazione
+
+#### Backend - Training Service
+- `backend/app/services/training_service.py` - Servizio completo per:
+  - Analisi email con ChatGPT (GPT-4o-mini)
+  - Generazione training samples annotati
+  - Sistema di approvazione manuale
+  - Benchmark NLP con metriche precision/recall/F1
+  - Confronto benchmark pre/post training
+  - Applicazione pattern approvati a EntityRuler
+  - Export formato spaCy e BERT
+
+#### Backend - NLP Training Data
+- `backend/app/services/nlp_training_data.py` - Generatore 853 pattern EntityRuler:
+  - 349 pattern classi di concorso (A-001, AA24, ADMM, etc.)
+  - 122 pattern codici meccanografici scuole Taranto
+  - 61 pattern nomi istituti scolastici
+  - 321 pattern province italiane
+
+#### Backend - API Routes
+- `backend/app/api/routes/training.py` - 12 endpoint API per training e benchmark
+
+#### Backend - NLP Service Update
+- `backend/app/services/nlp_service.py` - Aggiunta funzione `reload_nlp_model()` per ricaricare pattern senza riavviare container
+
+#### Frontend - Pagina NLP Training
+- `frontend/src/pages/NLPTraining.tsx` - UI completa con:
+  - Workflow visuale 7 step
+  - Selezione email per analisi
+  - Visualizzazione/approvazione risultati ChatGPT
+  - Esecuzione benchmark PRIMA/DOPO
+  - Confronto metriche con delta percentuali
+  - Applicazione training con reload modello
+  - Export training data
+
+### Bug Fix
+- Corretto `emails.filter is not a function` in NLPTraining.tsx e Settings.tsx
+- Gestione robusta struttura risposta API `{emails: [...]}` vs array diretto
+
+### File Creati/Modificati
+```
+CREATI:
+- backend/app/services/nlp_training_data.py
+- backend/app/services/training_service.py
+- backend/app/api/routes/training.py
+- frontend/src/pages/NLPTraining.tsx
+- frontend/src/vite-env.d.ts
+
+MODIFICATI:
+- backend/app/services/nlp_service.py (EntityRuler + reload)
+- backend/app/services/interpello_extractors.py (meccanografico)
+- backend/app/services/verification_service.py (nlp_stats)
+- backend/app/api/routes/verification.py (nlp_stats endpoint)
+- backend/main.py (training router)
+- frontend/src/pages/Settings.tsx (NLP stats + fix filter)
+- frontend/src/components/Layout.tsx (nav link)
+- frontend/src/App.tsx (route)
+```
+
+### Workflow Utente
+1. Seleziona email di test
+2. Esegui "Benchmark PRIMA" (salva baseline)
+3. Analizza con ChatGPT
+4. Rivedi e approva risultati corretti
+5. "Applica Training" (aggiunge pattern)
+6. Esegui "Benchmark DOPO" (ri-testa)
+7. Confronta risultati - se migliorato, commit!
+
+### Stato
+✓ Completato - Sistema training NLP operativo

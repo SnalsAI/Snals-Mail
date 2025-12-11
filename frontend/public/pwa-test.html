@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test PWA - SNALS Mail</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #0ea5e9;
+            margin-top: 0;
+        }
+        h2 {
+            color: #333;
+            font-size: 18px;
+            margin-top: 0;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+        .status.ok {
+            background: #10b981;
+            color: white;
+        }
+        .status.error {
+            background: #ef4444;
+            color: white;
+        }
+        .status.warning {
+            background: #f59e0b;
+            color: white;
+        }
+        .info {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        button {
+            background: #0ea5e9;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #0284c7;
+        }
+        #log {
+            background: #1e293b;
+            color: #22c55e;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            max-height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Test PWA - SNALS Mail</h1>
+
+    <div class="card">
+        <h2>Service Worker <span id="sw-status" class="status">Checking...</span></h2>
+        <div class="info" id="sw-info">Verificando...</div>
+        <button onclick="registerSW()">Registra Service Worker</button>
+        <button onclick="unregisterSW()">Rimuovi Service Worker</button>
+    </div>
+
+    <div class="card">
+        <h2>Manifest PWA <span id="manifest-status" class="status">Checking...</span></h2>
+        <div class="info" id="manifest-info">Verificando...</div>
+    </div>
+
+    <div class="card">
+        <h2>Installabilità <span id="install-status" class="status">Checking...</span></h2>
+        <div class="info" id="install-info">In attesa dell'evento beforeinstallprompt...</div>
+        <button id="install-btn" onclick="installApp()" style="display:none">Installa App</button>
+    </div>
+
+    <div class="card">
+        <h2>Icone PWA <span id="icons-status" class="status">Checking...</span></h2>
+        <div class="info" id="icons-info">Verificando...</div>
+    </div>
+
+    <div class="card">
+        <h2>Console Log</h2>
+        <div id="log"></div>
+        <button onclick="clearLog()">Cancella Log</button>
+    </div>
+
+    <script>
+        let deferredPrompt = null;
+        const log = document.getElementById('log');
+
+        function addLog(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const emoji = type === 'ok' ? '✅' : type === 'error' ? '❌' : type === 'warning' ? '⚠️' : 'ℹ️';
+            log.textContent += `[${timestamp}] ${emoji} ${message}\n`;
+            log.scrollTop = log.scrollHeight;
+            console.log(message);
+        }
+
+        function clearLog() {
+            log.textContent = '';
+        }
+
+        // Verifica Service Worker
+        async function checkServiceWorker() {
+            if (!('serviceWorker' in navigator)) {
+                document.getElementById('sw-status').className = 'status error';
+                document.getElementById('sw-status').textContent = 'Non Supportato';
+                document.getElementById('sw-info').textContent = 'Il browser non supporta i Service Workers';
+                addLog('Service Worker non supportato dal browser', 'error');
+                return;
+            }
+
+            try {
+                const registration = await navigator.serviceWorker.getRegistration();
+                if (registration) {
+                    document.getElementById('sw-status').className = 'status ok';
+                    document.getElementById('sw-status').textContent = 'Attivo';
+                    document.getElementById('sw-info').innerHTML = `
+                        Scope: ${registration.scope}<br>
+                        Stato: ${registration.active ? 'Active' : registration.installing ? 'Installing' : 'Waiting'}
+                    `;
+                    addLog(`Service Worker attivo - Scope: ${registration.scope}`, 'ok');
+                } else {
+                    document.getElementById('sw-status').className = 'status warning';
+                    document.getElementById('sw-status').textContent = 'Non Registrato';
+                    document.getElementById('sw-info').textContent = 'Service Worker non registrato. Clicca il pulsante per registrarlo.';
+                    addLog('Service Worker non registrato', 'warning');
+                }
+            } catch (error) {
+                document.getElementById('sw-status').className = 'status error';
+                document.getElementById('sw-status').textContent = 'Errore';
+                document.getElementById('sw-info').textContent = error.message;
+                addLog(`Errore verifica Service Worker: ${error.message}`, 'error');
+            }
+        }
+
+        // Registra Service Worker
+        async function registerSW() {
+            if (!('serviceWorker' in navigator)) {
+                alert('Service Worker non supportato dal browser');
+                return;
+            }
+
+            try {
+                addLog('Registrazione Service Worker...', 'info');
+                const registration = await navigator.serviceWorker.register('/service-worker.js');
+                addLog('Service Worker registrato con successo!', 'ok');
+                checkServiceWorker();
+            } catch (error) {
+                addLog(`Errore registrazione: ${error.message}`, 'error');
+            }
+        }
+
+        // Rimuovi Service Worker
+        async function unregisterSW() {
+            try {
+                const registration = await navigator.serviceWorker.getRegistration();
+                if (registration) {
+                    await registration.unregister();
+                    addLog('Service Worker rimosso', 'ok');
+                    checkServiceWorker();
+                }
+            } catch (error) {
+                addLog(`Errore rimozione: ${error.message}`, 'error');
+            }
+        }
+
+        // Verifica Manifest
+        async function checkManifest() {
+            try {
+                const response = await fetch('/manifest.json');
+                if (response.ok) {
+                    const manifest = await response.json();
+                    document.getElementById('manifest-status').className = 'status ok';
+                    document.getElementById('manifest-status').textContent = 'OK';
+                    document.getElementById('manifest-info').innerHTML = `
+                        Nome: ${manifest.name}<br>
+                        Nome breve: ${manifest.short_name}<br>
+                        Display: ${manifest.display}<br>
+                        Icone: ${manifest.icons.length} trovate
+                    `;
+                    addLog(`Manifest caricato: ${manifest.name}`, 'ok');
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                document.getElementById('manifest-status').className = 'status error';
+                document.getElementById('manifest-status').textContent = 'Errore';
+                document.getElementById('manifest-info').textContent = error.message;
+                addLog(`Errore caricamento manifest: ${error.message}`, 'error');
+            }
+        }
+
+        // Verifica Icone
+        async function checkIcons() {
+            const iconSizes = [72, 96, 128, 144, 152, 192, 384, 512];
+            let foundIcons = 0;
+            let missingIcons = [];
+
+            for (const size of iconSizes) {
+                try {
+                    const response = await fetch(`/icons/icon-${size}x${size}.png`, { method: 'HEAD' });
+                    if (response.ok) {
+                        foundIcons++;
+                    } else {
+                        missingIcons.push(size);
+                    }
+                } catch (error) {
+                    missingIcons.push(size);
+                }
+            }
+
+            if (missingIcons.length === 0) {
+                document.getElementById('icons-status').className = 'status ok';
+                document.getElementById('icons-status').textContent = 'Tutte OK';
+                document.getElementById('icons-info').textContent = `Tutte le ${iconSizes.length} icone sono presenti`;
+                addLog(`Tutte le ${iconSizes.length} icone trovate`, 'ok');
+            } else {
+                document.getElementById('icons-status').className = 'status warning';
+                document.getElementById('icons-status').textContent = 'Incomplete';
+                document.getElementById('icons-info').textContent = `${foundIcons}/${iconSizes.length} icone trovate. Mancanti: ${missingIcons.join(', ')}`;
+                addLog(`Icone mancanti: ${missingIcons.join(', ')}`, 'warning');
+            }
+        }
+
+        // Gestione installazione
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+
+            document.getElementById('install-status').className = 'status ok';
+            document.getElementById('install-status').textContent = 'Installabile!';
+            document.getElementById('install-info').textContent = 'L\'app può essere installata! Clicca il pulsante sotto.';
+            document.getElementById('install-btn').style.display = 'inline-block';
+
+            addLog('🎉 App installabile! Evento beforeinstallprompt catturato', 'ok');
+        });
+
+        window.addEventListener('appinstalled', () => {
+            deferredPrompt = null;
+            document.getElementById('install-status').className = 'status ok';
+            document.getElementById('install-status').textContent = 'Installata!';
+            document.getElementById('install-info').textContent = 'App installata con successo!';
+            document.getElementById('install-btn').style.display = 'none';
+
+            addLog('✅ App installata con successo!', 'ok');
+        });
+
+        async function installApp() {
+            if (!deferredPrompt) {
+                alert('Nessun prompt di installazione disponibile');
+                return;
+            }
+
+            addLog('Mostrando prompt di installazione...', 'info');
+            deferredPrompt.prompt();
+
+            const { outcome } = await deferredPrompt.userChoice;
+            addLog(`Scelta utente: ${outcome}`, outcome === 'accepted' ? 'ok' : 'warning');
+
+            deferredPrompt = null;
+        }
+
+        // Verifica se è già installata
+        function checkIfInstalled() {
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
+                                window.navigator.standalone ||
+                                document.referrer.includes('android-app://');
+
+            if (isStandalone) {
+                document.getElementById('install-status').className = 'status ok';
+                document.getElementById('install-status').textContent = 'Già Installata';
+                document.getElementById('install-info').textContent = 'Stai usando l\'app installata!';
+                addLog('App già installata (modalità standalone)', 'ok');
+            }
+        }
+
+        // Avvia tutti i controlli
+        addLog('Inizializzazione test PWA...', 'info');
+        checkServiceWorker();
+        checkManifest();
+        checkIcons();
+        checkIfInstalled();
+
+        // Log eventi importanti
+        navigator.serviceWorker?.addEventListener('controllerchange', () => {
+            addLog('Service Worker controller cambiato', 'info');
+        });
+
+        navigator.serviceWorker?.addEventListener('message', (event) => {
+            addLog(`Messaggio da SW: ${JSON.stringify(event.data)}`, 'info');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,5688 @@
+[
+  {
+    "name": "test",
+    "timestamp": "2025-11-28T09:05:09.140101",
+    "tipo": "interpello",
+    "email_count": 1,
+    "with_ground_truth": 0,
+    "metrics": {
+      "by_field": {
+        "classe_concorso": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "provincia": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "citta": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "istituto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "meccanografico": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "email_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "telefono_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "ore_settimanali": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        }
+      },
+      "overall": {
+        "avg_precision": 0,
+        "avg_recall": 0,
+        "avg_f1_score": 0
+      }
+    },
+    "results": []
+  },
+  {
+    "name": "pre_training_1764326751722",
+    "timestamp": "2025-11-28T10:46:12.694166",
+    "tipo": "interpello",
+    "email_count": 2,
+    "with_ground_truth": 0,
+    "metrics": {
+      "by_field": {
+        "classe_concorso": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "provincia": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "citta": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "istituto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "meccanografico": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "email_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "telefono_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "ore_settimanali": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        }
+      },
+      "overall": {
+        "avg_precision": 0,
+        "avg_recall": 0,
+        "avg_f1_score": 0
+      }
+    },
+    "results": [
+      {
+        "email_id": 240,
+        "oggetto": "I: interpello nazionaleper supplenza su classe di concorso A040 – SCIENZE E TECN.ELETTRICHE ED ELETTRONICHE",
+        "has_ground_truth": false,
+        "fields": {
+          "classe_concorso": {
+            "nlp": "A040",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "nlp": "LT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "nlp": "LTTF09000X",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "nlp": "USP.LT@ISTRUZIONE.IT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "nlp": "90046130598",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        }
+      },
+      {
+        "email_id": 237,
+        "oggetto": "I: Interpello per selezione personale ai sensi ex art. 13 comma 23 dell’O.M. 88/2024 Classe di concorso A013_LICEO CLASSICO STATALE “G.M. DETTORI”",
+        "has_ground_truth": false,
+        "fields": {
+          "classe_concorso": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "post_training_1764328107894",
+    "timestamp": "2025-11-28T11:08:30.386999",
+    "tipo": "interpello",
+    "email_count": 2,
+    "with_ground_truth": 2,
+    "metrics": {
+      "by_field": {
+        "classe_concorso": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1_score": 0.667,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 1,
+          "total_with_gt": 2
+        },
+        "provincia": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 1
+        },
+        "citta": {
+          "precision": 0,
+          "recall": 0.0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 2,
+          "total_with_gt": 2
+        },
+        "istituto": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1_score": 0.667,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 1,
+          "total_with_gt": 2
+        },
+        "meccanografico": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 1
+        },
+        "email_contatto": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 1
+        },
+        "telefono_contatto": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
+          "total_with_gt": 1
+        },
+        "ore_settimanali": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        }
+      },
+      "overall": {
+        "avg_precision": 0.714,
+        "avg_recall": 0.571,
+        "avg_f1_score": 0.619
+      }
+    },
+    "results": [
+      {
+        "email_id": 240,
+        "oggetto": "I: interpello nazionaleper supplenza su classe di concorso A040 – SCIENZE E TECN.ELETTRICHE ED ELETTRONICHE",
+        "has_ground_truth": true,
+        "fields": {
+          "classe_concorso": {
+            "nlp": "A040",
+            "ground_truth": "A040",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "provincia": {
+            "nlp": "LT",
+            "ground_truth": "LT",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "citta": {
+            "nlp": null,
+            "ground_truth": "FONDI",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "istituto": {
+            "nlp": "ISTITUTOTECNICOINDUSTRIALE“A.PACINOTTI”",
+            "ground_truth": "ISTITUTOTECNICOINDUSTRIALE“A.PACINOTTI”",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "meccanografico": {
+            "nlp": "LTTF09000X",
+            "ground_truth": "LTTF09000X",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "email_contatto": {
+            "nlp": "USP.LT@ISTRUZIONE.IT",
+            "ground_truth": "USP.LT@ISTRUZIONE.IT",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "telefono_contatto": {
+            "nlp": "90046130598",
+            "ground_truth": "0771208080",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "ore_settimanali": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        }
+      },
+      {
+        "email_id": 237,
+        "oggetto": "I: Interpello per selezione personale ai sensi ex art. 13 comma 23 dell’O.M. 88/2024 Classe di concorso A013_LICEO CLASSICO STATALE “G.M. DETTORI”",
+        "has_ground_truth": true,
+        "fields": {
+          "classe_concorso": {
+            "nlp": null,
+            "ground_truth": "A013",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "provincia": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "nlp": null,
+            "ground_truth": "G.M.DETTORI",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "istituto": {
+            "nlp": null,
+            "ground_truth": "LICEOCLASSICOSTATALE“G.M.DETTORI”",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "meccanografico": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "pre_training_1764328138506",
+    "timestamp": "2025-11-28T11:09:02.953482",
+    "tipo": "calendario",
+    "email_count": 5,
+    "with_ground_truth": 3,
+    "metrics": {
+      "by_field": {
+        "classe_concorso": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1_score": 0.667,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 1,
+          "total_with_gt": 2
+        },
+        "provincia": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 1
+        },
+        "citta": {
+          "precision": 0,
+          "recall": 0.0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 2,
+          "total_with_gt": 2
+        },
+        "istituto": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1_score": 0.667,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 1,
+          "total_with_gt": 2
+        },
+        "meccanografico": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 1
+        },
+        "email_contatto": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 1
+        },
+        "telefono_contatto": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
+          "total_with_gt": 1
+        },
+        "ore_settimanali": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        }
+      },
+      "overall": {
+        "avg_precision": 0.714,
+        "avg_recall": 0.571,
+        "avg_f1_score": 0.619
+      }
+    },
+    "results": [
+      {
+        "email_id": 240,
+        "oggetto": "I: interpello nazionaleper supplenza su classe di concorso A040 – SCIENZE E TECN.ELETTRICHE ED ELETTRONICHE",
+        "has_ground_truth": true,
+        "fields": {
+          "classe_concorso": {
+            "nlp": "A040",
+            "ground_truth": "A040",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "provincia": {
+            "nlp": "LT",
+            "ground_truth": "LT",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "citta": {
+            "nlp": null,
+            "ground_truth": "FONDI",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "istituto": {
+            "nlp": "ISTITUTOTECNICOINDUSTRIALE“A.PACINOTTI”",
+            "ground_truth": "ISTITUTOTECNICOINDUSTRIALE“A.PACINOTTI”",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "meccanografico": {
+            "nlp": "LTTF09000X",
+            "ground_truth": "LTTF09000X",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "email_contatto": {
+            "nlp": "USP.LT@ISTRUZIONE.IT",
+            "ground_truth": "USP.LT@ISTRUZIONE.IT",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "telefono_contatto": {
+            "nlp": "90046130598",
+            "ground_truth": "0771208080",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "ore_settimanali": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        }
+      },
+      {
+        "email_id": 237,
+        "oggetto": "I: Interpello per selezione personale ai sensi ex art. 13 comma 23 dell’O.M. 88/2024 Classe di concorso A013_LICEO CLASSICO STATALE “G.M. DETTORI”",
+        "has_ground_truth": true,
+        "fields": {
+          "classe_concorso": {
+            "nlp": null,
+            "ground_truth": "A013",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "provincia": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "nlp": null,
+            "ground_truth": "G.M.DETTORI",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "istituto": {
+            "nlp": null,
+            "ground_truth": "LICEOCLASSICOSTATALE“G.M.DETTORI”",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "meccanografico": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        }
+      },
+      {
+        "email_id": 253,
+        "oggetto": "Convocazione Incontro Rappresentanti OO.SS. 3 dicembre ore 10",
+        "has_ground_truth": true,
+        "fields": {
+          "classe_concorso": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "nlp": "TA",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "nlp": "TAIC84200E",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "nlp": "TAIC84200E@ISTRUZIONE.IT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "nlp": "90214320732",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        }
+      },
+      {
+        "email_id": 251,
+        "oggetto": "Convocazione delegazione trattante per il giorno 11.12.2025.",
+        "has_ground_truth": false,
+        "fields": {
+          "classe_concorso": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "nlp": "ISTITUTOA.S",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        }
+      },
+      {
+        "email_id": 244,
+        "oggetto": "Convocazione tavolo contrattuale per il giorno 28/11/2025-\n sottoscrizione contratto d'istituto definitivo a.s. 2025/2026",
+        "has_ground_truth": false,
+        "fields": {
+          "classe_concorso": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "nlp": "TA",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "nlp": "ICPASCOLIGIOVINAZZISURICO",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "nlp": "TAIC87700D",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "nlp": "TAIC87700D@ISTRUZIONE.IT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "nlp": "90283570738",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "post_training_1764329160847",
+    "timestamp": "2025-11-28T11:26:05.765514",
+    "tipo": "calendario",
+    "email_count": 3,
+    "with_ground_truth": 3,
+    "metrics": {
+      "by_field": {
+        "classe_concorso": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "provincia": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "citta": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "istituto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "meccanografico": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "email_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "telefono_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "ore_settimanali": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        }
+      },
+      "overall": {
+        "avg_precision": 0,
+        "avg_recall": 0,
+        "avg_f1_score": 0
+      }
+    },
+    "results": [
+      {
+        "email_id": 253,
+        "oggetto": "Convocazione Incontro Rappresentanti OO.SS. 3 dicembre ore 10",
+        "has_ground_truth": true,
+        "fields": {
+          "classe_concorso": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "nlp": "TA",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "nlp": "TAIC84200E",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "nlp": "TAIC84200E@ISTRUZIONE.IT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "nlp": "90214320732",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        }
+      },
+      {
+        "email_id": 251,
+        "oggetto": "Convocazione delegazione trattante per il giorno 11.12.2025.",
+        "has_ground_truth": true,
+        "fields": {
+          "classe_concorso": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        }
+      },
+      {
+        "email_id": 244,
+        "oggetto": "Convocazione tavolo contrattuale per il giorno 28/11/2025-\n sottoscrizione contratto d'istituto definitivo a.s. 2025/2026",
+        "has_ground_truth": true,
+        "fields": {
+          "classe_concorso": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "nlp": "TA",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "nlp": "ICPASCOLIGIOVINAZZISURICO",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "nlp": "TAIC87700D",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "nlp": "TAIC87700D@ISTRUZIONE.IT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "nlp": "90283570738",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "pre_training_1764337470523",
+    "timestamp": "2025-11-28T13:44:38.598238",
+    "tipo": "calendario",
+    "email_count": 3,
+    "with_ground_truth": 3,
+    "metrics": {
+      "by_field": {
+        "classe_concorso": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "provincia": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "citta": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "istituto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "meccanografico": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "email_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "telefono_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "ore_settimanali": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        }
+      },
+      "overall": {
+        "avg_precision": 0,
+        "avg_recall": 0,
+        "avg_f1_score": 0
+      }
+    },
+    "results": [
+      {
+        "email_id": 253,
+        "oggetto": "Convocazione Incontro Rappresentanti OO.SS. 3 dicembre ore 10",
+        "has_ground_truth": true,
+        "fields": {
+          "classe_concorso": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "nlp": "TA",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "nlp": "TAIC84200E",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "nlp": "TAIC84200E@ISTRUZIONE.IT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "nlp": "90214320732",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        }
+      },
+      {
+        "email_id": 251,
+        "oggetto": "Convocazione delegazione trattante per il giorno 11.12.2025.",
+        "has_ground_truth": true,
+        "fields": {
+          "classe_concorso": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "nlp": "ISTITUTOA.S",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        }
+      },
+      {
+        "email_id": 244,
+        "oggetto": "Convocazione tavolo contrattuale per il giorno 28/11/2025-\n sottoscrizione contratto d'istituto definitivo a.s. 2025/2026",
+        "has_ground_truth": true,
+        "fields": {
+          "classe_concorso": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "nlp": "TA",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "nlp": "ICPASCOLIGIOVINAZZISURICO",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "nlp": "TAIC87700D",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "nlp": "TAIC87700D@ISTRUZIONE.IT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "nlp": "90283570738",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "pre_training_1764412949270",
+    "timestamp": "2025-11-29T10:42:48.734290",
+    "tipo": "calendario",
+    "email_count": 2,
+    "with_ground_truth": 0,
+    "metrics": {
+      "by_field": {
+        "classe_concorso": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "provincia": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "citta": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "istituto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "meccanografico": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "email_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "telefono_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "ore_settimanali": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        }
+      },
+      "overall": {
+        "avg_precision": 0,
+        "avg_recall": 0,
+        "avg_f1_score": 0
+      }
+    },
+    "results": [
+      {
+        "email_id": 261,
+        "oggetto": "POSTA CERTIFICATA: Convocazione Tavolo Contrattuale in data 4\n dicembre 2025",
+        "has_ground_truth": false,
+        "fields": {
+          "classe_concorso": {
+            "nlp": "AT15",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "nlp": "TA",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "nlp": "ANNA.PESCE@LICEOARISTOSSENO.EDU.IT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "nlp": "TAPC070005",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "nlp": "TAPC070005@PEC.ISTRUZIONE.IT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        }
+      },
+      {
+        "email_id": 253,
+        "oggetto": "Convocazione Incontro Rappresentanti OO.SS. 3 dicembre ore 10",
+        "has_ground_truth": false,
+        "fields": {
+          "classe_concorso": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "nlp": "TA",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "nlp": "TAIC84200E",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "nlp": "TAIC84200E@ISTRUZIONE.IT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "nlp": "90214320732",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "pre_training_1764416198739",
+    "timestamp": "2025-11-29T11:36:41.380173",
+    "tipo": "calendario",
+    "email_count": 3,
+    "with_ground_truth": 3,
+    "metrics": {
+      "by_field": {
+        "classe_concorso": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "provincia": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "citta": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "istituto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "meccanografico": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "email_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "telefono_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "ore_settimanali": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        }
+      },
+      "overall": {
+        "avg_precision": 0,
+        "avg_recall": 0,
+        "avg_f1_score": 0
+      }
+    },
+    "results": [
+      {
+        "email_id": 261,
+        "oggetto": "POSTA CERTIFICATA: Convocazione Tavolo Contrattuale in data 4\n dicembre 2025",
+        "has_ground_truth": true,
+        "fields": {
+          "classe_concorso": {
+            "nlp": "AT15",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "nlp": "TA",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "nlp": "ANNA.PESCE@LICEOARISTOSSENO.EDU.IT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "nlp": "TAPC070005",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "nlp": "TAPC070005@PEC.ISTRUZIONE.IT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        }
+      },
+      {
+        "email_id": 253,
+        "oggetto": "Convocazione Incontro Rappresentanti OO.SS. 3 dicembre ore 10",
+        "has_ground_truth": true,
+        "fields": {
+          "classe_concorso": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "nlp": "TA",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "nlp": "TAIC84200E",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "nlp": "TAIC84200E@ISTRUZIONE.IT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "nlp": "90214320732",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        }
+      },
+      {
+        "email_id": 251,
+        "oggetto": "Convocazione delegazione trattante per il giorno 11.12.2025.",
+        "has_ground_truth": true,
+        "fields": {
+          "classe_concorso": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "nlp": "ISTITUTOA.S",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "post_training_1764416235320",
+    "timestamp": "2025-11-29T11:37:17.510160",
+    "tipo": "calendario",
+    "email_count": 3,
+    "with_ground_truth": 3,
+    "metrics": {
+      "by_field": {
+        "classe_concorso": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "provincia": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "citta": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "istituto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "meccanografico": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "email_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "telefono_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "ore_settimanali": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        }
+      },
+      "overall": {
+        "avg_precision": 0,
+        "avg_recall": 0,
+        "avg_f1_score": 0
+      }
+    },
+    "results": [
+      {
+        "email_id": 261,
+        "oggetto": "POSTA CERTIFICATA: Convocazione Tavolo Contrattuale in data 4\n dicembre 2025",
+        "has_ground_truth": true,
+        "fields": {
+          "classe_concorso": {
+            "nlp": "AT15",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "nlp": "TA",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "nlp": "ANNA.PESCE@LICEOARISTOSSENO.EDU.IT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "nlp": "TAPC070005",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "nlp": "TAPC070005@PEC.ISTRUZIONE.IT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        }
+      },
+      {
+        "email_id": 253,
+        "oggetto": "Convocazione Incontro Rappresentanti OO.SS. 3 dicembre ore 10",
+        "has_ground_truth": true,
+        "fields": {
+          "classe_concorso": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "nlp": "TA",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "nlp": "TAIC84200E",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "nlp": "TAIC84200E@ISTRUZIONE.IT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "nlp": "90214320732",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        }
+      },
+      {
+        "email_id": 251,
+        "oggetto": "Convocazione delegazione trattante per il giorno 11.12.2025.",
+        "has_ground_truth": true,
+        "fields": {
+          "classe_concorso": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "benchmark_20251130_093346",
+    "timestamp": "2025-11-30T09:33:46.524427",
+    "tipo": "interpello",
+    "email_count": 2,
+    "with_ground_truth": 0,
+    "metrics": {
+      "by_field": {
+        "email_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "telefono_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "ore_settimanali": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "provincia": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "citta": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "istituto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "classe_concorso": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "meccanografico": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        }
+      },
+      "overall": {
+        "avg_precision": 0,
+        "avg_recall": 0,
+        "avg_f1_score": 0
+      }
+    },
+    "results": [
+      {
+        "email_id": 240,
+        "oggetto": "I: interpello nazionaleper supplenza su classe di concorso A040 – SCIENZE E TECN.ELETTRICHE ED ELETTRONICHE",
+        "has_ground_truth": false,
+        "extraction_method": "regex_only",
+        "fields": {
+          "classe_concorso": {
+            "extracted": "A40",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "extracted": "LT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "extracted": "LTTF09000X",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "extracted": "USP.LT@ISTRUZIONE.IT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "extracted": "0771208080",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        },
+        "pipeline_info": {}
+      },
+      {
+        "email_id": 237,
+        "oggetto": "I: Interpello per selezione personale ai sensi ex art. 13 comma 23 dell’O.M. 88/2024 Classe di concorso A013_LICEO CLASSICO STATALE “G.M. DETTORI”",
+        "has_ground_truth": false,
+        "extraction_method": "regex_only",
+        "fields": {
+          "classe_concorso": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        },
+        "pipeline_info": {}
+      }
+    ]
+  },
+  {
+    "name": "benchmark_20251130_092837",
+    "timestamp": "2025-11-30T09:35:11.158177",
+    "tipo": "interpello",
+    "email_count": 3,
+    "with_ground_truth": 0,
+    "metrics": {
+      "by_field": {
+        "telefono_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "istituto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "email_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "meccanografico": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "citta": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "ore_settimanali": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "classe_concorso": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "provincia": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        }
+      },
+      "overall": {
+        "avg_precision": 0,
+        "avg_recall": 0,
+        "avg_f1_score": 0
+      }
+    },
+    "results": [
+      {
+        "email_id": 240,
+        "oggetto": "I: interpello nazionaleper supplenza su classe di concorso A040 – SCIENZE E TECN.ELETTRICHE ED ELETTRONICHE",
+        "has_ground_truth": false,
+        "extraction_method": "unified",
+        "fields": {
+          "classe_concorso": {
+            "extracted": "A40",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "extracted": "LT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "extracted": "LTTF09000X",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "extracted": "USP.LT@ISTRUZIONE.IT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "extracted": "0771208080",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "extracted": "9",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        },
+        "pipeline_info": {
+          "steps": [
+            {
+              "step": "regex",
+              "fields_found": 5,
+              "success": true
+            },
+            {
+              "step": "nlp",
+              "fields_found": 8,
+              "success": true
+            },
+            {
+              "step": "validation",
+              "success": true,
+              "corrections": 0
+            }
+          ],
+          "completeness": 0.8999999999999999,
+          "confidence": 0.85
+        }
+      },
+      {
+        "email_id": 237,
+        "oggetto": "I: Interpello per selezione personale ai sensi ex art. 13 comma 23 dell’O.M. 88/2024 Classe di concorso A013_LICEO CLASSICO STATALE “G.M. DETTORI”",
+        "has_ground_truth": false,
+        "extraction_method": "unified",
+        "fields": {
+          "classe_concorso": {
+            "extracted": "A26",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "extracted": "FALSE",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "extracted": "18",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        },
+        "pipeline_info": {
+          "steps": [
+            {
+              "step": "regex",
+              "fields_found": 0,
+              "success": false
+            },
+            {
+              "step": "nlp",
+              "fields_found": 2,
+              "success": true
+            },
+            {
+              "step": "ollama",
+              "fields_found": 5,
+              "success": true
+            },
+            {
+              "step": "validation",
+              "success": true,
+              "corrections": 1
+            }
+          ],
+          "completeness": 0.44999999999999996,
+          "confidence": 0.7285714285714285
+        }
+      },
+      {
+        "email_id": 236,
+        "oggetto": "I: Interpello nazionale supplenti  - Classe concorso B017 (Laboratori di Scienze e Tecnologie Meccaniche) dal 29/11/2025 al 23/12/2025 ",
+        "has_ground_truth": false,
+        "extraction_method": "unified",
+        "fields": {
+          "classe_concorso": {
+            "extracted": "A26",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "extracted": "SI",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "extracted": "PSRI02000B@ISTRUZIONE.IT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "extracted": "11",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        },
+        "pipeline_info": {
+          "steps": [
+            {
+              "step": "regex",
+              "fields_found": 3,
+              "success": true
+            },
+            {
+              "step": "nlp",
+              "fields_found": 6,
+              "success": true
+            },
+            {
+              "step": "validation",
+              "success": true,
+              "corrections": 1
+            }
+          ],
+          "completeness": 0.7999999999999999,
+          "confidence": 0.85
+        }
+      }
+    ]
+  },
+  {
+    "name": "benchmark_20251130_140148",
+    "timestamp": "2025-11-30T14:05:38.474841",
+    "tipo": "interpello",
+    "email_count": 2,
+    "with_ground_truth": 0,
+    "metrics": {
+      "by_field": {
+        "istituto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "telefono_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "ore_settimanali": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "citta": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "classe_concorso": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "meccanografico": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "email_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "provincia": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        }
+      },
+      "overall": {
+        "avg_precision": 0,
+        "avg_recall": 0,
+        "avg_f1_score": 0
+      }
+    },
+    "results": [
+      {
+        "email_id": 240,
+        "oggetto": "I: interpello nazionaleper supplenza su classe di concorso A040 – SCIENZE E TECN.ELETTRICHE ED ELETTRONICHE",
+        "has_ground_truth": false,
+        "extraction_method": "unified",
+        "fields": {
+          "classe_concorso": {
+            "extracted": "A26",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "extracted": "LT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "extracted": "LTTF09000X",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "extracted": "USP.LT@ISTRUZIONE.IT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "extracted": "0771208080",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "extracted": "9",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        },
+        "pipeline_info": {
+          "steps": [
+            {
+              "step": "regex",
+              "fields_found": 5,
+              "success": true
+            },
+            {
+              "step": "nlp",
+              "fields_found": 8,
+              "success": true
+            },
+            {
+              "step": "validation",
+              "success": true,
+              "corrections": 1
+            }
+          ],
+          "completeness": 0.8999999999999999,
+          "confidence": 0.85
+        }
+      },
+      {
+        "email_id": 236,
+        "oggetto": "I: Interpello nazionale supplenti  - Classe concorso B017 (Laboratori di Scienze e Tecnologie Meccaniche) dal 29/11/2025 al 23/12/2025 ",
+        "has_ground_truth": false,
+        "extraction_method": "unified",
+        "fields": {
+          "classe_concorso": {
+            "extracted": "A26",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "extracted": "SI",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "extracted": "PSRI02000B@ISTRUZIONE.IT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "extracted": "11",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        },
+        "pipeline_info": {
+          "steps": [
+            {
+              "step": "regex",
+              "fields_found": 3,
+              "success": true
+            },
+            {
+              "step": "nlp",
+              "fields_found": 6,
+              "success": true
+            },
+            {
+              "step": "validation",
+              "success": true,
+              "corrections": 1
+            }
+          ],
+          "completeness": 0.7999999999999999,
+          "confidence": 0.85
+        }
+      }
+    ]
+  },
+  {
+    "name": "benchmark_20251130_144623",
+    "timestamp": "2025-11-30T14:48:40.048046",
+    "tipo": "interpello",
+    "email_count": 1,
+    "with_ground_truth": 0,
+    "metrics": {
+      "by_field": {
+        "istituto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "provincia": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "ore_settimanali": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "email_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "classe_concorso": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "citta": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "meccanografico": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "telefono_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        }
+      },
+      "overall": {
+        "avg_precision": 0,
+        "avg_recall": 0,
+        "avg_f1_score": 0
+      }
+    },
+    "results": [
+      {
+        "email_id": 240,
+        "oggetto": "I: interpello nazionaleper supplenza su classe di concorso A040 – SCIENZE E TECN.ELETTRICHE ED ELETTRONICHE",
+        "has_ground_truth": false,
+        "extraction_method": "unified",
+        "fields": {
+          "classe_concorso": {
+            "extracted": "A40",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "extracted": "LT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "extracted": "LTTF09000X",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "extracted": "USP.LT@ISTRUZIONE.IT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "extracted": "0771208080",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "extracted": "9",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        },
+        "pipeline_info": {
+          "steps": [
+            {
+              "step": "regex",
+              "fields_found": 5,
+              "success": true
+            },
+            {
+              "step": "nlp",
+              "fields_found": 8,
+              "success": true
+            },
+            {
+              "step": "validation",
+              "success": true,
+              "corrections": 0
+            }
+          ],
+          "completeness": 0.8999999999999999,
+          "confidence": 0.85
+        }
+      }
+    ]
+  },
+  {
+    "name": "benchmark_20251130_144901",
+    "timestamp": "2025-11-30T14:55:24.503959",
+    "tipo": "calendario",
+    "email_count": 3,
+    "with_ground_truth": 3,
+    "metrics": {
+      "by_field": {
+        "modalita": {
+          "precision": 0.5,
+          "recall": 0.333,
+          "f1_score": 0.4,
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 2,
+          "total_with_gt": 3
+        },
+        "contatto_telefono": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
+          "total_with_gt": 1
+        },
+        "luogo": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 3,
+          "false_negatives": 3,
+          "total_with_gt": 3
+        },
+        "tipo_riunione": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 3,
+          "false_negatives": 3,
+          "total_with_gt": 3
+        },
+        "motivo": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "scuola_nome": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 2,
+          "false_negatives": 2,
+          "total_with_gt": 2
+        },
+        "ora_inizio": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "true_positives": 3,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 3
+        },
+        "scuola_codice": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 1
+        },
+        "data_inizio": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 3,
+          "false_negatives": 3,
+          "total_with_gt": 3
+        },
+        "contatto_email": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 2
+        }
+      },
+      "overall": {
+        "avg_precision": 0.389,
+        "avg_recall": 0.37,
+        "avg_f1_score": 0.378
+      }
+    },
+    "results": [
+      {
+        "email_id": 261,
+        "oggetto": "POSTA CERTIFICATA: Convocazione Tavolo Contrattuale in data 4\n dicembre 2025",
+        "has_ground_truth": true,
+        "extraction_method": "unified",
+        "fields": {
+          "data_inizio": {
+            "extracted": "04/12/2025",
+            "ground_truth": "20251204",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "ora_inizio": {
+            "extracted": "10:00",
+            "ground_truth": "10:00",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "luogo": {
+            "extracted": "L’AULAMAGNADIQUESTO",
+            "ground_truth": "AULAMAGNA",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "scuola_nome": {
+            "extracted": "ANNA.PESCE@LICEOARISTOSSENO.EDU.IT",
+            "ground_truth": "LICEOARISTOSSENO",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "scuola_codice": {
+            "extracted": "TAPC070005",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "modalita": {
+            "extracted": "PRESENZA",
+            "ground_truth": "PRESENZA",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "tipo_riunione": {
+            "extracted": "CONVOCAZIONE",
+            "ground_truth": "CONTRATTAZIONE",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "motivo": {
+            "extracted": "POSTACERTIFICATA:CONVOCAZIONETAVOLOCONTRATTUALEINDATA4",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "contatto_email": {
+            "extracted": "TAPC070005@PEC.ISTRUZIONE.IT",
+            "ground_truth": "TAPC070005@PEC.ISTRUZIONE.IT",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "contatto_telefono": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        },
+        "pipeline_info": {
+          "steps": [
+            {
+              "step": "regex",
+              "fields_found": 6,
+              "success": true
+            },
+            {
+              "step": "nlp",
+              "fields_found": 13,
+              "success": true
+            },
+            {
+              "step": "validation",
+              "success": true,
+              "corrections": 0
+            }
+          ],
+          "completeness": 1.0,
+          "confidence": 0.8166666666666668
+        }
+      },
+      {
+        "email_id": 253,
+        "oggetto": "Convocazione Incontro Rappresentanti OO.SS. 3 dicembre ore 10",
+        "has_ground_truth": true,
+        "extraction_method": "unified",
+        "fields": {
+          "data_inizio": {
+            "extracted": "03/12/2025",
+            "ground_truth": "20251203",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "ora_inizio": {
+            "extracted": "10:00",
+            "ground_truth": "10:00",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "luogo": {
+            "extracted": "LASEDECENTRALEINVIACALÒ",
+            "ground_truth": "VIAV.CALÒ,37,74023GROTTAGLIE(TA)",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "scuola_nome": {
+            "extracted": "CONSIGLIO\nD'ISTITUTO",
+            "ground_truth": "ISTITUTOCOMPRENSIVO'E.DEAMICIS'",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "scuola_codice": {
+            "extracted": "TAIC84200E",
+            "ground_truth": "TAIC84200E",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "modalita": {
+            "extracted": "ONLINE",
+            "ground_truth": "PRESENZA",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "tipo_riunione": {
+            "extracted": "COLLEGIO_DOCENTI",
+            "ground_truth": "INCONTRO",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "motivo": {
+            "extracted": "CONVOCAZIONEINCONTRORAPPRESENTANTIOO.SS.3DICEMBREORE10",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "contatto_email": {
+            "extracted": "TAIC84200E@ISTRUZIONE.IT",
+            "ground_truth": "TAIC84200E@ISTRUZIONE.IT",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "contatto_telefono": {
+            "extracted": "90214320732",
+            "ground_truth": "099/5620500",
+            "match": false,
+            "has_ground_truth": true
+          }
+        },
+        "pipeline_info": {
+          "steps": [
+            {
+              "step": "regex",
+              "fields_found": 6,
+              "success": true
+            },
+            {
+              "step": "nlp",
+              "fields_found": 14,
+              "success": true
+            },
+            {
+              "step": "validation",
+              "success": true,
+              "corrections": 0
+            }
+          ],
+          "completeness": 1.0,
+          "confidence": 0.8375
+        }
+      },
+      {
+        "email_id": 251,
+        "oggetto": "Convocazione delegazione trattante per il giorno 11.12.2025.",
+        "has_ground_truth": true,
+        "extraction_method": "unified",
+        "fields": {
+          "data_inizio": {
+            "extracted": "11.12.2025",
+            "ground_truth": "20251211",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "ora_inizio": {
+            "extracted": "09:30",
+            "ground_truth": "09:30",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "luogo": {
+            "extracted": "LASEDEDELL’UFFICIODI",
+            "ground_truth": "VIARISORGIMENTOSNAMARUGGIO",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "scuola_nome": {
+            "extracted": "ISTITUTOA.S",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "scuola_codice": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "modalita": {
+            "extracted": null,
+            "ground_truth": "PRESENZA",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "tipo_riunione": {
+            "extracted": "CONVOCAZIONE",
+            "ground_truth": "CONTRATTAZIONE",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "motivo": {
+            "extracted": "CONVOCAZIONEDELEGAZIONETRATTANTEPERILGIORNO11.12.2025.",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "contatto_email": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "contatto_telefono": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        },
+        "pipeline_info": {
+          "steps": [
+            {
+              "step": "regex",
+              "fields_found": 4,
+              "success": true
+            },
+            {
+              "step": "nlp",
+              "fields_found": 10,
+              "success": true
+            },
+            {
+              "step": "validation",
+              "success": true,
+              "corrections": 0
+            }
+          ],
+          "completeness": 0.8999999999999999,
+          "confidence": 0.8
+        }
+      }
+    ]
+  },
+  {
+    "name": "benchmark_20251130_150413",
+    "timestamp": "2025-11-30T15:06:31.644693",
+    "tipo": "interpello",
+    "email_count": 1,
+    "with_ground_truth": 0,
+    "metrics": {
+      "by_field": {
+        "meccanografico": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "istituto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "provincia": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "citta": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "classe_concorso": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "telefono_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "email_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "ore_settimanali": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        }
+      },
+      "overall": {
+        "avg_precision": 0,
+        "avg_recall": 0,
+        "avg_f1_score": 0
+      }
+    },
+    "results": [
+      {
+        "email_id": 240,
+        "oggetto": "I: interpello nazionaleper supplenza su classe di concorso A040 – SCIENZE E TECN.ELETTRICHE ED ELETTRONICHE",
+        "has_ground_truth": false,
+        "extraction_method": "unified",
+        "fields": {
+          "classe_concorso": {
+            "extracted": "A40",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "extracted": "LT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "extracted": "LTTF09000X",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "extracted": "USP.LT@ISTRUZIONE.IT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "extracted": "0771208080",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "extracted": "9",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        },
+        "pipeline_info": {
+          "steps": [
+            {
+              "step": "regex",
+              "fields_found": 5,
+              "success": true
+            },
+            {
+              "step": "nlp",
+              "fields_found": 8,
+              "success": true
+            },
+            {
+              "step": "validation",
+              "success": true,
+              "corrections": 0
+            }
+          ],
+          "completeness": 0.8999999999999999,
+          "confidence": 0.85
+        }
+      }
+    ]
+  },
+  {
+    "name": "benchmark_20251130_150900",
+    "timestamp": "2025-11-30T15:11:18.908421",
+    "tipo": "interpello",
+    "email_count": 1,
+    "with_ground_truth": 0,
+    "metrics": {
+      "by_field": {
+        "meccanografico": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "ore_settimanali": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "citta": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "telefono_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "provincia": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "email_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "istituto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "classe_concorso": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        }
+      },
+      "overall": {
+        "avg_precision": 0,
+        "avg_recall": 0,
+        "avg_f1_score": 0
+      }
+    },
+    "results": [
+      {
+        "email_id": 240,
+        "oggetto": "I: interpello nazionaleper supplenza su classe di concorso A040 – SCIENZE E TECN.ELETTRICHE ED ELETTRONICHE",
+        "has_ground_truth": false,
+        "extraction_method": "unified",
+        "fields": {
+          "classe_concorso": {
+            "extracted": "A40",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "extracted": "LT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "extracted": "LTTF09000X",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "extracted": "USP.LT@ISTRUZIONE.IT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "extracted": "0771208080",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "extracted": "9",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        },
+        "pipeline_info": {
+          "steps": [
+            {
+              "step": "regex",
+              "fields_found": 5,
+              "success": true
+            },
+            {
+              "step": "nlp",
+              "fields_found": 8,
+              "success": true
+            },
+            {
+              "step": "validation",
+              "success": true,
+              "corrections": 0
+            }
+          ],
+          "completeness": 0.8999999999999999,
+          "confidence": 0.85
+        }
+      }
+    ]
+  },
+  {
+    "name": "benchmark_20251130_151450",
+    "timestamp": "2025-11-30T15:17:08.562105",
+    "tipo": "interpello",
+    "email_count": 1,
+    "with_ground_truth": 0,
+    "metrics": {
+      "by_field": {
+        "telefono_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "classe_concorso": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "citta": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "provincia": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "email_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "ore_settimanali": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "meccanografico": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "istituto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        }
+      },
+      "overall": {
+        "avg_precision": 0,
+        "avg_recall": 0,
+        "avg_f1_score": 0
+      }
+    },
+    "results": [
+      {
+        "email_id": 240,
+        "oggetto": "I: interpello nazionaleper supplenza su classe di concorso A040 – SCIENZE E TECN.ELETTRICHE ED ELETTRONICHE",
+        "has_ground_truth": false,
+        "extraction_method": "unified",
+        "fields": {
+          "classe_concorso": {
+            "extracted": "A40",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "extracted": "LT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "extracted": "LTTF09000X",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "extracted": "USP.LT@ISTRUZIONE.IT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "extracted": "0771208080",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "extracted": "9",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        },
+        "pipeline_info": {
+          "steps": [
+            {
+              "step": "regex",
+              "fields_found": 5,
+              "success": true
+            },
+            {
+              "step": "nlp",
+              "fields_found": 8,
+              "success": true
+            },
+            {
+              "step": "validation",
+              "success": true,
+              "corrections": 0
+            }
+          ],
+          "completeness": 0.8999999999999999,
+          "confidence": 0.85
+        }
+      }
+    ]
+  },
+  {
+    "name": "benchmark_20251130_152018",
+    "timestamp": "2025-11-30T15:21:04.166631",
+    "tipo": "interpello",
+    "email_count": 1,
+    "with_ground_truth": 0,
+    "metrics": {
+      "by_field": {
+        "meccanografico": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "classe_concorso": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "ore_settimanali": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "telefono_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "istituto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "citta": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "provincia": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "email_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        }
+      },
+      "overall": {
+        "avg_precision": 0,
+        "avg_recall": 0,
+        "avg_f1_score": 0
+      }
+    },
+    "results": [
+      {
+        "email_id": 240,
+        "oggetto": "I: interpello nazionaleper supplenza su classe di concorso A040 – SCIENZE E TECN.ELETTRICHE ED ELETTRONICHE",
+        "has_ground_truth": false,
+        "extraction_method": "unified",
+        "fields": {
+          "classe_concorso": {
+            "extracted": "A40",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "extracted": "LT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "extracted": "LTTF09000X",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "extracted": "USP.LT@ISTRUZIONE.IT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "extracted": "0771208080",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "extracted": "9",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        },
+        "pipeline_info": {
+          "steps": [
+            {
+              "step": "regex",
+              "fields_found": 5,
+              "success": true
+            },
+            {
+              "step": "nlp",
+              "fields_found": 8,
+              "success": true
+            },
+            {
+              "step": "validation",
+              "success": true,
+              "corrections": 0
+            }
+          ],
+          "completeness": 0.8999999999999999,
+          "confidence": 0.85
+        }
+      }
+    ]
+  },
+  {
+    "name": "benchmark_20251130_172002",
+    "timestamp": "2025-11-30T17:20:51.801443",
+    "tipo": "calendario",
+    "email_count": 1,
+    "with_ground_truth": 0,
+    "metrics": {
+      "by_field": {
+        "ora_inizio": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "data_inizio": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "modalita": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "scuola_nome": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "luogo": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "tipo_riunione": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "scuola_codice": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "motivo": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "contatto_email": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "contatto_telefono": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        }
+      },
+      "overall": {
+        "avg_precision": 0,
+        "avg_recall": 0,
+        "avg_f1_score": 0
+      }
+    },
+    "results": [
+      {
+        "email_id": 196,
+        "oggetto": "Convocazione delegazione trattante. Rinvio tavolo contrattuale del\n 26.11.2025.",
+        "has_ground_truth": false,
+        "extraction_method": "unified",
+        "fields": {
+          "data_inizio": {
+            "extracted": "26.11.2025",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ora_inizio": {
+            "extracted": "26:11",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "luogo": {
+            "extracted": "ISTITUTO\nAITERMINALI",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "scuola_nome": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "scuola_codice": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "modalita": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "tipo_riunione": {
+            "extracted": "CONVOCAZIONE",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "motivo": {
+            "extracted": "CONVOCAZIONEDELEGAZIONETRATTANTE.RINVIOTAVOLOCONTRATTUALEDEL",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "contatto_email": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "contatto_telefono": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        },
+        "pipeline_info": {
+          "steps": [
+            {
+              "step": "regex",
+              "fields_found": 2,
+              "success": true
+            },
+            {
+              "step": "nlp",
+              "fields_found": 9,
+              "success": true
+            },
+            {
+              "step": "validation",
+              "success": true,
+              "corrections": 0
+            }
+          ],
+          "completeness": 0.7999999999999999,
+          "confidence": 0.8500000000000001
+        }
+      }
+    ]
+  },
+  {
+    "name": "benchmark_20251130_172322",
+    "timestamp": "2025-11-30T17:23:35.640470",
+    "tipo": "calendario",
+    "email_count": 1,
+    "with_ground_truth": 0,
+    "metrics": {
+      "by_field": {
+        "tipo_riunione": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "scuola_nome": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "contatto_telefono": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "modalita": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "contatto_email": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "scuola_codice": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "luogo": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "motivo": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "data_inizio": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "ora_inizio": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        }
+      },
+      "overall": {
+        "avg_precision": 0,
+        "avg_recall": 0,
+        "avg_f1_score": 0
+      }
+    },
+    "results": [
+      {
+        "email_id": 196,
+        "oggetto": "Convocazione delegazione trattante. Rinvio tavolo contrattuale del\n 26.11.2025.",
+        "has_ground_truth": false,
+        "extraction_method": "unified",
+        "fields": {
+          "data_inizio": {
+            "extracted": "26.11.2025",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ora_inizio": {
+            "extracted": "26:11",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "luogo": {
+            "extracted": "ISTITUTO\nAITERMINALI",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "scuola_nome": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "scuola_codice": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "modalita": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "tipo_riunione": {
+            "extracted": "CONVOCAZIONE",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "motivo": {
+            "extracted": "CONVOCAZIONEDELEGAZIONETRATTANTE.RINVIOTAVOLOCONTRATTUALEDEL",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "contatto_email": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "contatto_telefono": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        },
+        "pipeline_info": {
+          "steps": [
+            {
+              "step": "regex",
+              "fields_found": 2,
+              "success": true
+            },
+            {
+              "step": "nlp",
+              "fields_found": 9,
+              "success": true
+            }
+          ],
+          "completeness": 0.7999999999999999,
+          "confidence": 0.8166666666666668
+        }
+      }
+    ]
+  },
+  {
+    "name": "benchmark_20251130_172600",
+    "timestamp": "2025-11-30T17:26:21.435115",
+    "tipo": "calendario",
+    "email_count": 5,
+    "with_ground_truth": 5,
+    "metrics": {
+      "by_field": {
+        "scuola_nome": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 3,
+          "false_negatives": 4,
+          "total_with_gt": 4
+        },
+        "data_inizio": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 5,
+          "false_negatives": 5,
+          "total_with_gt": 5
+        },
+        "modalita": {
+          "precision": 0.5,
+          "recall": 0.25,
+          "f1_score": 0.333,
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 3,
+          "total_with_gt": 4
+        },
+        "contatto_telefono": {
+          "precision": 0.667,
+          "recall": 0.667,
+          "f1_score": 0.667,
+          "true_positives": 2,
+          "false_positives": 1,
+          "false_negatives": 1,
+          "total_with_gt": 3
+        },
+        "tipo_riunione": {
+          "precision": 0.2,
+          "recall": 0.2,
+          "f1_score": 0.2,
+          "true_positives": 1,
+          "false_positives": 4,
+          "false_negatives": 4,
+          "total_with_gt": 5
+        },
+        "motivo": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "contatto_email": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "true_positives": 4,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 4
+        },
+        "luogo": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 5,
+          "false_negatives": 5,
+          "total_with_gt": 5
+        },
+        "scuola_codice": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "true_positives": 3,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 3
+        },
+        "ora_inizio": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "true_positives": 5,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 5
+        }
+      },
+      "overall": {
+        "avg_precision": 0.485,
+        "avg_recall": 0.457,
+        "avg_f1_score": 0.467
+      }
+    },
+    "results": [
+      {
+        "email_id": 261,
+        "oggetto": "POSTA CERTIFICATA: Convocazione Tavolo Contrattuale in data 4\n dicembre 2025",
+        "has_ground_truth": true,
+        "extraction_method": "unified",
+        "fields": {
+          "data_inizio": {
+            "extracted": "04/12/2025",
+            "ground_truth": "20251204",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "ora_inizio": {
+            "extracted": "10:00",
+            "ground_truth": "10:00",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "luogo": {
+            "extracted": "L’AULAMAGNADIQUESTO",
+            "ground_truth": "AULAMAGNA",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "scuola_nome": {
+            "extracted": "ANNA.PESCE@LICEOARISTOSSENO.EDU.IT",
+            "ground_truth": "LICEOARISTOSSENO",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "scuola_codice": {
+            "extracted": "TAPC070005",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "modalita": {
+            "extracted": "PRESENZA",
+            "ground_truth": "PRESENZA",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "tipo_riunione": {
+            "extracted": "CONVOCAZIONE",
+            "ground_truth": "CONTRATTAZIONE",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "motivo": {
+            "extracted": "POSTACERTIFICATA:CONVOCAZIONETAVOLOCONTRATTUALEINDATA4",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "contatto_email": {
+            "extracted": "TAPC070005@PEC.ISTRUZIONE.IT",
+            "ground_truth": "TAPC070005@PEC.ISTRUZIONE.IT",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "contatto_telefono": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        },
+        "pipeline_info": {
+          "steps": [
+            {
+              "step": "regex",
+              "fields_found": 6,
+              "success": true
+            },
+            {
+              "step": "nlp",
+              "fields_found": 13,
+              "success": true
+            }
+          ],
+          "completeness": 1.0,
+          "confidence": 0.8166666666666668
+        }
+      },
+      {
+        "email_id": 253,
+        "oggetto": "Convocazione Incontro Rappresentanti OO.SS. 3 dicembre ore 10",
+        "has_ground_truth": true,
+        "extraction_method": "unified",
+        "fields": {
+          "data_inizio": {
+            "extracted": "03/12/2025",
+            "ground_truth": "20251203",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "ora_inizio": {
+            "extracted": "10:00",
+            "ground_truth": "10:00",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "luogo": {
+            "extracted": "LASEDECENTRALEINVIACALÒ",
+            "ground_truth": "VIAV.CALÒ,37,74023GROTTAGLIE(TA)",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "scuola_nome": {
+            "extracted": "CONSIGLIO\nD'ISTITUTO",
+            "ground_truth": "ISTITUTOCOMPRENSIVO'E.DEAMICIS'",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "scuola_codice": {
+            "extracted": "TAIC84200E",
+            "ground_truth": "TAIC84200E",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "modalita": {
+            "extracted": "ONLINE",
+            "ground_truth": "PRESENZA",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "tipo_riunione": {
+            "extracted": "COLLEGIO_DOCENTI",
+            "ground_truth": "INCONTRO",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "motivo": {
+            "extracted": "CONVOCAZIONEINCONTRORAPPRESENTANTIOO.SS.3DICEMBREORE10",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "contatto_email": {
+            "extracted": "TAIC84200E@ISTRUZIONE.IT",
+            "ground_truth": "TAIC84200E@ISTRUZIONE.IT",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "contatto_telefono": {
+            "extracted": "90214320732",
+            "ground_truth": "099/5620500",
+            "match": false,
+            "has_ground_truth": true
+          }
+        },
+        "pipeline_info": {
+          "steps": [
+            {
+              "step": "regex",
+              "fields_found": 6,
+              "success": true
+            },
+            {
+              "step": "nlp",
+              "fields_found": 14,
+              "success": true
+            }
+          ],
+          "completeness": 1.0,
+          "confidence": 0.8375
+        }
+      },
+      {
+        "email_id": 251,
+        "oggetto": "Convocazione delegazione trattante per il giorno 11.12.2025.",
+        "has_ground_truth": true,
+        "extraction_method": "unified",
+        "fields": {
+          "data_inizio": {
+            "extracted": "11.12.2025",
+            "ground_truth": "20251211",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "ora_inizio": {
+            "extracted": "09:30",
+            "ground_truth": "09:30",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "luogo": {
+            "extracted": "LASEDEDELL’UFFICIODI",
+            "ground_truth": "VIARISORGIMENTOSNAMARUGGIO",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "scuola_nome": {
+            "extracted": "ISTITUTOA.S",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "scuola_codice": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "modalita": {
+            "extracted": null,
+            "ground_truth": "PRESENZA",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "tipo_riunione": {
+            "extracted": "CONVOCAZIONE",
+            "ground_truth": "CONTRATTAZIONE",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "motivo": {
+            "extracted": "CONVOCAZIONEDELEGAZIONETRATTANTEPERILGIORNO11.12.2025.",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "contatto_email": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "contatto_telefono": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        },
+        "pipeline_info": {
+          "steps": [
+            {
+              "step": "regex",
+              "fields_found": 4,
+              "success": true
+            },
+            {
+              "step": "nlp",
+              "fields_found": 10,
+              "success": true
+            }
+          ],
+          "completeness": 0.8999999999999999,
+          "confidence": 0.8
+        }
+      },
+      {
+        "email_id": 244,
+        "oggetto": "Convocazione tavolo contrattuale per il giorno 28/11/2025-\n sottoscrizione contratto d'istituto definitivo a.s. 2025/2026",
+        "has_ground_truth": true,
+        "extraction_method": "unified",
+        "fields": {
+          "data_inizio": {
+            "extracted": "28/11/2025",
+            "ground_truth": "20251128",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "ora_inizio": {
+            "extracted": "09:00",
+            "ground_truth": "09:00",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "luogo": {
+            "extracted": "ISTITUTO",
+            "ground_truth": "VIAMAZZINI,2574011CASTELLANETA(TA)",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "scuola_nome": {
+            "extracted": "ICPASCOLIGIOVINAZZISURICO",
+            "ground_truth": "ISTITUTOCOMPRENSIVOPASCOLIGIOVINAZZIF.SURICO",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "scuola_codice": {
+            "extracted": "TAIC87700D",
+            "ground_truth": "TAIC87700D",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "modalita": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "tipo_riunione": {
+            "extracted": "RSU",
+            "ground_truth": "CONTRATTAZIONE",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "motivo": {
+            "extracted": "CONVOCAZIONETAVOLOCONTRATTUALEPERILGIORNO28/11/2025",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "contatto_email": {
+            "extracted": "TAIC87700D@ISTRUZIONE.IT",
+            "ground_truth": "TAIC87700D@ISTRUZIONE.IT",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "contatto_telefono": {
+            "extracted": "0998491143",
+            "ground_truth": "0998491143",
+            "match": true,
+            "has_ground_truth": true
+          }
+        },
+        "pipeline_info": {
+          "steps": [
+            {
+              "step": "regex",
+              "fields_found": 5,
+              "success": true
+            },
+            {
+              "step": "nlp",
+              "fields_found": 13,
+              "success": true
+            }
+          ],
+          "completeness": 0.8999999999999999,
+          "confidence": 0.86
+        }
+      },
+      {
+        "email_id": 233,
+        "oggetto": "Convocazione R.S.U - Avvio tavolo negoziale 2025-2026",
+        "has_ground_truth": true,
+        "extraction_method": "unified",
+        "fields": {
+          "data_inizio": {
+            "extracted": "02/12/2025",
+            "ground_truth": "20251202",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "ora_inizio": {
+            "extracted": "12:00",
+            "ground_truth": "12:00",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "luogo": {
+            "extracted": "L’UFFICIODELDIRIGENTE",
+            "ground_truth": "VIAIMAGGIO,3–MANDURIA",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "scuola_nome": {
+            "extracted": null,
+            "ground_truth": "ISTITUTOCOMPRENSIVO“MICHELEGRECO”",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "scuola_codice": {
+            "extracted": "TAIC84800D",
+            "ground_truth": "TAIC84800D",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "modalita": {
+            "extracted": null,
+            "ground_truth": "PRESENZA",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "tipo_riunione": {
+            "extracted": "RSU",
+            "ground_truth": "RSU",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "motivo": {
+            "extracted": "CONVOCAZIONER.S.UAVVIOTAVOLONEGOZIALE20252026",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "contatto_email": {
+            "extracted": "TAIC84800D@ISTRUZIONE.IT",
+            "ground_truth": "TAIC84800D@ISTRUZIONE.IT",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "contatto_telefono": {
+            "extracted": "0999794467",
+            "ground_truth": "0999794467",
+            "match": true,
+            "has_ground_truth": true
+          }
+        },
+        "pipeline_info": {
+          "steps": [
+            {
+              "step": "regex",
+              "fields_found": 6,
+              "success": true
+            },
+            {
+              "step": "nlp",
+              "fields_found": 10,
+              "success": true
+            }
+          ],
+          "completeness": 0.7999999999999999,
+          "confidence": 0.8
+        }
+      }
+    ]
+  },
+  {
+    "name": "benchmark_20251130_173707",
+    "timestamp": "2025-11-30T17:37:22.004853",
+    "tipo": "calendario",
+    "email_count": 1,
+    "with_ground_truth": 0,
+    "metrics": {
+      "by_field": {
+        "data_inizio": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "scuola_nome": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "modalita": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "ora_inizio": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "tipo_riunione": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "contatto_telefono": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "motivo": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "luogo": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "contatto_email": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "scuola_codice": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        }
+      },
+      "overall": {
+        "avg_precision": 0,
+        "avg_recall": 0,
+        "avg_f1_score": 0
+      }
+    },
+    "results": [
+      {
+        "email_id": 263,
+        "oggetto": "Comunicazione Integrazione finanziamenti a.s. 2025/2026  per\n contrattazione di istituto.",
+        "has_ground_truth": false,
+        "extraction_method": "unified",
+        "fields": {
+          "data_inizio": {
+            "extracted": "29/09/2025",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ora_inizio": {
+            "extracted": "4:03",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "luogo": {
+            "extracted": "LEISTITUZIONISCOLASTICHECOINVOLTENELCOSIDDETTOPIANOAGENDASUD",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "scuola_nome": {
+            "extracted": "FONDOD’ISTITUTO",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "scuola_codice": {
+            "extracted": "TAIC845002",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "modalita": {
+            "extracted": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "tipo_riunione": {
+            "extracted": "RSU",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "motivo": {
+            "extracted": "COMUNICAZIONEINTEGRAZIONEFINANZIAMENTIA.S.2025/2026PER",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "contatto_email": {
+            "extracted": "TAIC845002@PEC.ISTRUZIONE.IT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "contatto_telefono": {
+            "extracted": "0997352446",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        },
+        "pipeline_info": {
+          "steps": [
+            {
+              "step": "regex",
+              "fields_found": 4,
+              "success": true
+            },
+            {
+              "step": "nlp",
+              "fields_found": 13,
+              "success": true
+            }
+          ],
+          "completeness": 0.8999999999999999,
+          "confidence": 0.8400000000000001
+        }
+      }
+    ]
+  },
+  {
+    "name": "pre_training_1764837537969",
+    "timestamp": "2025-12-04T08:39:12.392410",
+    "tipo": "calendario",
+    "email_count": 2,
+    "with_ground_truth": 1,
+    "metrics": {
+      "by_field": {
+        "telefono_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "meccanografico": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "email_contatto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "citta": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "provincia": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "classe_concorso": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "ore_settimanali": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        },
+        "istituto": {
+          "precision": 0,
+          "recall": 0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "total_with_gt": 0
+        }
+      },
+      "overall": {
+        "avg_precision": 0,
+        "avg_recall": 0,
+        "avg_f1_score": 0
+      }
+    },
+    "results": [
+      {
+        "email_id": 291,
+        "oggetto": "Invio Convocazione Contratto Integrativo di Istituto 2025/2026",
+        "has_ground_truth": true,
+        "fields": {
+          "classe_concorso": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "nlp": "TARANTO",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "nlp": "CISLSCUOLA.TARANTO.BRINDISI@CISL.IT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        }
+      },
+      {
+        "email_id": 294,
+        "oggetto": "INVIO CONVOCAZIONE CONTRATTATAZIONE INTERGRATIVA DEFINITIVA A.S.\n 2025/26 DOCUMENTI",
+        "has_ground_truth": false,
+        "fields": {
+          "classe_concorso": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "nlp": "TARANTO",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "nlp": "SEGRETERIAFLCCGILSCUOLA\nCOMETERMINALE",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "nlp": "CISLSCUOLA.TARANTO.BRINDISI@CISL.IT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "pre_training_1765269963883",
+    "timestamp": "2025-12-09T08:46:13.475005",
+    "tipo": "interpello",
+    "email_count": 4,
+    "with_ground_truth": 3,
+    "without_ground_truth": 1,
+    "emails_without_gt_list": [
+      {
+        "id": 308,
+        "oggetto": "POSTA CERTIFICATA: Appendice alla Contrattazione integrativa di istituto sulle disponibilità del risorse PNRR/PN 2021/2027 – a.s. 2025/2026"
+      }
+    ],
+    "testable_percentage": 75.0,
+    "metrics": {
+      "by_field": {
+        "provincia": {
+          "precision": 0,
+          "recall": 0.0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 3,
+          "total_with_gt": 3
+        },
+        "email_contatto": {
+          "precision": 0,
+          "recall": 0.0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 3,
+          "total_with_gt": 3
+        },
+        "classe_concorso": {
+          "precision": 0,
+          "recall": 0.0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 3,
+          "total_with_gt": 3
+        },
+        "citta": {
+          "precision": 0,
+          "recall": 0.0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 3,
+          "total_with_gt": 3
+        },
+        "istituto": {
+          "precision": 0,
+          "recall": 0.0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 3,
+          "total_with_gt": 3
+        },
+        "meccanografico": {
+          "precision": 0,
+          "recall": 0.0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 3,
+          "total_with_gt": 3
+        },
+        "telefono_contatto": {
+          "precision": 0,
+          "recall": 0.0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 3,
+          "total_with_gt": 3
+        },
+        "ore_settimanali": {
+          "precision": 0,
+          "recall": 0.0,
+          "f1_score": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 2,
+          "total_with_gt": 2
+        }
+      },
+      "overall": {
+        "avg_precision": 0.0,
+        "avg_recall": 0.0,
+        "avg_f1_score": 0.0
+      }
+    },
+    "results": [
+      {
+        "email_id": 324,
+        "oggetto": "I: INTERPELLO+A026_bis ",
+        "has_ground_truth": true,
+        "fields": {
+          "classe_concorso": {
+            "nlp": "A026",
+            "ground_truth": "A026_BIS",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "provincia": {
+            "nlp": "TARANTO",
+            "ground_truth": "TA",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "citta": {
+            "nlp": null,
+            "ground_truth": "TARANTO",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "istituto": {
+            "nlp": null,
+            "ground_truth": "ISTITUTOSTATALED'ISTRUZIONESECONDARIASUPERIOREE.MATTEI",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "meccanografico": {
+            "nlp": "UDIS00400G",
+            "ground_truth": "UDIS00400G",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "email_contatto": {
+            "nlp": "USP.TA@ISTRUZIONE.IT",
+            "ground_truth": "USP.TA@ISTRUZIONE.IT",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "telefono_contatto": {
+            "nlp": "0997730511",
+            "ground_truth": "0997730511",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "ore_settimanali": {
+            "nlp": "18",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        }
+      },
+      {
+        "email_id": 308,
+        "oggetto": "POSTA CERTIFICATA: Appendice alla Contrattazione integrativa di istituto sulle disponibilità del risorse PNRR/PN 2021/2027 – a.s. 2025/2026",
+        "has_ground_truth": false,
+        "fields": {
+          "classe_concorso": {
+            "nlp": "AT12",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "provincia": {
+            "nlp": "PN",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "citta": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "istituto": {
+            "nlp": "ICSANG.BOSCO",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "meccanografico": {
+            "nlp": "TAIC866003",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "email_contatto": {
+            "nlp": "TAIC866003@PEC.ISTRUZIONE.IT",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "telefono_contatto": {
+            "nlp": "21000470006",
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          },
+          "ore_settimanali": {
+            "nlp": null,
+            "ground_truth": null,
+            "match": null,
+            "has_ground_truth": false
+          }
+        }
+      },
+      {
+        "email_id": 287,
+        "oggetto": "I: Interpello nazionale per supplenza breve fino al 05/12/2025-\n Avviso finalizzato al reclutamento di docenti in possesso del titolo\n specifico per posto comune Scuola Primaria.",
+        "has_ground_truth": true,
+        "fields": {
+          "classe_concorso": {
+            "nlp": "AL05",
+            "ground_truth": "EEEE",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "provincia": {
+            "nlp": "TARANTO",
+            "ground_truth": "MC",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "citta": {
+            "nlp": null,
+            "ground_truth": "TOLENTINO",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "istituto": {
+            "nlp": null,
+            "ground_truth": "ISTITUTOCOMPRENSIVO“LUCATELLIDONBOSCO”",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "meccanografico": {
+            "nlp": "MCIC81500L",
+            "ground_truth": "MCIC81500L",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "email_contatto": {
+            "nlp": "USP.TA@ISTRUZIONE.IT",
+            "ground_truth": "MCIC81500L@ISTRUZIONE.IT",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "telefono_contatto": {
+            "nlp": "0997730511",
+            "ground_truth": "0733966427",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "ore_settimanali": {
+            "nlp": "24",
+            "ground_truth": "24",
+            "match": true,
+            "has_ground_truth": true
+          }
+        }
+      },
+      {
+        "email_id": 286,
+        "oggetto": "I: Interpello nazionale per supplenza breve fino al 05/12/2025-\n Avviso finalizzato al reclutamento di docenti in possesso del titolo\n specifico per posto comune Scuola Primaria",
+        "has_ground_truth": true,
+        "fields": {
+          "classe_concorso": {
+            "nlp": "AL05",
+            "ground_truth": "EEEE",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "provincia": {
+            "nlp": "TARANTO",
+            "ground_truth": "MC",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "citta": {
+            "nlp": null,
+            "ground_truth": "TOLENTINO",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "istituto": {
+            "nlp": null,
+            "ground_truth": "ISTITUTOCOMPRENSIVO“LUCATELLIDONBOSCO”",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "meccanografico": {
+            "nlp": "MCIC81500L",
+            "ground_truth": "MCIC81500L",
+            "match": true,
+            "has_ground_truth": true
+          },
+          "email_contatto": {
+            "nlp": "USP.TA@ISTRUZIONE.IT",
+            "ground_truth": "MCIC81500L@ISTRUZIONE.IT",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "telefono_contatto": {
+            "nlp": "0997730511",
+            "ground_truth": "0733966427",
+            "match": false,
+            "has_ground_truth": true
+          },
+          "ore_settimanali": {
+            "nlp": "24",
+            "ground_truth": "24",
+            "match": true,
+            "has_ground_truth": true
+          }
+        }
+      }
+    ],
+    "warning": "⚠️ 1 email senza ground truth approvato"
+  }
+]

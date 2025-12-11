@@ -1,0 +1,62 @@
+{
+  "timestamp": "2025-12-04T08:13:36.743877",
+  "version_id": "v1_20251129_113704",
+  "patterns": [
+    {
+      "label": "MECCANOGRAFICO",
+      "pattern": "TAIC84200E",
+      "id": "trained_mec_TAIC84200E"
+    },
+    {
+      "label": "ISTITUTO",
+      "pattern": "ISTITUTO COMPRENSIVO 'DE AMICIS'",
+      "id": "trained_ist_253_f841c88bdbf55da8"
+    },
+    {
+      "label": "MOTIVO",
+      "pattern": "Ipotesi Contratto Integrativo di Istituto a.s. 2025/2026",
+      "id": "trained_motivo_253_f841c88bdbf55da8"
+    },
+    {
+      "label": "CLASSE_CONCORSO",
+      "pattern": "A040",
+      "id": "trained_cc_A040"
+    },
+    {
+      "label": "MECCANOGRAFICO",
+      "pattern": "LTTF09000X",
+      "id": "trained_mec_LTTF09000X"
+    },
+    {
+      "label": "ISTITUTO",
+      "pattern": "Istituto Tecnico Industriale “A. Pacinotti”",
+      "id": "trained_ist_240_6a2db9e821553289"
+    },
+    {
+      "label": "CLASSE_CONCORSO",
+      "pattern": "A013",
+      "id": "trained_cc_A013"
+    },
+    {
+      "label": "ISTITUTO",
+      "pattern": "LICEO CLASSICO STATALE “G.M. DETTORI”",
+      "id": "trained_ist_237_b1e627097ca5bb6c"
+    },
+    {
+      "label": "ISTITUTO",
+      "pattern": "Liceo Aristosseno",
+      "id": "trained_ist_261_1923445eaa779b5e"
+    },
+    {
+      "label": "MOTIVO",
+      "pattern": "Convocazione Tavolo Contrattuale a.s. 2025/2026",
+      "id": "trained_motivo_261_1923445eaa779b5e"
+    },
+    {
+      "label": "MOTIVO",
+      "pattern": "Ipotesi di contratto integrativo di Istituto a.s. 2025/2026",
+      "id": "trained_motivo_251_074a8e966e847700"
+    }
+  ],
+  "pattern_count": 11
+}

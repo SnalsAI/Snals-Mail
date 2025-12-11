@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Calendario API</title>
+    <style>
+        body {
+            font-family: system-ui;
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 { color: #0ea5e9; }
+        .status {
+            padding: 8px 16px;
+            border-radius: 6px;
+            display: inline-block;
+            margin: 10px 0;
+            font-weight: 600;
+        }
+        .ok { background: #10b981; color: white; }
+        .error { background: #ef4444; color: white; }
+        pre {
+            background: #1e293b;
+            color: #22c55e;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 13px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        th {
+            background: #f3f4f6;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <h1>📅 Test Calendario API</h1>
+
+    <div class="card">
+        <h2>API Calendario (/api/calendario/)</h2>
+        <div id="status">Caricando automaticamente...</div>
+        <div id="result"></div>
+    </div>
+
+    <div class="card">
+        <h2>Eventi Trovati</h2>
+        <div id="events"></div>
+    </div>
+
+    <div class="card">
+        <h2>Debug Raw Response</h2>
+        <pre id="raw"></pre>
+    </div>
+
+    <script>
+        async function testCalendar() {
+            const status = document.getElementById('status');
+            const result = document.getElementById('result');
+            const events = document.getElementById('events');
+            const raw = document.getElementById('raw');
+
+            try {
+                status.className = 'status';
+                status.textContent = 'Chiamando /api/calendario/...';
+
+                const response = await fetch('/api/calendario/');
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+
+                // Mostra raw response
+                raw.textContent = JSON.stringify(data, null, 2);
+
+                // Status
+                status.className = 'status ok';
+                status.textContent = `✅ OK - Ricevuto risposta`;
+
+                // Parse data (gestisce sia array che oggetto)
+                let eventsList = [];
+                if (Array.isArray(data)) {
+                    eventsList = data;
+                    result.innerHTML = `<strong>Array diretto: ${data.length} eventi</strong>`;
+                } else if (data.eventi) {
+                    eventsList = data.eventi;
+                    result.innerHTML = `<strong>Oggetto con campo 'eventi': ${data.total || data.eventi.length} eventi</strong>`;
+                } else {
+                    result.innerHTML = `<strong>⚠️ Formato non riconosciuto</strong>`;
+                }
+
+                // Mostra eventi
+                if (eventsList.length > 0) {
+                    let html = '<table>';
+                    html += '<tr><th>ID</th><th>Titolo</th><th>Data Inizio</th><th>Luogo</th><th>Email ID</th></tr>';
+
+                    eventsList.forEach(event => {
+                        html += `<tr>
+                            <td>${event.id}</td>
+                            <td>${event.titolo || 'N/A'}</td>
+                            <td>${event.data_inizio || 'N/A'}</td>
+                            <td>${event.luogo || 'N/A'}</td>
+                            <td>${event.email_id || 'N/A'}</td>
+                        </tr>`;
+                    });
+
+                    html += '</table>';
+                    events.innerHTML = html;
+                } else {
+                    events.innerHTML = '<p style="color: #666;">Nessun evento trovato</p>';
+                }
+
+            } catch (error) {
+                status.className = 'status error';
+                status.textContent = `❌ Errore: ${error.message}`;
+                result.innerHTML = `<pre style="color: #ef4444;">${error.stack}</pre>`;
+                events.innerHTML = '';
+                raw.textContent = 'Errore nella chiamata';
+            }
+        }
+
+        // Avvia test automaticamente
+        window.addEventListener('load', () => {
+            setTimeout(testCalendar, 500);
+        });
+    </script>
+</body>
+</html>

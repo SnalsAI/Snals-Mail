@@ -6,15 +6,50 @@ import { rulesApi } from '../lib/api'
 import RuleBuilder from '../components/RuleBuilder'
 import type { Rule } from '../types'
 
+// Mappa tipi azione → label leggibili
+const getActionLabel = (actionType: string): string => {
+  const actionLabels: Record<string, string> = {
+    'BOZZA_RISPOSTA': 'Crea Bozza Risposta',
+    'BOZZA_APPUNTAMENTO': 'Crea Bozza Appuntamento',
+    'BOZZA_TESSERAMENTO': 'Crea Bozza Tesseramento',
+    'EVENTO_CALENDARIO': 'Crea Evento Calendario',
+    // Google Drive rimosso
+    // 'UPLOAD_DRIVE': 'Carica su Google Drive',
+    'SINTESI': 'Genera Sintesi',
+    'INDICIZZA_RAG': 'Indicizza nel RAG',
+    'PARSE_INTERPELLO': 'Estrai Dati Interpello',
+    'ARCHIVIA': 'Archivia Email',
+    'SEGNA_IMPORTANTE': 'Segna Importante',
+    'segna_importante': 'Segna Importante',
+    'INOLTRA': 'Inoltra Email',
+    'INOLTRA_DELEGATI_ZONA': 'Inoltra a Delegati Zona',
+    'INVIA_NOTIFICA': 'Invia Notifica',
+    'NOTIFICA': 'Invia Notifica',
+    'assegna_categoria': 'Assegna Categoria',
+    'aggiungi_tag': 'Aggiungi Tag',
+    'marca_come_letto': 'Marca come Letto',
+    // Legacy/alias
+    'crea_bozza_risposta': 'Crea Bozza Risposta',
+    'crea_evento_calendario': 'Crea Evento Calendario',
+    // 'carica_allegati_drive': 'Carica su Google Drive',
+    'indicizza_rag': 'Indicizza nel RAG',
+    'inoltra_a': 'Inoltra Email',
+  }
+
+  return actionLabels[actionType] || actionType.replace(/_/g, ' ')
+}
+
 export default function Rules() {
   const queryClient = useQueryClient()
   const [showModal, setShowModal] = useState(false)
   const [editingRule, setEditingRule] = useState<Rule | undefined>(undefined)
 
-  const { data: rules, isLoading } = useQuery({
+  const { data: rulesResponse, isLoading } = useQuery({
     queryKey: ['rules'],
     queryFn: () => rulesApi.getAll().then(res => res.data),
   })
+
+  const rules = rulesResponse?.regole || []
 
   const toggleMutation = useMutation({
     mutationFn: (id: number) => rulesApi.toggle(id),
@@ -68,8 +103,90 @@ export default function Rules() {
   }
 
   const handleEditRule = (rule: Rule) => {
-    setEditingRule(rule)
+    // Converti regole legacy al nuovo formato per il builder
+    const normalizedRule: Rule = {
+      ...rule,
+      condizioni: normalizeCondizioni(rule.condizioni),
+      azioni: normalizeAzioni(rule.azioni)
+    }
+    setEditingRule(normalizedRule)
     setShowModal(true)
+  }
+
+  // Funzione per normalizzare condizioni legacy
+  const normalizeCondizioni = (condizioni: any) => {
+    // Se è già nel nuovo formato, restituiscilo
+    if (condizioni?.rules && Array.isArray(condizioni.rules)) {
+      return condizioni
+    }
+
+    // Se è vuoto, usa default
+    if (!condizioni || Object.keys(condizioni).length === 0) {
+      return {
+        operator: 'AND' as const,
+        rules: [],
+        stop_on_match: false
+      }
+    }
+
+    // Converti formato legacy {categoria: "..."} al nuovo formato
+    const rules = []
+
+    if (condizioni.categoria) {
+      rules.push({
+        field: 'categoria',
+        condition: 'uguale',
+        value: condizioni.categoria
+      })
+    }
+
+    if (condizioni.mittente) {
+      rules.push({
+        field: 'mittente',
+        condition: 'contiene',
+        value: condizioni.mittente
+      })
+    }
+
+    // Aggiungi altre condizioni se presenti
+    for (const [key, value] of Object.entries(condizioni)) {
+      if (key !== 'categoria' && key !== 'mittente' && typeof value === 'string') {
+        rules.push({
+          field: key,
+          condition: 'uguale',
+          value: value as string
+        })
+      }
+    }
+
+    return {
+      operator: 'AND' as const,
+      rules,
+      stop_on_match: false
+    }
+  }
+
+  // Funzione per normalizzare azioni legacy
+  const normalizeAzioni = (azioni: any) => {
+    // Se è già nel nuovo formato oggetto con actions, restituiscilo
+    if (azioni?.actions && Array.isArray(azioni.actions)) {
+      return azioni
+    }
+
+    // Se è un array (formato database standard), convertilo per il builder
+    if (Array.isArray(azioni)) {
+      return {
+        actions: azioni.map((azione: any) => ({
+          type: azione.tipo || azione.type || '',
+          params: azione.params || {}
+        }))
+      }
+    }
+
+    // Default vuoto
+    return {
+      actions: []
+    }
   }
 
   const handleNewRule = () => {
@@ -142,10 +259,11 @@ export default function Rules() {
                         {/* Conditions */}
                         <div className="mb-3">
                           <p className="text-xs font-medium text-gray-500 mb-1">
-                            CONDIZIONI ({rule.condizioni.operator}):
+                            CONDIZIONI{rule.condizioni?.operator ? ` (${rule.condizioni.operator})` : ''}:
                           </p>
                           <div className="space-y-1">
-                            {rule.condizioni.rules?.map((cond, idx) => (
+                            {/* Nuovo formato condizioni con rules array */}
+                            {rule.condizioni?.rules?.map((cond, idx) => (
                               <div
                                 key={idx}
                                 className="text-sm text-gray-700 bg-white px-2 py-1 rounded"
@@ -159,21 +277,42 @@ export default function Rules() {
                                 </span>
                               </div>
                             ))}
+                            {/* Vecchio formato condizioni (legacy) - mostra come JSON */}
+                            {rule.condizioni && !rule.condizioni.rules && (
+                              <div className="text-sm text-gray-700 bg-white px-2 py-1 rounded font-mono">
+                                {JSON.stringify(rule.condizioni)}
+                              </div>
+                            )}
                           </div>
                         </div>
 
                         {/* Actions */}
                         <div>
-                          <p className="text-xs font-medium text-gray-500 mb-1">
-                            AZIONI ({rule.azioni.actions?.length || 0}):
-                          </p>
-                          <div className="flex flex-wrap gap-2">
-                            {rule.azioni.actions?.map((action, idx) => (
-                              <span key={idx} className="badge-primary">
-                                {action.type.replace(/_/g, ' ')}
-                              </span>
-                            ))}
-                          </div>
+                          {(() => {
+                            // Gestisci entrambi i formati: array diretto o oggetto con actions
+                            const actions = Array.isArray(rule.azioni)
+                              ? rule.azioni
+                              : (rule.azioni?.actions || []);
+
+                            return (
+                              <>
+                                <p className="text-xs font-medium text-gray-500 mb-1">
+                                  AZIONI ({actions.length}):
+                                </p>
+                                <div className="flex flex-wrap gap-2">
+                                  {actions.map((action, idx) => {
+                                    const actionType = action.type || action.tipo || 'UNKNOWN'
+                                    const label = action.descrizione || getActionLabel(actionType)
+                                    return (
+                                      <span key={idx} className="badge-primary" title={actionType}>
+                                        {label}
+                                      </span>
+                                    )
+                                  })}
+                                </div>
+                              </>
+                            );
+                          })()}
                         </div>
 
                         {/* Stats */}

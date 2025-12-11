@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA Debug - SNALS</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 { color: #0ea5e9; margin-top: 0; font-size: 24px; }
+        h2 { color: #333; font-size: 18px; margin-top: 0; }
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+        .status.ok { background: #10b981; color: white; }
+        .status.error { background: #ef4444; color: white; }
+        .status.warning { background: #f59e0b; color: white; }
+        button {
+            background: #0ea5e9;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px 10px 0 0;
+            width: 100%;
+            max-width: 250px;
+        }
+        button:hover { background: #0284c7; }
+        button.install {
+            background: linear-gradient(to right, #0ea5e9, #8b5cf6);
+            font-size: 16px;
+            padding: 16px 24px;
+        }
+        pre {
+            background: #1e293b;
+            color: #22c55e;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        .info { color: #666; font-size: 14px; line-height: 1.6; margin: 10px 0; }
+        .log-entry {
+            padding: 4px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 13px;
+        }
+        .log-entry:last-child { border-bottom: none; }
+    </style>
+</head>
+<body>
+    <h1>🔍 PWA Debug - SNALS</h1>
+
+    <div class="card">
+        <h2>Installazione App <span id="install-status" class="status warning">Checking...</span></h2>
+        <div class="info" id="install-info">Verificando supporto PWA...</div>
+        <button id="install-btn" onclick="installApp()" class="install" style="display:none">
+            📥 Installa App Adesso
+        </button>
+    </div>
+
+    <div class="card">
+        <h2>Service Worker <span id="sw-status" class="status warning">Checking...</span></h2>
+        <div class="info" id="sw-info">Verificando...</div>
+        <button onclick="registerSW()">Registra Service Worker</button>
+        <button onclick="unregisterSW()">Rimuovi Service Worker</button>
+    </div>
+
+    <div class="card">
+        <h2>Manifest <span id="manifest-status" class="status warning">Checking...</span></h2>
+        <div class="info" id="manifest-info">Verificando...</div>
+    </div>
+
+    <div class="card">
+        <h2>Criteri PWA</h2>
+        <div id="criteria"></div>
+    </div>
+
+    <div class="card">
+        <h2>Event Log (Real-time)</h2>
+        <div id="log"></div>
+    </div>
+
+    <script>
+        let deferredPrompt = null;
+        const log = document.getElementById('log');
+
+        function addLog(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const emoji = type === 'ok' ? '✅' : type === 'error' ? '❌' : type === 'warning' ? '⚠️' : 'ℹ️';
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            entry.textContent = `[${timestamp}] ${emoji} ${message}`;
+            log.insertBefore(entry, log.firstChild);
+            console.log(message);
+        }
+
+        // Ascolta beforeinstallprompt
+        window.addEventListener('beforeinstallprompt', (e) => {
+            addLog('🎉 beforeinstallprompt ricevuto! App installabile!', 'ok');
+            e.preventDefault();
+            deferredPrompt = e;
+
+            document.getElementById('install-status').className = 'status ok';
+            document.getElementById('install-status').textContent = 'Installabile!';
+            document.getElementById('install-info').innerHTML = `
+                ✅ <strong>L'app può essere installata!</strong><br>
+                Clicca il pulsante sotto per installarla.
+            `;
+            document.getElementById('install-btn').style.display = 'block';
+        });
+
+        // Ascolta appinstalled
+        window.addEventListener('appinstalled', () => {
+            addLog('✅ App installata con successo!', 'ok');
+            document.getElementById('install-status').className = 'status ok';
+            document.getElementById('install-status').textContent = 'Installata!';
+            document.getElementById('install-info').textContent = '✅ App installata! Controlla la schermata Home.';
+            document.getElementById('install-btn').style.display = 'none';
+            deferredPrompt = null;
+        });
+
+        async function installApp() {
+            if (!deferredPrompt) {
+                alert('❌ Nessun prompt di installazione disponibile.\n\nProva a usare il menu del browser (⋮) → "Installa app"');
+                return;
+            }
+
+            addLog('Mostrando prompt di installazione...', 'info');
+            deferredPrompt.prompt();
+
+            const { outcome } = await deferredPrompt.userChoice;
+            addLog(`Scelta utente: ${outcome}`, outcome === 'accepted' ? 'ok' : 'warning');
+
+            if (outcome === 'accepted') {
+                document.getElementById('install-status').className = 'status ok';
+                document.getElementById('install-status').textContent = 'Installata!';
+            }
+
+            deferredPrompt = null;
+        }
+
+        // Controlla Service Worker
+        async function checkServiceWorker() {
+            if (!('serviceWorker' in navigator)) {
+                document.getElementById('sw-status').className = 'status error';
+                document.getElementById('sw-status').textContent = 'Non Supportato';
+                document.getElementById('sw-info').textContent = '❌ Service Worker non supportato dal browser';
+                addLog('Service Worker non supportato', 'error');
+                return;
+            }
+
+            try {
+                const registration = await navigator.serviceWorker.getRegistration();
+                if (registration) {
+                    document.getElementById('sw-status').className = 'status ok';
+                    document.getElementById('sw-status').textContent = 'Attivo';
+                    document.getElementById('sw-info').innerHTML = `
+                        ✅ Service Worker registrato<br>
+                        Scope: ${registration.scope}<br>
+                        Stato: ${registration.active ? 'Active' : registration.installing ? 'Installing' : 'Waiting'}
+                    `;
+                    addLog('Service Worker attivo', 'ok');
+                } else {
+                    document.getElementById('sw-status').className = 'status warning';
+                    document.getElementById('sw-status').textContent = 'Non Registrato';
+                    document.getElementById('sw-info').textContent = '⚠️ Service Worker non registrato. Registrazione in corso...';
+                    addLog('Service Worker non trovato, provo a registrare...', 'warning');
+                    await registerSW();
+                }
+            } catch (error) {
+                document.getElementById('sw-status').className = 'status error';
+                document.getElementById('sw-status').textContent = 'Errore';
+                document.getElementById('sw-info').textContent = `❌ ${error.message}`;
+                addLog(`Errore Service Worker: ${error.message}`, 'error');
+            }
+        }
+
+        async function registerSW() {
+            if (!('serviceWorker' in navigator)) {
+                alert('Service Worker non supportato');
+                return;
+            }
+
+            try {
+                addLog('Registrando Service Worker...', 'info');
+                const registration = await navigator.serviceWorker.register('/service-worker.js');
+                addLog('Service Worker registrato!', 'ok');
+
+                // Aspetta che diventi attivo
+                if (registration.installing) {
+                    addLog('Service Worker in fase di installazione...', 'info');
+                    registration.installing.addEventListener('statechange', (e) => {
+                        addLog(`Service Worker state: ${e.target.state}`, 'info');
+                    });
+                }
+
+                setTimeout(() => checkServiceWorker(), 2000);
+            } catch (error) {
+                addLog(`Errore registrazione: ${error.message}`, 'error');
+            }
+        }
+
+        async function unregisterSW() {
+            try {
+                const registration = await navigator.serviceWorker.getRegistration();
+                if (registration) {
+                    await registration.unregister();
+                    addLog('Service Worker rimosso', 'ok');
+                    setTimeout(() => checkServiceWorker(), 1000);
+                }
+            } catch (error) {
+                addLog(`Errore rimozione: ${error.message}`, 'error');
+            }
+        }
+
+        // Controlla Manifest
+        async function checkManifest() {
+            try {
+                const response = await fetch('/manifest.json');
+                if (response.ok) {
+                    const manifest = await response.json();
+                    document.getElementById('manifest-status').className = 'status ok';
+                    document.getElementById('manifest-status').textContent = 'OK';
+                    document.getElementById('manifest-info').innerHTML = `
+                        ✅ Manifest caricato<br>
+                        Nome: ${manifest.name}<br>
+                        Display: ${manifest.display}<br>
+                        Icone: ${manifest.icons.length}
+                    `;
+                    addLog('Manifest OK', 'ok');
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                document.getElementById('manifest-status').className = 'status error';
+                document.getElementById('manifest-status').textContent = 'Errore';
+                document.getElementById('manifest-info').textContent = `❌ ${error.message}`;
+                addLog(`Errore manifest: ${error.message}`, 'error');
+            }
+        }
+
+        // Controlla criteri PWA
+        function checkCriteria() {
+            const criteria = {
+                'HTTPS': window.location.protocol === 'https:' || window.location.hostname === 'localhost',
+                'Service Worker Support': 'serviceWorker' in navigator,
+                'Manifest Link': !!document.querySelector('link[rel="manifest"]'),
+                'BeforeInstallPrompt Support': 'onbeforeinstallprompt' in window,
+                'Standalone Mode': window.matchMedia('(display-mode: standalone)').matches,
+                'App Already Installed': window.navigator.standalone || document.referrer.includes('android-app://')
+            };
+
+            let html = '<div style="font-size: 14px;">';
+            for (const [key, value] of Object.entries(criteria)) {
+                const icon = value ? '✅' : '❌';
+                html += `<div style="padding: 4px 0;">${icon} ${key}: ${value ? 'Sì' : 'No'}</div>`;
+            }
+            html += '</div>';
+
+            document.getElementById('criteria').innerHTML = html;
+        }
+
+        // Controlla se già installata
+        function checkIfInstalled() {
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
+                                window.navigator.standalone ||
+                                document.referrer.includes('android-app://');
+
+            if (isStandalone) {
+                document.getElementById('install-status').className = 'status ok';
+                document.getElementById('install-status').textContent = 'Già Installata';
+                document.getElementById('install-info').textContent = '✅ Stai usando l\'app installata!';
+                addLog('App già installata (modalità standalone)', 'ok');
+            } else {
+                document.getElementById('install-status').className = 'status warning';
+                document.getElementById('install-status').textContent = 'In attesa...';
+                document.getElementById('install-info').textContent = '⏳ In attesa dell\'evento beforeinstallprompt...';
+                addLog('In attesa di beforeinstallprompt...', 'info');
+            }
+        }
+
+        // Inizializza
+        addLog('Inizializzando PWA Debug...', 'info');
+        checkIfInstalled();
+        checkServiceWorker();
+        checkManifest();
+        checkCriteria();
+
+        // Monitora eventi Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                addLog('Service Worker controller cambiato', 'info');
+            });
+
+            navigator.serviceWorker.addEventListener('message', (event) => {
+                addLog(`Messaggio da SW: ${JSON.stringify(event.data)}`, 'info');
+            });
+        }
+
+        // Dopo 5 secondi, se ancora non c'è beforeinstallprompt
+        setTimeout(() => {
+            if (!deferredPrompt) {
+                addLog('⚠️ beforeinstallprompt non ricevuto dopo 5 secondi', 'warning');
+                addLog('Possibili cause: Browser non supporta PWA install, app già installata, o criteri PWA non soddisfatti', 'warning');
+            }
+        }, 5000);
+    </script>
+</body>
+</html>
