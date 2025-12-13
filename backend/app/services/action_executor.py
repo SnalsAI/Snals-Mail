@@ -78,6 +78,132 @@ class ActionExecutor:
             return ', '.join(f"{v}" for v in luogo.values() if v)
         return str(luogo)
 
+    def _ensure_scuola_and_luogo(self, event_data: Dict, email: Email) -> Dict:
+        """
+        Garantisce che scuola e luogo siano sempre correttamente popolati.
+
+        LOGICA:
+        1. Estrae SEMPRE il codice meccanografico dal mittente
+        2. Cerca SEMPRE la scuola nel database per ottenere nome e indirizzo
+        3. Scuola = NOME scuola (non codice meccanografico)
+        4. Luogo = luogo originale + indirizzo scuola (es. "Ufficio del dirigente - Via Roma 1, Taranto - IC MORLEO")
+
+        Args:
+            event_data: Dizionario con dati evento estratti
+            email: Email sorgente
+
+        Returns:
+            event_data aggiornato con scuola e luogo corretti
+        """
+        import re
+        from app.services.school_identifier import get_school_identifier
+
+        school_identifier = get_school_identifier()
+
+        # 1. ESTRAI SEMPRE IL CODICE SCUOLA DAL MITTENTE
+        codice_scuola = None
+        if email.mittente:
+            # Pattern per codici meccanografici: 4 lettere + 6 alfanumerici
+            match = re.search(r'([a-zA-Z]{4}[a-zA-Z0-9]{6})', email.mittente)
+            if match:
+                codice_scuola = match.group(1).upper()
+                logger.info(f"📍 Codice scuola estratto da mittente: {codice_scuola}")
+
+        # 2. CERCA NEL DATABASE PER OTTENERE NOME E INDIRIZZO
+        school_info = None
+        if codice_scuola:
+            school_info = school_identifier.get_school_info(codice_scuola)
+            if school_info:
+                logger.info(f"🏫 Scuola trovata nel database: {school_info.get('nome')} - {school_info.get('comune')}")
+
+        # 3. POPOLA SCUOLA CON IL NOME (non il codice!)
+        if school_info and not event_data.get('scuola'):
+            nome_scuola = school_info.get('nome', '')
+            comune = school_info.get('comune', '')
+            if nome_scuola:
+                # Usa nome scuola con comune
+                event_data['scuola'] = f"{nome_scuola} ({comune})" if comune else nome_scuola
+                logger.info(f"🏫 Campo scuola impostato: {event_data['scuola']}")
+
+        # 4. ARRICCHISCI LUOGO (mantieni originale + aggiungi indirizzo scuola)
+        luogo_attuale = event_data.get('luogo') or event_data.get('sede') or ''
+        luogo_ha_indirizzo = self._is_valid_address(luogo_attuale)
+
+        if school_info:
+            indirizzo_db = school_info.get('indirizzo', '')
+            comune_db = school_info.get('comune', '')
+            nome_scuola = school_info.get('nome', '')
+            indirizzo_completo = f"{indirizzo_db}, {comune_db} (TA)" if indirizzo_db else f"{comune_db} (TA)"
+
+            if not luogo_attuale:
+                # Nessun luogo → usa indirizzo completo
+                event_data['luogo'] = f"{indirizzo_completo} - {nome_scuola}"
+                logger.info(f"📍 Luogo impostato da database: {event_data['luogo']}")
+            elif not luogo_ha_indirizzo:
+                # Luogo generico (es. "Ufficio del dirigente") → mantieni + aggiungi indirizzo
+                event_data['luogo'] = f"{luogo_attuale} - {indirizzo_completo} - {nome_scuola}"
+                logger.info(f"📍 Luogo arricchito: {event_data['luogo']}")
+            else:
+                # Luogo ha già indirizzo → aggiungi solo nome scuola se manca
+                if nome_scuola and nome_scuola.upper() not in luogo_attuale.upper():
+                    event_data['luogo'] = f"{luogo_attuale} - {nome_scuola}"
+                    logger.info(f"📍 Aggiunto nome scuola al luogo: {event_data['luogo']}")
+
+        elif codice_scuola and not luogo_ha_indirizzo:
+            # Scuola non nel database ma abbiamo codice → segnala
+            if luogo_attuale:
+                event_data['luogo'] = f"{luogo_attuale} - Scuola {codice_scuola}"
+            else:
+                event_data['luogo'] = f"Scuola {codice_scuola}"
+            logger.warning(f"⚠️ Scuola {codice_scuola} non trovata nel database")
+
+        return event_data
+
+    def _is_valid_address(self, luogo: str) -> bool:
+        """
+        Verifica se un luogo è un indirizzo valido (non generico).
+
+        Un indirizzo è valido se contiene:
+        - Via/Viale/Piazza/Corso/Contrada + numero civico
+
+        NON è valido se è solo:
+        - "Ufficio del dirigente"
+        - "Presidenza"
+        - Nome scuola senza indirizzo
+        - Stringa troppo corta
+
+        Args:
+            luogo: Stringa con il luogo
+
+        Returns:
+            True se è un indirizzo valido
+        """
+        if not luogo or len(luogo) < 10:
+            return False
+
+        luogo_lower = luogo.lower()
+
+        # Parole chiave che indicano un luogo generico (non valido)
+        luoghi_generici = [
+            'ufficio', 'presidenza', 'dirigente', 'segreteria',
+            'ai rappresentanti', 'alle oo.ss', 'alle rsu'
+        ]
+        if any(generico in luogo_lower for generico in luoghi_generici):
+            # Controlla se c'è anche un indirizzo valido
+            has_address = any(prefix in luogo_lower for prefix in [
+                'via ', 'viale ', 'piazza ', 'p.zza ', 'corso ',
+                'contrada ', 'c.da ', 'vicolo ', 'largo '
+            ])
+            if not has_address:
+                return False
+
+        # Verifica presenza di un tipo di via
+        prefissi_via = ['via ', 'viale ', 'piazza ', 'p.zza ', 'corso ',
+                       'contrada ', 'c.da ', 'vicolo ', 'largo ', 'loc.', 's.s.']
+        has_prefix = any(prefix in luogo_lower for prefix in prefissi_via)
+
+        return has_prefix
+
     def _detect_event_modification(self, oggetto: str, corpo: str, allegati_testo: str = None) -> Dict:
         """
         Rileva se un'email riguarda una modifica/rinvio/annullamento di un evento esistente.
@@ -661,9 +787,6 @@ class ActionExecutor:
             elif azione.tipo == TipoAzione.SEGNA_IMPORTANTE:
                 success = self._execute_mark_important(azione)
 
-            elif azione.tipo == TipoAzione.ARCHIVIA:
-                success = self._execute_archive(azione)
-
             elif azione.tipo == TipoAzione.SINTESI:
                 success = self._execute_sintesi(azione)
 
@@ -1183,6 +1306,10 @@ ARGOMENTO (max 10 parole):"""
                     sintesi_motivo = email.oggetto[:200] if email.oggetto else "Convocazione"
                     logger.info(f"📝 Sintesi motivo fallback (oggetto): {sintesi_motivo[:100]}...")
 
+                # GARANTISCI SCUOLA E LUOGO CORRETTI
+                # Estrae sempre codice scuola dal mittente e usa database per indirizzo
+                event_data = self._ensure_scuola_and_luogo(event_data, email)
+
                 # Crea evento nel database locale
                 evento_locale = EventoCalendario(
                     email_id=azione.email_id,
@@ -1449,26 +1576,6 @@ Formato HTML ben strutturato."""
             return True
         except Exception as e:
             logger.error(f"Errore segna importante: {e}")
-            return False
-
-    def _execute_archive(self, azione: Azione) -> bool:
-        """Archivia email."""
-        try:
-            email = self.db.query(Email).filter(Email.id == azione.email_id).first()
-            if not email:
-                return False
-
-            folder = azione.dettagli.get('parametri', {}).get('folder', 'archive')
-            logger.info(f"Archivia email {azione.email_id} in folder {folder}")
-            # TODO: Implementare archiviazione su sistema email
-            azione.risultato = {
-                'status': 'archived',
-                'folder': folder,
-                'email_id': email.id
-            }
-            return True
-        except Exception as e:
-            logger.error(f"Errore archiviazione: {e}")
             return False
 
     def _execute_sintesi(self, azione: Azione) -> bool:

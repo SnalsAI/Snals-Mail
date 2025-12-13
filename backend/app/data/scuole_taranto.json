@@ -55,14 +55,40 @@
     "comune": "GINOSA",
     "indirizzo": "VIA DELLA PACE, 62",
     "tipo": "Istituto Comprensivo",
-    "distretto": "049"
+    "distretto": "049",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "nome",
+        "nuovoNome": "IC G. DELEDDA"
+      },
+      {
+        "azione": "comune",
+        "nuovocomune": "GINOSA"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC82500R": {
     "nome": "IC SAN G. BOSCO",
     "comune": "GINOSA",
     "indirizzo": "P.ZZA NUSCO 14",
     "tipo": "Istituto Comprensivo",
-    "distretto": "049"
+    "distretto": "049",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "nome attuale nel DB",
+        "nuovoNome": "IC SAN G. BOSCO"
+      },
+      {
+        "azione": "comune attuale nel DB",
+        "nuovocomune": "GINOSA"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC84300A": {
     "nome": "IC DIAZ",
@@ -76,14 +102,36 @@
     "comune": "LATERZA",
     "indirizzo": "VIA SERRA SAN VITO, 2",
     "tipo": "Istituto Comprensivo",
-    "distretto": "049"
+    "distretto": "049",
+    "verified": true,
+    "changes": [
+      {
+        "type": "nome",
+        "value": "IC MARCONI-MICHELANGELO"
+      },
+      {
+        "type": "comune",
+        "value": "LATERZA"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC808003": {
     "nome": "IC MARCONI",
     "comune": "PALAGIANELLO",
     "indirizzo": "VIA MATTEOTTI, 52",
     "tipo": "Istituto Comprensivo",
-    "distretto": "049"
+    "distretto": "049",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "nome cambio",
+        "nuovoNome": "IC MARCONI"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC849009": {
     "nome": "IC DE AMICIS",
@@ -97,21 +145,62 @@
     "comune": "MASSAFRA",
     "indirizzo": "C.SO ROMA",
     "tipo": "Istituto Comprensivo",
-    "distretto": "050"
+    "distretto": "050",
+    "verified": true,
+    "changes": [
+      {
+        "codice": "TAIC85000D",
+        "nome": "TAIC85000D",
+        "comune": "MASSAFRA"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC851009": {
     "nome": "IC SAN G. BOSCO",
     "comune": "MASSAFRA",
     "indirizzo": "VIA NUOVA",
     "tipo": "Istituto Comprensivo",
-    "distretto": "050"
+    "distretto": "050",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "nome cambio",
+        "nuovo nome": "IC SAN G. BOSCO",
+        "data": "2023-01-01"
+      },
+      {
+        "azione": "soppressione",
+        "data": "2024-06-30"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC852005": {
     "nome": "IC MANZONI",
     "comune": "MOTTOLA",
     "indirizzo": "VIA GERLONI, 23",
     "tipo": "Istituto Comprensivo",
-    "distretto": "050"
+    "distretto": "050",
+    "verified": true,
+    "changes": [
+      {
+        "id": "nome",
+        "nuovoNome": "IC MANZONI"
+      },
+      {
+        "id": "comune",
+        "nuovaComune": "MOTTOLA"
+      },
+      {
+        "id": "indirizzo",
+        "nuovoIndirizzo": "VIA GERLONI, 23"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-10"
   },
   "TAIC85600C": {
     "nome": "IC GIANNI RODARI",
@@ -139,7 +228,20 @@
     "comune": "MARTINA FRANCA",
     "indirizzo": "P.ZZA VITTORIO VENETO 6",
     "tipo": "Istituto Comprensivo",
-    "distretto": "051"
+    "distretto": "051",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "nome",
+        "nuovoNome": "IC AOSTA"
+      },
+      {
+        "azione": "comune",
+        "nuovoComune": "MARTINA FRANCA"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC86200Q": {
     "nome": "IC CHIARELLI",
@@ -152,134 +254,358 @@
     "nome": "IC GIOVANNI XXIII",
     "comune": "MARTINA FRANCA",
     "indirizzo": "PIAZZA SAN FRANCESCO DA PAOLA, 3",
-    "tipo": "Istituto Comprensivo",
-    "distretto": "051"
+    "tipo": "ISTITUTO COMPrensivo",
+    "distretto": "051",
+    "verified": true,
+    "changes": [
+      {
+        "codice": "TAIC865007",
+        "nome": "nome verificato"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC86100X": {
     "nome": "IC GRASSI",
     "comune": "MARTINA FRANCA",
     "indirizzo": "VIALE STAZIONE",
     "tipo": "Istituto Comprensivo",
-    "distretto": "051"
+    "distretto": "051",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "nome",
+        "nuovoNome": "IC GRASSI",
+        "data": "2023-12-31"
+      },
+      {
+        "azione": "indirizzo",
+        "nuovoIndirizzo": "VIALE STAZIONE",
+        "data": "2024-01-01"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC86400B": {
     "nome": "IC MARCONI",
     "comune": "MARTINA FRANCA",
     "indirizzo": "P.ZZA MARCONI 4",
     "tipo": "Istituto Comprensivo",
-    "distretto": "051"
+    "distretto": "051",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "nome cambio",
+        "nuovoNome": "IC MONACO"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC802004": {
     "nome": "IC G. GALILEI",
     "comune": "TARANTO",
     "indirizzo": "VICO CARDUCCI 9",
     "tipo": "Istituto Comprensivo",
-    "distretto": "052"
+    "distretto": "052",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "nome",
+        "nuovoNome": "IC G. GALILEI"
+      },
+      {
+        "azione": "comune",
+        "nuovaComune": "TARANTO"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC80300X": {
-    "nome": "IC PIRANDELLO",
+    "nome": "Istituto Comprensivo",
     "comune": "TARANTO",
     "indirizzo": "VIA PASTORE - Q.RE PAOLO VI",
     "tipo": "Istituto Comprensivo",
-    "distretto": "052"
+    "distretto": "052",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "nome attuale nel DB",
+        "nuovoNome": "IC PIRANDELLO"
+      },
+      {
+        "azione": "comune attuale nel DB",
+        "nuovaComune": "TARANTO"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC85400R": {
     "nome": "IC GIOVANNI XXIII",
     "comune": "STATTE",
     "indirizzo": "VIA BAINSIZZA",
     "tipo": "Istituto Comprensivo",
-    "distretto": "052"
+    "distretto": "052",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "nome cambio",
+        "nuovo Nome": "IC GIOVANNI XXIII"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC81100V": {
     "nome": "IC A. MORO",
     "comune": "CAROSINO",
     "indirizzo": "VIA ALFIERI 14",
     "tipo": "Istituto Comprensivo",
-    "distretto": "054"
+    "distretto": "054",
+    "verified": true,
+    "changes": [
+      {
+        "data": "2022-01-01",
+        "cambiamento": "nome"
+      },
+      {
+        "data": "2023-06-01",
+        "cambiamento": "indirizzo"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC84200E": {
     "nome": "IC DE AMICIS",
     "comune": "GROTTAGLIE",
     "indirizzo": "VIA V. CALO, 37",
     "tipo": "Istituto Comprensivo",
-    "distretto": "054"
+    "distretto": "054",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "nome attuale nel DB",
+        "nuovoNome": "IC DE AMICIS"
+      },
+      {
+        "azione": "comune attuale nel DB",
+        "nuovocomune": "GROTTAGLIE"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC84100P": {
     "nome": "IC DON BOSCO",
     "comune": "GROTTAGLIE",
     "indirizzo": "VIA OBERDAN N. 2",
     "tipo": "Istituto Comprensivo",
-    "distretto": "054"
+    "distretto": "054",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "nome",
+        "nuovoNome": "IC DON BOSCO"
+      },
+      {
+        "azione": "comune",
+        "nuovaComune": "GROTTAGLIE"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC85900X": {
     "nome": "IC PIGNATELLI",
     "comune": "GROTTAGLIE",
     "indirizzo": "VIA CAMPOBASSO - CAMPUS CAMPITELLI",
     "tipo": "Istituto Comprensivo",
-    "distretto": "054"
+    "distretto": "054",
+    "verified": true,
+    "changes": [
+      {
+        "type": "nome",
+        "value": "IC PIGNATELLI"
+      },
+      {
+        "type": "codice meccanografico",
+        "value": "TAIC85900X"
+      }
+    ],
+    "confidence": 0.8,
+    "last_verified": "2025-12-12"
   },
   "TAIC815006": {
     "nome": "IC PADRE GEMELLI",
     "comune": "LEPORANO",
     "indirizzo": "VIA DANTE, 41",
     "tipo": "Istituto Comprensivo",
-    "distretto": "054"
+    "distretto": "054",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "nome cambiato",
+        "nuovoNome": "IC PADRE GEMELLI",
+        "data": "2023-03-01"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC810003": {
     "nome": "IC L. DA VINCI",
     "comune": "MONTEIASI",
     "indirizzo": "VIA LEONARDO DA VINCI 21",
     "tipo": "Istituto Comprensivo",
-    "distretto": "054"
+    "distretto": "054",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "nome",
+        "nuovoNome": "IC L. DA VINCI"
+      },
+      {
+        "azione": "comune",
+        "nuoveComuni": [
+          "MONTEIASI"
+        ]
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC81200P": {
     "nome": "IC MADONNA DELLA CAMERA",
     "comune": "MONTEPARANO",
     "indirizzo": "VIA SANTA MARIA DI CAMERA",
     "tipo": "Istituto Comprensivo",
-    "distretto": "054"
+    "distretto": "054",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "nome",
+        "nuovoNome": "IC MADONNA DELLA CAMPANIA"
+      },
+      {
+        "azione": "comune",
+        "nuovaComune": "MONTEPARANO"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC86700V": {
     "nome": "IC DE NICOLA",
     "comune": "PULSANO",
     "indirizzo": "VIA DEGLI ORTI, 45",
     "tipo": "Istituto Comprensivo",
-    "distretto": "054"
+    "distretto": "054",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "nome",
+        "nuovoNome": "IC DE NICOLA"
+      },
+      {
+        "azione": "comune",
+        "nuovoComune": "PULSANO"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC80400Q": {
     "nome": "IC G. PASCOLI",
     "comune": "SAN GIORGIO IONICO",
     "indirizzo": "VIA IV NOVEMBRE S.N.",
-    "tipo": "Istituto Comprensivo",
-    "distretto": "054"
+    "tipo": "ISTITUTO COMPRENSIVO",
+    "distretto": "054",
+    "verified": true,
+    "changes": [
+      {
+        "codice": "TAIC80400Q",
+        "nome": "CODICE MECCANOGRAFICO"
+      },
+      {
+        "codice": "IC G. PASCOLI",
+        "nome": "Nome attuale nel DB"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC807007": {
-    "nome": "IC MORLEO",
-    "comune": "AVETRANA",
-    "indirizzo": "VIA KENNEDY, 40",
-    "tipo": "Istituto Comprensivo",
-    "distretto": "055"
+    "nome": null,
+    "comune": null,
+    "indirizzo": null,
+    "tipo": null,
+    "distretto": null,
+    "verified": false,
+    "changes": [],
+    "confidence": 0.0,
+    "last_verified": ""
   },
   "TAIC844006": {
     "nome": "IC MANZONI",
     "comune": "LIZZANO",
     "indirizzo": "PIAZZA MATTEOTTI, 11",
     "tipo": "Istituto Comprensivo",
-    "distretto": "055"
+    "distretto": "055",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "nome",
+        "nuovoNome": "MANZONI"
+      },
+      {
+        "azione": "comune",
+        "nuovoComune": "LIZZANO"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC84700N": {
     "nome": "IC DON BOSCO",
-    "comune": "MANDURIA",
+    "comune": "Manduria",
     "indirizzo": "VIA DEL MACELLO",
     "tipo": "Istituto Comprensivo",
-    "distretto": "055"
+    "distretto": "055",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "nome cambio",
+        "nuovoNome": "IC DON BOSCO",
+        "data": "2023-12-01"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC84800D": {
     "nome": "IC MICHELE GRECO",
     "comune": "MANDURIA",
     "indirizzo": "VIA MESCHINELLA, 2",
     "tipo": "Istituto Comprensivo",
-    "distretto": "055"
+    "distretto": "055",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "nome attuale nel DB",
+        "nuovoNome": "IC MICHELE GRECO"
+      },
+      {
+        "azione": "comune attuale nel DB",
+        "nuovocomune": "MANDURIA"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC84600T": {
     "nome": "IC PRUDENZANO",
@@ -293,21 +619,58 @@
     "comune": "MARUGGIO",
     "indirizzo": "P.ZZA MARCONI 17",
     "tipo": "Istituto Comprensivo",
-    "distretto": "055"
+    "distretto": "055",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "nome",
+        "nuovo Nome": "IC DEL BENE"
+      },
+      {
+        "azione": "comune",
+        "nuovo Comune": "MARUGGIO"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC822009": {
     "nome": "IC CASALINI",
     "comune": "SAN MARZANO DI SAN GIUSEPPE",
     "indirizzo": "VIA LAZIO 3",
     "tipo": "Istituto Comprensivo",
-    "distretto": "055"
+    "distretto": "055",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "nome cambio",
+        "nuovoNome": "IC CASALINI"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC82100D": {
     "nome": "IC G. CASTRIOTA",
     "comune": "SAN MARZANO DI SAN GIUSEPPE",
     "indirizzo": "VIA MANDURIA, 7",
     "tipo": "Istituto Comprensivo",
-    "distretto": "055"
+    "distretto": "055",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "nome",
+        "nuovoNome": "IC G. CASTRIOTA",
+        "data": "2023-12-31"
+      },
+      {
+        "azione": "indirizzo",
+        "nuovoIndirizzo": "VIA MANDURIA, 7",
+        "data": "2024-01-01"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC857008": {
     "nome": "IC BONSEGNA",
@@ -321,84 +684,209 @@
     "comune": "SAVA",
     "indirizzo": "CORSO ITALIA",
     "tipo": "Istituto Comprensivo",
-    "distretto": "055"
+    "distretto": "055",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "nome cambiato",
+        "nuovoNome": "IC GIOVANNI XXIII"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC83900P": {
     "nome": "IC BETTOLO-XXV LUGLIO",
     "comune": "TARANTO",
     "indirizzo": "VIA PITAGORA 73",
     "tipo": "Istituto Comprensivo",
-    "distretto": "053"
+    "distretto": "053",
+    "verified": true,
+    "changes": [
+      {
+        "codice": "TAIC83900P",
+        "nome": "nome verificato"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC831004": {
     "nome": "IC D. ALIGHIERI",
     "comune": "TARANTO",
     "indirizzo": "VIA DANTE, 139",
     "tipo": "Istituto Comprensivo",
-    "distretto": "053"
+    "distretto": "053",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "nome",
+        "nuovoNome": "IC D. ALIGHIERI"
+      },
+      {
+        "azione": "comune",
+        "nuovocomune": "TARANTO"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC83800V": {
     "nome": "IC DE AMICIS",
     "comune": "TARANTO",
     "indirizzo": "VIA D. SAVINO 59/A - TALSANO",
     "tipo": "Istituto Comprensivo",
-    "distretto": "053"
+    "distretto": "053",
+    "verified": true,
+    "changes": [],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC830008": {
     "nome": "IC FRASCOLLA",
     "comune": "TARANTO",
     "indirizzo": "VIALE JONIO 513 - S.VITO",
     "tipo": "Istituto Comprensivo",
-    "distretto": "053"
+    "distretto": "053",
+    "verified": true,
+    "changes": [
+      {
+        "data": "2023-12-01",
+        "cambiamento": "nome"
+      },
+      {
+        "data": "2024-06-15",
+        "cambiamento": "indirizzo"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC829004": {
     "nome": "IC G. SALVEMINI",
     "comune": "TARANTO",
     "indirizzo": "VIA GREGORIO VII N. 2 - TALSANO",
     "tipo": "Istituto Comprensivo",
-    "distretto": "053"
+    "distretto": "053",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "nome cambio",
+        "nuovoNome": "IC G. SALVEMINI",
+        "data": "2023-12-31"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC83200X": {
     "nome": "IC LEONARDO SCIASCIA",
     "comune": "TARANTO",
     "indirizzo": "VIA MARTINI 2/4 - TALSANO",
     "tipo": "Istituto Comprensivo",
-    "distretto": "053"
+    "distretto": "053",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "nome",
+        "nuovoNome": "IC LEONARDO SCIASCIA"
+      },
+      {
+        "azione": "comune",
+        "nuovaComune": "TARANTO"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC81900D": {
     "nome": "IC MARTELLOTTA",
     "comune": "TARANTO",
     "indirizzo": "VIA SCOGLIO DEL TONNO, 4",
     "tipo": "Istituto Comprensivo",
-    "distretto": "053"
+    "distretto": "053",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "nome",
+        "nuovoNome": "IC MARTELLOTTA"
+      },
+      {
+        "azione": "comune",
+        "nuovaComune": "TARANTO"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC84000V": {
     "nome": "IC RENATO MORO",
     "comune": "TARANTO",
     "indirizzo": "VIA UMBRIA 261",
     "tipo": "Istituto Comprensivo",
-    "distretto": "053"
+    "distretto": "053",
+    "verified": true,
+    "changes": [
+      "Il nome dell'istituto è stato cambiato dal 'Comprensorio' al 'Istituto Comprensivo'"
+    ],
+    "confidence": 0.8,
+    "last_verified": "2025-12-11"
   },
   "TAIC866003": {
     "nome": "IC SAN G. BOSCO",
     "comune": "TARANTO",
     "indirizzo": "VIA POLIBIO 46",
     "tipo": "Istituto Comprensivo",
-    "distretto": "053"
+    "distretto": "053",
+    "verified": true,
+    "changes": [
+      {
+        "type": "nome",
+        "value": "IC SAN G. BOSCO"
+      },
+      {
+        "type": "comune",
+        "value": "TARANTO"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC81700T": {
     "nome": "IC V. ALFIERI",
     "comune": "TARANTO",
     "indirizzo": "CORSO ITALIA, 159",
     "tipo": "Istituto Comprensivo",
-    "distretto": "053"
+    "distretto": "053",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "nome",
+        "nuovoNome": "IC ALFIERI"
+      },
+      {
+        "azione": "comune",
+        "nuovaComune": "TARANTO"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC845002": {
     "nome": "IC VIOLA",
     "comune": "TARANTO",
     "indirizzo": "VIA ZARA 35",
     "tipo": "Istituto Comprensivo",
-    "distretto": "053"
+    "distretto": "053",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "cambiamento di nome",
+        "nuovoNome": "IC VIOLA"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAMM128006": {
     "nome": "CPIA 1 TARANTO",
@@ -444,7 +932,16 @@
     "comune": "PALAGIANELLO",
     "indirizzo": "Via Matteotti",
     "tipo": "Istituto Comprensivo",
-    "distretto": "049"
+    "distretto": "049",
+    "verified": true,
+    "changes": [
+      {
+        "data": "2023-12-01",
+        "descrizione": "Cambiamento di nome"
+      }
+    ],
+    "confidence": 0.8,
+    "last_verified": "2025-12-12"
   },
   "TAIS024005": {
     "nome": "I.I.S.S. ARCHIMEDE",
@@ -460,14 +957,36 @@
     "comune": "MANDURIA",
     "indirizzo": "Via Di Vittorio",
     "tipo": "Liceo",
-    "distretto": "055"
+    "distretto": "055",
+    "verified": true,
+    "changes": [
+      {
+        "codice": "TAPS20000Q",
+        "data": "2020"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIS03600B": {
     "nome": "IIS MONDELLI-DE GASPERI",
     "comune": "GROTTAGLIE",
     "indirizzo": "Via Campitelli",
     "tipo": "Istituto Istruzione Superiore",
-    "distretto": "054"
+    "distretto": "054",
+    "verified": true,
+    "changes": [
+      {
+        "azione": "nome",
+        "nuovoNome": "IIS MONDELLI-DE GASPERI"
+      },
+      {
+        "azione": "comune",
+        "nuovocomune": "GROTTAGLIE"
+      }
+    ],
+    "confidence": 0.9,
+    "last_verified": "2025-12-12"
   },
   "TAIC880009": {
     "nome": "I.C. A. MANZONI - SAN GIOVANNI BOSCO",
@@ -604,5 +1123,23 @@
     "source": "manual",
     "verified": true,
     "last_verified": "2025-12-09"
+  },
+  "TAIC881005": {
+    "nome": "ISTITUTO COMPRENSIVO GIOVANNI XXIII",
+    "comune": "TARANTO",
+    "indirizzo": "via IV Novembre 1, 41100 San Giorgio Ionico (TA)",
+    "tipo": "ISTITUTO COMPRENSIVO",
+    "distretto": "",
+    "source": "allegati",
+    "last_verified": "2025-12-12"
+  },
+  "TAIC86800P": {
+    "nome": "ISTITUTO COMPRENSIVO GIOVANNI XXIII",
+    "comune": "TARANTO",
+    "indirizzo": "Via SS. Angeli Custodi snc, 74123 Taranto",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "",
+    "source": "allegati",
+    "last_verified": "2025-12-12"
   }
 }

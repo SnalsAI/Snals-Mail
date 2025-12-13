@@ -248,10 +248,10 @@ class EmailProcessorService:
     def _crea_azione(self, email: Email, regola: Regola, azione_data: Dict) -> Azione:
         """Crea un'azione dal template della regola"""
 
-        tipo_str = azione_data.get('tipo', 'ARCHIVIA')
+        tipo_str = azione_data.get('tipo', 'SINTESI')
 
         # Mappa string -> enum (cerca per valore, non per nome)
-        tipo_enum = TipoAzione.ARCHIVIA  # default
+        tipo_enum = TipoAzione.SINTESI  # default
 
         # Cerca l'enum che ha questo valore
         tipo_str_lower = tipo_str.lower()
@@ -260,7 +260,7 @@ class EmailProcessorService:
                 tipo_enum = azione_type
                 break
         else:
-            logger.warning(f"Tipo azione sconosciuto: {tipo_str}, uso ARCHIVIA")
+            logger.warning(f"Tipo azione sconosciuto: {tipo_str}, uso SINTESI")
 
         # Controlla se esiste già un'azione dello stesso tipo per questa email
         existing_azione = self.db.query(Azione).filter(

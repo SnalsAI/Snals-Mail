@@ -130,13 +130,6 @@ regole = [
                     "salva_su": "archivio"
                 }
             },
-            {
-                "tipo": "ARCHIVIA",
-                "descrizione": "Archivia comunicazione",
-                "params": {
-                    "folder": "comunicazioni_scuole"
-                }
-            }
         ]
     },
     {
@@ -164,16 +157,16 @@ regole = [
         ]
     },
     {
-        "nome": "Varie - Archivia",
-        "descrizione": "Archivia email varie senza categoria specifica",
+        "nome": "Varie - Sintesi",
+        "descrizione": "Genera sintesi per email varie",
         "priorita": 100,
         "condizioni": {"categoria": "varie"},
         "azioni": [
             {
-                "tipo": "ARCHIVIA",
-                "descrizione": "Archivia email generica",
+                "tipo": "SINTESI",
+                "descrizione": "Genera sintesi email",
                 "params": {
-                    "folder": "varie"
+                    "tipo_sintesi": "standard"
                 }
             }
         ]

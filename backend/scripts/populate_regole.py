@@ -23,7 +23,7 @@ def create_regole():
                 },
                 "azioni": [
                     {
-                        "tipo": "ARCHIVIA",
+                        "tipo": "SINTESI",
                         "descrizione": "Archivia comunicazione scolastica",
                         "params": {
                             "folder": "comunicazioni_scuola"
@@ -71,7 +71,7 @@ def create_regole():
                         }
                     },
                     {
-                        "tipo": "ARCHIVIA",
+                        "tipo": "SINTESI",
                         "descrizione": "Archivia comunicazione centrale",
                         "params": {
                             "folder": "snals_centrale"
@@ -184,7 +184,7 @@ def create_regole():
                         }
                     },
                     {
-                        "tipo": "ARCHIVIA",
+                        "tipo": "SINTESI",
                         "descrizione": "Archivia newsletter",
                         "params": {
                             "folder": "newsletter"
@@ -201,7 +201,7 @@ def create_regole():
                 },
                 "azioni": [
                     {
-                        "tipo": "ARCHIVIA",
+                        "tipo": "SINTESI",
                         "descrizione": "Archivia email generica",
                         "params": {
                             "folder": "varie"

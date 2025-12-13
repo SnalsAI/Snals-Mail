@@ -37,6 +37,7 @@ class EventoUpdate(BaseModel):
     descrizione: Optional[str] = None
     partecipanti: Optional[List[str]] = None
     stato: Optional[str] = None  # confermato, completato, annullato, rinviato
+    scuola: Optional[str] = None  # codice meccanografico
 
 
 @router.get("/")
@@ -258,6 +259,9 @@ def update_evento(
 
     if evento_data.partecipanti is not None:
         evento.partecipanti = evento_data.partecipanti
+
+    if evento_data.scuola is not None:
+        evento.scuola = evento_data.scuola
 
     # Gestione stato con sincronizzazione Google
     stato_cambiato = False

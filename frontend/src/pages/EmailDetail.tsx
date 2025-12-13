@@ -1,8 +1,8 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { ArrowLeft, Mail, Calendar as CalendarIcon, Paperclip, Trash2, Code, Eye, RotateCcw, CheckCircle, XCircle, AlertCircle, ShieldAlert } from 'lucide-react'
+import { ArrowLeft, Mail, Calendar as CalendarIcon, Paperclip, Trash2, Code, Eye, RotateCcw, CheckCircle, XCircle, AlertCircle, ShieldAlert, MapPin, School, Clock, AlertTriangle } from 'lucide-react'
 import toast from 'react-hot-toast'
-import { emailsApi, settingsApi, actionsApi, spamApi } from '../lib/api'
+import { emailsApi, settingsApi, actionsApi, spamApi, calendarApi } from '../lib/api'
 import { EmailCategory } from '../types'
 import { useState } from 'react'
 
@@ -36,6 +36,16 @@ export default function EmailDetail() {
   const { data: actionsResponse } = useQuery({
     queryKey: ['actions', id],
     queryFn: () => actionsApi.getAll({ email_id: Number(id) }).then(res => res.data),
+    enabled: !!id,
+  })
+
+  // Load calendar events for this email
+  const { data: calendarResponse } = useQuery({
+    queryKey: ['calendar-events', id],
+    queryFn: () => calendarApi.getAll().then(res => {
+      const eventi = res.data.eventi || []
+      return eventi.filter((e: any) => e.email_id === Number(id))
+    }),
     enabled: !!id,
   })
 
@@ -573,6 +583,137 @@ export default function EmailDetail() {
               </label>
               <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
                 <p className="text-sm text-gray-800 whitespace-pre-wrap">{email.note}</p>
+              </div>
+            </div>
+          )}
+
+          {/* Evento Calendario */}
+          {calendarResponse && calendarResponse.length > 0 && (
+            <div>
+              <label className="label flex items-center gap-2">
+                <CalendarIcon className="w-4 h-4" />
+                Evento Calendario ({calendarResponse.length})
+              </label>
+              <div className="space-y-3">
+                {calendarResponse.map((evento: any) => {
+                  // Verifica problemi nei dati
+                  const hasProblems = !evento.scuola ||
+                    !evento.luogo ||
+                    evento.luogo === 'ISTITUTO' ||
+                    evento.luogo?.length < 15 ||
+                    (evento.luogo && !evento.luogo.toLowerCase().includes('via') &&
+                     !evento.luogo.toLowerCase().includes('piazza') &&
+                     !evento.luogo.toLowerCase().includes('viale'));
+
+                  return (
+                    <div
+                      key={evento.id}
+                      className={`p-4 rounded-lg border-2 ${
+                        hasProblems
+                          ? 'bg-red-50 border-red-300'
+                          : 'bg-green-50 border-green-300'
+                      }`}
+                    >
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex items-center gap-2">
+                          <span className={`px-2 py-1 rounded text-xs font-bold ${
+                            hasProblems ? 'bg-red-200 text-red-800' : 'bg-green-200 text-green-800'
+                          }`}>
+                            ID: {evento.id}
+                          </span>
+                          {hasProblems && (
+                            <span className="flex items-center gap-1 text-red-600 text-xs font-medium">
+                              <AlertTriangle className="w-3 h-3" />
+                              Dati incompleti
+                            </span>
+                          )}
+                          {evento.sincronizzato && (
+                            <span className="flex items-center gap-1 text-green-600 text-xs">
+                              <CheckCircle className="w-3 h-3" />
+                              Sincronizzato
+                            </span>
+                          )}
+                        </div>
+                        <a
+                          href={`/calendar`}
+                          className="text-xs text-primary-600 hover:underline"
+                        >
+                          Vai al calendario
+                        </a>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                        {/* Data e Ora */}
+                        <div className="flex items-start gap-2">
+                          <Clock className="w-4 h-4 text-gray-500 mt-0.5 flex-shrink-0" />
+                          <div>
+                            <span className="text-gray-500 text-xs">Data/Ora:</span>
+                            <p className="font-medium text-gray-900">
+                              {evento.data_inizio ? new Date(evento.data_inizio).toLocaleString('it-IT', {
+                                weekday: 'long',
+                                day: '2-digit',
+                                month: 'long',
+                                year: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                              }) : <span className="text-red-600">Non impostata</span>}
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Scuola */}
+                        <div className="flex items-start gap-2">
+                          <School className="w-4 h-4 text-gray-500 mt-0.5 flex-shrink-0" />
+                          <div>
+                            <span className="text-gray-500 text-xs">Scuola:</span>
+                            <p className={`font-medium ${evento.scuola ? 'text-gray-900' : 'text-red-600'}`}>
+                              {evento.scuola || 'MANCANTE!'}
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Luogo */}
+                        <div className="flex items-start gap-2 md:col-span-2">
+                          <MapPin className="w-4 h-4 text-gray-500 mt-0.5 flex-shrink-0" />
+                          <div className="flex-1">
+                            <span className="text-gray-500 text-xs">Luogo:</span>
+                            <p className={`font-medium ${
+                              evento.luogo && evento.luogo !== 'ISTITUTO' && evento.luogo.length > 15
+                                ? 'text-gray-900'
+                                : 'text-red-600'
+                            }`}>
+                              {evento.luogo || 'MANCANTE!'}
+                              {evento.luogo === 'ISTITUTO' && ' (generico!)'}
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Stato */}
+                        {evento.stato && (
+                          <div className="md:col-span-2">
+                            <span className="text-gray-500 text-xs">Stato: </span>
+                            <span className={`px-2 py-0.5 rounded text-xs font-medium ${
+                              evento.stato === 'confermato' ? 'bg-blue-100 text-blue-800' :
+                              evento.stato === 'completato' ? 'bg-gray-100 text-gray-800' :
+                              evento.stato === 'annullato' ? 'bg-red-100 text-red-800' :
+                              'bg-yellow-100 text-yellow-800'
+                            }`}>
+                              {evento.stato}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Sintesi motivo */}
+                      {evento.sintesi_motivo && (
+                        <div className="mt-3 pt-3 border-t border-gray-200">
+                          <span className="text-gray-500 text-xs">Motivo: </span>
+                          <span className="text-sm text-gray-700">{evento.sintesi_motivo}</span>
+                        </div>
+                      )}
+                    </div>
+                  )
+                })}
               </div>
             </div>
           )}

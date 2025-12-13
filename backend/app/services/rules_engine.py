@@ -372,9 +372,6 @@ class RulesEngine:
                 elif tipo in ['PARSE_INTERPELLO', 'parse_interpello']:
                     azione = self._create_parse_interpello_action(email, params)
 
-                elif tipo in ['ARCHIVIA', 'archivia']:
-                    azione = self._create_archive_action(email, params)
-
                 elif tipo in ['SEGNA_IMPORTANTE', 'marca_importante']:
                     azione = self._create_mark_important_action(email, params)
 
@@ -544,20 +541,6 @@ class RulesEngine:
         return Azione(
             email_id=email.id,
             tipo=TipoAzione.INDICIZZA_RAG,
-            stato=StatoAzione.IN_CODA,
-            dettagli={'parametri': parametri, 'from_rule': True}
-        )
-
-    def _create_archive_action(self, email: Email, params: Dict) -> Azione:
-        """Crea azione archivia."""
-        parametri = {
-            'folder': params.get('folder', 'archivio'),
-            'from_rule': True
-        }
-
-        return Azione(
-            email_id=email.id,
-            tipo=TipoAzione.ARCHIVIA,
             stato=StatoAzione.IN_CODA,
             dettagli={'parametri': parametri, 'from_rule': True}
         )

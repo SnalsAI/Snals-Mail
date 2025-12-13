@@ -31,8 +31,7 @@ class TipoAzione(enum.Enum):
     NOTIFICA = "NOTIFICA"
     INVIA_NOTIFICA = "invia_notifica"
 
-    # Azioni di archiviazione e organizzazione
-    ARCHIVIA = "archivia"
+    # Azioni di organizzazione
     SEGNA_IMPORTANTE = "segna_importante"
     PUBBLICA_SU_SITO = "pubblica_su_sito"
 
