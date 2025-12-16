@@ -35,7 +35,7 @@ export default function RicevutePEC() {
   })
 
   const ricevute: RicevutaPEC[] = ricevuteData?.emails || []
-  const totalRicevute = statsData?.total || 0
+  void (statsData?.total || 0) // totalRicevute reserved for future pagination
   const totalConsegne = statsData?.consegne || 0
   const totalAccettazioni = statsData?.accettazioni || 0
 

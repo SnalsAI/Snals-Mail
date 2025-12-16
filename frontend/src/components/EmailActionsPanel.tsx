@@ -16,7 +16,7 @@ export default function EmailActionsPanel({ emailId, isExpanded, onToggle }: Ema
     enabled: isExpanded,
   })
 
-  const actions = actionsResponse?.azioni || []
+  const actions: Action[] = Array.isArray(actionsResponse) ? actionsResponse : []
 
   const getActionTypeLabel = (tipo: string) => {
     const labels: Record<string, string> = {

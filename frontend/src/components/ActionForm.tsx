@@ -52,9 +52,9 @@ export default function ActionForm({ emailId, emailMittente, onSave, onClose }: 
 
     const actionData: Partial<Action> = {
       email_id: emailId,
-      tipo_azione: tipoAzione as ActionType,
-      stato: 'PENDING' as any,
-      parametri: params,
+      tipo: tipoAzione as string,
+      stato: 'IN_CODA',
+      dettagli: params,
     }
 
     onSave(actionData)

@@ -540,15 +540,11 @@
     "last_verified": "2025-12-12"
   },
   "TAIC807007": {
-    "nome": null,
-    "comune": null,
-    "indirizzo": null,
-    "tipo": null,
-    "distretto": null,
-    "verified": false,
-    "changes": [],
-    "confidence": 0.0,
-    "last_verified": ""
+    "nome": "IC MORLEO",
+    "comune": "AVETRANA",
+    "indirizzo": "VIA KENNEDY, 40",
+    "tipo": "Istituto Comprensivo",
+    "distretto": "051"
   },
   "TAIC844006": {
     "nome": "IC MANZONI",
@@ -1141,5 +1137,14 @@
     "distretto": "",
     "source": "allegati",
     "last_verified": "2025-12-12"
+  },
+  "TAPC040009": {
+    "nome": "ISTITUTO COMPRENSIVO GIOVANNI XXIII",
+    "comune": "TARANTO",
+    "indirizzo": "",
+    "tipo": "IC",
+    "distretto": "",
+    "source": "allegati",
+    "last_verified": "2025-12-13"
   }
 }

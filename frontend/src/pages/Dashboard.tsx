@@ -16,7 +16,7 @@ export default function Dashboard() {
     queryFn: () => emailsApi.getAll({ limit: 5 }).then(res => res.data),
   })
 
-  const recentEmails = recentEmailsResponse?.emails || []
+  const recentEmails = Array.isArray(recentEmailsResponse) ? recentEmailsResponse : []
 
   if (isLoading) {
     return (
@@ -128,7 +128,7 @@ export default function Dashboard() {
                   fill="#8884d8"
                   dataKey="value"
                 >
-                  {categoryData.map((entry, index) => (
+                  {categoryData.map((_entry, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>

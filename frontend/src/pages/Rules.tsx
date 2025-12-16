@@ -49,7 +49,7 @@ export default function Rules() {
     queryFn: () => rulesApi.getAll().then(res => res.data),
   })
 
-  const rules = rulesResponse?.regole || []
+  const rules: Rule[] = Array.isArray(rulesResponse) ? rulesResponse : []
 
   const toggleMutation = useMutation({
     mutationFn: (id: number) => rulesApi.toggle(id),
@@ -302,7 +302,7 @@ export default function Rules() {
                                 <div className="flex flex-wrap gap-2">
                                   {actions.map((action, idx) => {
                                     const actionType = action.type || action.tipo || 'UNKNOWN'
-                                    const label = action.descrizione || getActionLabel(actionType)
+                                    const label = (action as any).descrizione || getActionLabel(actionType)
                                     return (
                                       <span key={idx} className="badge-primary" title={actionType}>
                                         {label}

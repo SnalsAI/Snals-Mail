@@ -61,7 +61,7 @@ export default function Interpelli() {
   const [expandedClasses, setExpandedClasses] = useState<Set<string>>(new Set())
 
   // Carica interpelli raggruppati per classe
-  const { data, isLoading, refetch } = useQuery<PerClasseResponse>({
+  const { data, isLoading, refetch: _refetch } = useQuery<PerClasseResponse>({
     queryKey: ['interpelli-per-classe', soloAperti],
     queryFn: async () => {
       const response = await interpelliApi.perClasse({ solo_aperti: soloAperti })

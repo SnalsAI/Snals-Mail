@@ -34,7 +34,7 @@ export default function Calendar() {
     queryFn: () => calendarApi.getAll().then(res => res.data),
   })
 
-  const events = eventsResponse?.eventi || []
+  const events: CalendarEvent[] = Array.isArray(eventsResponse) ? eventsResponse : []
 
   const createMutation = useMutation({
     mutationFn: (data: Partial<CalendarEvent>) => calendarApi.create(data),
@@ -140,17 +140,17 @@ export default function Calendar() {
     return null
   }
 
-  const groupedEvents = events?.reduce((acc, event) => {
+  const groupedEvents = events?.reduce((acc: Record<string, CalendarEvent[]>, event: CalendarEvent) => {
     const date = format(parseUTCDate(event.data_inizio), 'yyyy-MM-dd')
     if (!acc[date]) acc[date] = []
     acc[date].push(event)
     return acc
-  }, {} as Record<string, typeof events>)
+  }, {} as Record<string, CalendarEvent[]>)
 
   // Ordina eventi all'interno di ogni giorno per orario
   if (groupedEvents) {
     Object.keys(groupedEvents).forEach(date => {
-      groupedEvents[date].sort((a, b) =>
+      groupedEvents[date].sort((a: CalendarEvent, b: CalendarEvent) =>
         parseUTCDate(a.data_inizio).getTime() - parseUTCDate(b.data_inizio).getTime()
       )
     })
@@ -181,23 +181,23 @@ export default function Calendar() {
     )
 
     // Group by date
-    const grouped = sortedEvents.reduce((acc, event) => {
+    const grouped = sortedEvents.reduce((acc: Record<string, CalendarEvent[]>, event: CalendarEvent) => {
       const date = format(parseUTCDate(event.data_inizio), 'EEEE d MMMM yyyy', { locale: it })
       if (!acc[date]) acc[date] = []
       acc[date].push(event)
       return acc
-    }, {} as Record<string, typeof events>)
+    }, {} as Record<string, CalendarEvent[]>)
 
     let message = '*CALENDARIO EVENTI SNALS*\n'
     message += `_Aggiornato al ${format(new Date(), 'd/MM/yyyy', { locale: it })}_\n`
     message += '━━━━━━━━━━━━━━━━━━━━\n\n'
 
-    Object.entries(grouped).forEach(([date, dateEvents], index) => {
+    Object.entries(grouped).forEach(([date, dateEvents]: [string, CalendarEvent[]], index: number) => {
       // Capitalize first letter
       const capitalizedDate = date.charAt(0).toUpperCase() + date.slice(1)
       message += `*${capitalizedDate}*\n`
 
-      dateEvents.forEach((event) => {
+      dateEvents.forEach((event: CalendarEvent) => {
         const startTime = format(parseUTCDate(event.data_inizio), 'HH:mm')
         const endTime = event.data_fine ? format(parseUTCDate(event.data_fine), 'HH:mm') : null
 
@@ -536,7 +536,7 @@ export default function Calendar() {
         <div className="card">
           {events && events.length > 0 ? (
             <div className="space-y-6">
-              {Object.entries(groupedEvents || {}).sort(([a], [b]) => a.localeCompare(b)).map(([date, dateEvents]) => (
+              {Object.entries(groupedEvents || {}).sort(([a], [b]) => a.localeCompare(b)).map(([date, dateEvents]: [string, CalendarEvent[]]) => (
                 <div key={date}>
                   <h3 className="text-lg font-semibold text-gray-900 mb-3">
                     {format(parseISO(date), 'EEEE, d MMMM yyyy', { locale: it })}

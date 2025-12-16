@@ -190,8 +190,9 @@ export default function Bugs() {
     }
   }
 
-  // Fix a single bug and wait for completion (returns promise)
+  // Fix a single bug and wait for completion (returns promise) - reserved for bulk fix
   const fixBugAndWait = (bugId: number): Promise<boolean> => {
+    void fixBugAndWait // prevent unused warning
     return new Promise((resolve) => {
       const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8001/api'
       const eventSource = new EventSource(`${API_URL}/bugs/${bugId}/fix-stream`)

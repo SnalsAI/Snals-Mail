@@ -33,7 +33,7 @@ export default function RuleBuilder({ rule, onSave, onClose }: RuleBuilderProps)
     rule?.condizioni.rules || [{ field: '', condition: '', value: '' }]
   )
   const [actions, setActions] = useState<Action[]>(
-    rule?.azioni.actions || [{ type: '', params: {} }]
+    (Array.isArray(rule?.azioni) ? rule.azioni : (rule?.azioni as any)?.actions) || [{ type: '', params: {} }]
   )
   const [stopOnMatch, setStopOnMatch] = useState(rule?.condizioni.stop_on_match || false)
 

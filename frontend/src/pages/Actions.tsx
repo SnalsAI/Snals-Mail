@@ -3,7 +3,6 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Play, Trash2, Clock, CheckCircle, XCircle, Plus, Mail, Calendar, Archive, AlertCircle, Database, Bell, FileText, Star, ListChecks } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { actionsApi } from '../lib/api'
-import { ActionStatus, ActionType } from '../types'
 import ActionForm from '../components/ActionForm'
 import type { Action } from '../types'
 
@@ -19,7 +18,7 @@ export default function Actions() {
     queryFn: () => actionsApi.getAll().then(res => res.data),
   })
 
-  const actions = actionsResponse?.azioni || []
+  const actions: Action[] = Array.isArray(actionsResponse) ? actionsResponse : []
 
   // Calculate statistics
   const stats = useMemo(() => {
@@ -292,12 +291,6 @@ export default function Actions() {
         ) : filteredActions && filteredActions.length > 0 ? (
           <div className="space-y-3">
             {filteredActions.map((action: Action) => {
-              const statusColor =
-                action.stato === 'COMPLETATA' ? 'green' :
-                action.stato === 'FALLITA' ? 'red' :
-                action.stato === 'IN_ESECUZIONE' ? 'yellow' :
-                'gray'
-
               return (
                 <div
                   key={action.id}

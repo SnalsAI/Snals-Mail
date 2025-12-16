@@ -153,7 +153,7 @@ export default function Schools() {
 
     setAddingSchool(true)
     try {
-      const response = await schoolsApi.add(newSchoolCode.trim().toUpperCase())
+      await schoolsApi.add(newSchoolCode.trim().toUpperCase())
       toast.success('Scuola aggiunta con successo')
       setNewSchoolCode('')
       loadSchools()
@@ -169,11 +169,11 @@ export default function Schools() {
   const handleUpdateSchool = async (schoolCode: string) => {
     setUpdatingSchool(schoolCode)
     try {
-      const response = await schoolsApi.update(schoolCode)
+      const _response = await schoolsApi.update(schoolCode)
       toast.success(`Scuola ${schoolCode} aggiornata`)
 
-      if (response.data.changes && response.data.changes.length > 0) {
-        toast.success(`Rilevati ${response.data.changes.length} cambiamenti`)
+      if (_response.data.changes && _response.data.changes.length > 0) {
+        toast.success(`Rilevati ${_response.data.changes.length} cambiamenti`)
       }
 
       loadSchools()

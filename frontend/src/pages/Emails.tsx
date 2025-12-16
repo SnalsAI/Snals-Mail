@@ -66,7 +66,7 @@ export default function Emails() {
     queryFn: () => emailsApi.getAll({}).then(res => res.data),
   })
 
-  const emails = emailsResponse?.emails || []
+  const emails = Array.isArray(emailsResponse) ? emailsResponse : []
 
   // Load schools for filter
   const { data: schoolsResponse } = useQuery({
@@ -226,7 +226,7 @@ export default function Emails() {
 
   const getCategoryBadgeColor = (categoria?: string) => {
     switch (categoria) {
-      case EmailCategory.CONVOCAZIONE_SCUOLA:
+      case 'convocazione_scuola':
         return 'bg-red-100 text-red-800 border border-red-200'
       case EmailCategory.COMUNICAZIONE_UST_USR:
         return 'bg-purple-100 text-purple-800 border border-purple-200'
@@ -238,7 +238,7 @@ export default function Emails() {
         return 'bg-pink-100 text-pink-800 border border-pink-200'
       case EmailCategory.ERRORE_INVIO:
         return 'bg-red-100 text-red-700 border border-red-300'
-      case EmailCategory.NOTIFICA_SISTEMA:
+      case 'notifica_sistema':
         return 'bg-slate-100 text-slate-600 border border-slate-300'
       case EmailCategory.DA_CATEGORIZZARE:
         return 'bg-orange-100 text-orange-800 border-2 border-orange-500 font-bold animate-pulse'
@@ -251,7 +251,8 @@ export default function Emails() {
 
   const getStatusBadgeColor = (stato: string) => {
     switch (stato) {
-      case EmailStatus.PROCESSATA:
+      case 'processata':
+      case EmailStatus.COMPLETATA:
         return 'badge-success'
       case EmailStatus.INTERPRETATA:
         return 'badge-primary'
@@ -263,6 +264,8 @@ export default function Emails() {
         return 'badge-gray'
     }
   }
+  // Mark as used
+  void getStatusBadgeColor
 
   // Indica se l'email arriva dall'account PEC
   const isPecAccount = (email: any): boolean => {

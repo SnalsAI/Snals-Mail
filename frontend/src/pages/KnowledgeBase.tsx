@@ -10,11 +10,8 @@ import {
   Tag,
   Calendar,
   Building,
-  CheckCircle,
-  XCircle,
   ChevronDown,
   ChevronUp,
-  Download,
   RefreshCw
 } from 'lucide-react'
 import { knowledgeApi } from '../lib/api'

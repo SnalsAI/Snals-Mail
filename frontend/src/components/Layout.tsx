@@ -5,6 +5,7 @@ import {
   ListChecks,
   Sliders,
   Calendar as CalendarIcon,
+  CalendarPlus,
   School,
   Briefcase,
   Database,
@@ -34,6 +35,8 @@ const mainNavigation = [
   { name: 'Email', href: '/', icon: Mail },
   { name: 'Azioni', href: '/actions', icon: ListChecks },
   { name: 'Calendario', href: '/calendar', icon: CalendarIcon },
+  { name: 'Prenotazioni', href: '/booking', icon: CalendarPlus },
+  { name: 'Booking Staff', href: '/booking/staff', icon: Users },
   { name: 'Interpelli', href: '/interpelli', icon: Briefcase },
   { name: 'Chat RAG', href: '/chat-rag', icon: MessageSquare },
   { name: 'Spam', href: '/spam', icon: Shield },
@@ -52,6 +55,7 @@ const configNavigation = [
   { name: 'Knowledge Base', href: '/knowledge', icon: BookOpen },
   { name: 'Documenti RAG', href: '/rag-documents', icon: Database },
   { name: 'NLP Training', href: '/nlp-training', icon: Brain },
+  { name: 'Booking Admin', href: '/booking/admin', icon: CalendarPlus },
   { name: 'Debug', href: '/debug', icon: Terminal },
 ]
 
@@ -72,8 +76,8 @@ export default function Layout() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Mobile menu button */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
+      {/* Mobile menu button - hidden in print */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between print:hidden">
         <div className="flex items-center gap-2">
           <Mail className="w-6 h-6 text-primary-600" />
           <div>
@@ -96,9 +100,9 @@ export default function Layout() {
         />
       )}
 
-      {/* Sidebar */}
+      {/* Sidebar - hidden in print */}
       <div className={`
-        fixed inset-y-0 left-0 w-64 bg-white border-r border-gray-200 z-50 transform transition-transform duration-200 ease-in-out
+        fixed inset-y-0 left-0 w-64 bg-white border-r border-gray-200 z-50 transform transition-transform duration-200 ease-in-out print:hidden
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
         lg:translate-x-0
       `}>
@@ -215,14 +219,16 @@ export default function Layout() {
       </div>
 
       {/* Main content */}
-      <div className="lg:pl-64 pt-14 lg:pt-0">
-        <main className="p-4 sm:p-6 lg:p-8">
+      <div className="lg:pl-64 pt-14 lg:pt-0 print:pl-0 print:pt-0">
+        <main className="p-4 sm:p-6 lg:p-8 print:p-2">
           <Outlet />
         </main>
       </div>
 
-      {/* Bug Reporter - Floating button */}
-      <BugReporter />
+      {/* Bug Reporter - Floating button - hidden in print */}
+      <div className="print:hidden">
+        <BugReporter />
+      </div>
     </div>
   )
 }

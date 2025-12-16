@@ -19,6 +19,11 @@ import Delegati from './pages/Delegati'
 import Reports from './pages/Reports'
 import NLPTraining from './pages/NLPTraining'
 import Bugs from './pages/Bugs'
+// Booking module pages
+import BookingPublic from './pages/BookingPublic'
+import BookingAdmin from './pages/BookingAdmin'
+import BookingStaff from './pages/BookingStaff'
+import BookingManage from './pages/BookingManage'
 import PWAInstallBanner from './components/PWAInstallBanner'
 import { usePWA } from './hooks/usePWA'
 
@@ -39,6 +44,9 @@ function App() {
 
       {/* Routes */}
       <Routes>
+        {/* Public booking management route (outside Layout) */}
+        <Route path="prenotazioni/:token" element={<BookingManage />} />
+
         <Route path="/" element={<Layout />}>
           <Route index element={<Emails />} />
           <Route path="emails" element={<Emails />} />
@@ -60,6 +68,10 @@ function App() {
           <Route path="settings" element={<Settings />} />
           <Route path="nlp-training" element={<NLPTraining />} />
           <Route path="bugs" element={<Bugs />} />
+          {/* Booking Module Routes */}
+          <Route path="booking" element={<BookingPublic />} />
+          <Route path="booking/admin" element={<BookingAdmin />} />
+          <Route path="booking/staff" element={<BookingStaff />} />
         </Route>
       </Routes>
 

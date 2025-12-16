@@ -507,3 +507,191 @@ export const bugsApi = {
 // Health check
 export const healthCheck = () =>
   api.get('/health')
+
+// ============================================================================
+// BOOKING MODULE API
+// ============================================================================
+
+// Booking Public API (for external users)
+export const bookingPublicApi = {
+  getServizi: () =>
+    api.get('/booking/public/servizi'),
+
+  getSedi: () =>
+    api.get('/booking/public/sedi'),
+
+  getTipiAppuntamento: (servizioId?: number) =>
+    api.get('/booking/public/tipi-appuntamento', { params: { servizio_id: servizioId } }),
+
+  getSlotsDisponibili: (params: {
+    servizio_id?: number
+    sede_id?: number
+    tipo_appuntamento_id?: number
+    data_da?: string
+    data_a?: string
+  }) =>
+    api.get('/booking/public/slots/disponibili', { params }),
+
+  creaPrenotazione: (data: {
+    slot_id: number
+    servizio_id?: number
+    note_utente?: string
+    contatto: {
+      nome: string
+      cognome: string
+      email: string
+      telefono?: string
+      iscritto_snals?: boolean
+      tipologia_contratto?: string
+      scuola_attuale?: string
+      consenso_privacy: boolean
+    }
+  }) =>
+    api.post('/booking/public/prenotazioni', data),
+
+  getPrenotazioneByToken: (token: string) =>
+    api.get(`/booking/public/prenotazioni/${token}`),
+
+  aggiornaPrenotazione: (token: string, data: { telefono?: string; note?: string }) =>
+    api.put(`/booking/public/prenotazioni/${token}`, data),
+
+  annullaPrenotazione: (token: string, motivo?: string) =>
+    api.delete(`/booking/public/prenotazioni/${token}`, { params: { motivo } }),
+
+  spostaPrenotazione: (token: string, nuovoSlotId: number) =>
+    api.post(`/booking/public/prenotazioni/${token}/sposta`, { nuovo_slot_id: nuovoSlotId }),
+
+  // Scuole - usa l'API esistente /schools
+  getAllScuole: () =>
+    api.get<{ total: number; schools: Array<{ codice: string; nome: string; comune: string; indirizzo?: string; tipo?: string; distretto?: string }> }>('/schools/'),
+
+  getScuoleByComune: (comune: string) =>
+    api.get<{ comune: string; total: number; schools: Array<{ codice: string; nome: string; comune: string; indirizzo?: string; tipo?: string }> }>(`/schools/by-comune/${comune}`),
+
+  searchScuole: (q: string, limit?: number) =>
+    api.get<{ total: number; limit: number; schools: Array<{ codice: string; nome: string; comune: string; indirizzo?: string; tipo?: string }> }>('/schools/search', { params: { q, limit: limit || 20 } }),
+}
+
+// Booking Staff API (for operators)
+export const bookingStaffApi = {
+  getDisponibilita: (staffId: number, params?: { data_da?: string; data_a?: string }) =>
+    api.get('/booking/staff/disponibilita', { params: { staff_id: staffId, ...params } }),
+
+  creaDisponibilita: (data: {
+    staff_id: number
+    sede_id: number
+    data: string
+    ora_inizio: string
+    ora_fine: string
+    note?: string
+  }) =>
+    api.post('/booking/staff/disponibilita', data),
+
+  creaDisponibilitaBulk: (data: {
+    staff_id: number
+    sede_id: number
+    date_list: string[]
+    ora_inizio: string
+    ora_fine: string
+    note?: string
+  }) =>
+    api.post('/booking/staff/disponibilita/bulk', data),
+
+  aggiornaDisponibilita: (id: number, data: {
+    ora_inizio?: string
+    ora_fine?: string
+    note?: string
+    attivo?: boolean
+  }) =>
+    api.put(`/booking/staff/disponibilita/${id}`, data),
+
+  eliminaDisponibilita: (id: number) =>
+    api.delete(`/booking/staff/disponibilita/${id}`),
+
+  getCalendario: (staffId: number, params?: { data_da?: string; data_a?: string }) =>
+    api.get('/booking/staff/calendario', { params: { staff_id: staffId, ...params } }),
+
+  getPrenotazioni: (staffId: number, params?: {
+    data_da?: string
+    data_a?: string
+    stato?: string
+    page?: number
+    per_page?: number
+  }) =>
+    api.get('/booking/staff/prenotazioni', { params: { staff_id: staffId, ...params } }),
+
+  marcaCompletata: (id: number, esito?: string) =>
+    api.put(`/booking/staff/prenotazioni/${id}/completata`, null, { params: { esito } }),
+
+  marcaNoShow: (id: number, note?: string) =>
+    api.put(`/booking/staff/prenotazioni/${id}/no-show`, null, { params: { note } }),
+
+  annullaPrenotazione: (id: number, motivo?: string) =>
+    api.put(`/booking/staff/prenotazioni/${id}/annulla`, null, { params: { motivo } }),
+}
+
+// Booking Admin API (for administrators)
+export const bookingAdminApi = {
+  // Sedi
+  getSedi: () => api.get('/booking/admin/sedi'),
+  creaSede: (data: { nome: string; indirizzo?: string; citta?: string; cap?: string; telefono?: string; email?: string }) =>
+    api.post('/booking/admin/sedi', data),
+  aggiornaSede: (id: number, data: { nome?: string; indirizzo?: string; citta?: string; cap?: string; telefono?: string; email?: string; attivo?: boolean }) =>
+    api.put(`/booking/admin/sedi/${id}`, data),
+  eliminaSede: (id: number) => api.delete(`/booking/admin/sedi/${id}`),
+
+  // Staff
+  getStaff: () => api.get('/booking/admin/staff'),
+  getStaffById: (id: number) => api.get(`/booking/admin/staff/${id}`),
+  creaStaff: (data: { nome: string; cognome: string; email: string; telefono?: string; ruolo?: string }) =>
+    api.post('/booking/admin/staff', data),
+  aggiornaStaff: (id: number, data: { nome?: string; cognome?: string; email?: string; telefono?: string; ruolo?: string; attivo?: boolean }) =>
+    api.put(`/booking/admin/staff/${id}`, data),
+  eliminaStaff: (id: number) => api.delete(`/booking/admin/staff/${id}`),
+  aggiungiCompetenza: (staffId: number, data: { tipo_appuntamento_id: number; durata_minuti?: number }) =>
+    api.post(`/booking/admin/staff/${staffId}/competenze`, data),
+  rimuoviCompetenza: (staffId: number, competenzaId: number) =>
+    api.delete(`/booking/admin/staff/${staffId}/competenze/${competenzaId}`),
+
+  // Tipi Appuntamento
+  getTipiAppuntamento: () => api.get('/booking/admin/tipi-appuntamento'),
+  creaTipoAppuntamento: (data: { nome: string; descrizione?: string; durata_default_minuti: number; colore?: string; richiede_documenti?: boolean; documenti_richiesti?: string[] }) =>
+    api.post('/booking/admin/tipi-appuntamento', data),
+  aggiornaTipoAppuntamento: (id: number, data: { nome?: string; descrizione?: string; durata_default_minuti?: number; colore?: string; richiede_documenti?: boolean; documenti_richiesti?: string[]; attivo?: boolean }) =>
+    api.put(`/booking/admin/tipi-appuntamento/${id}`, data),
+  eliminaTipoAppuntamento: (id: number) => api.delete(`/booking/admin/tipi-appuntamento/${id}`),
+
+  // Campagne
+  getServizi: () => api.get('/booking/admin/servizi'),
+  creaServizio: (data: { nome: string; descrizione?: string; data_inizio: string; data_fine: string; tipi_appuntamento_ids: number[] }) =>
+    api.post('/booking/admin/servizi', data),
+  aggiornaServizio: (id: number, data: { nome?: string; descrizione?: string; data_inizio?: string; data_fine?: string; attiva?: boolean; tipi_appuntamento_ids?: number[] }) =>
+    api.put(`/booking/admin/servizi/${id}`, data),
+  eliminaServizio: (id: number) => api.delete(`/booking/admin/servizi/${id}`),
+
+  // Slots
+  generaSlots: (data: { staff_id?: number; data_inizio: string; data_fine: string; tipi_appuntamento_ids?: number[] }) =>
+    api.post('/booking/admin/slots/genera', data),
+  bloccaSlot: (id: number, note?: string) => api.put(`/booking/admin/slots/${id}/blocca`, null, { params: { note } }),
+  sbloccaSlot: (id: number) => api.put(`/booking/admin/slots/${id}/sblocca`),
+
+  // Prenotazioni
+  getPrenotazioni: (params?: { data_da?: string; data_a?: string; stato?: string; sede_id?: number; staff_id?: number; page?: number; per_page?: number }) =>
+    api.get('/booking/admin/prenotazioni', { params }),
+  getPrenotazioneById: (id: number) => api.get(`/booking/admin/prenotazioni/${id}`),
+  exportPrenotazioni: (params?: { data_da?: string; data_a?: string; stato?: string }) =>
+    api.get('/booking/admin/prenotazioni/export', { params, responseType: 'blob' }),
+
+  // Dashboard
+  getDashboard: () => api.get('/booking/admin/dashboard'),
+  getStatistiche: (params?: { data_da?: string; data_a?: string }) =>
+    api.get('/booking/admin/statistiche', { params }),
+
+  // Config
+  getConfig: () => api.get('/booking/admin/config'),
+  aggiornaConfig: (data: any) => api.put('/booking/admin/config', data),
+
+  // Audit logs
+  getAuditLogs: (params?: { limit?: number; offset?: number }) =>
+    api.get('/booking/admin/audit-logs', { params }),
+}

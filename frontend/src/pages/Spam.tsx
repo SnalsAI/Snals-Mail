@@ -59,8 +59,8 @@ export default function Spam() {
 
   // Elimina singola email dal server
   const deleteFromServerMutation = useMutation({
-    mutationFn: (emailId: number) =>
-      spamApi.deleteFromServer(emailId),
+    mutationFn: (_emailId: number) =>
+      spamApi.deleteFromServer(_emailId),
     onMutate: async (emailId) => {
       // Cancella query precedenti
       await queryClient.cancelQueries({ queryKey: ['spam-emails'] })
@@ -93,7 +93,7 @@ export default function Spam() {
       // Ritorna context per rollback in caso di errore
       return { previousEmails, previousStats }
     },
-    onError: (err, emailId, context) => {
+    onError: (_err, _emailId, context) => {
       // Rollback in caso di errore
       if (context?.previousEmails) {
         queryClient.setQueryData(['spam-emails'], context.previousEmails)
@@ -101,7 +101,7 @@ export default function Spam() {
       if (context?.previousStats) {
         queryClient.setQueryData(['spam-stats'], context.previousStats)
       }
-      console.error('Errore eliminazione spam:', err)
+      console.error('Errore eliminazione spam:', _err)
       alert('Errore durante l\'eliminazione dal server')
     },
     onSettled: () => {
@@ -135,7 +135,7 @@ export default function Spam() {
       // Ritorna context per rollback in caso di errore
       return { previousEmails }
     },
-    onError: (err, variables, context) => {
+    onError: (_err, _variables, context) => {
       // Rollback in caso di errore
       if (context?.previousEmails) {
         queryClient.setQueryData(['spam-emails'], context.previousEmails)
@@ -152,8 +152,8 @@ export default function Spam() {
 
   // Segna come non spam
   const unmarkAsSpamMutation = useMutation({
-    mutationFn: ({ emailId, newCategoria }: { emailId: number; newCategoria: string }) =>
-      spamApi.unmarkAsSpam(emailId, newCategoria),
+    mutationFn: ({ emailId: _emailId, newCategoria }: { emailId: number; newCategoria: string }) =>
+      spamApi.unmarkAsSpam(_emailId, newCategoria),
     onMutate: async ({ emailId }) => {
       await queryClient.cancelQueries({ queryKey: ['spam-emails'] })
       await queryClient.cancelQueries({ queryKey: ['spam-stats'] })
@@ -181,14 +181,14 @@ export default function Spam() {
 
       return { previousEmails, previousStats }
     },
-    onError: (err, variables, context) => {
+    onError: (_err, _variables, context) => {
       if (context?.previousEmails) {
         queryClient.setQueryData(['spam-emails'], context.previousEmails)
       }
       if (context?.previousStats) {
         queryClient.setQueryData(['spam-stats'], context.previousStats)
       }
-      console.error('Errore rimozione spam:', err)
+      console.error('Errore rimozione spam:', _err)
       alert('Errore durante la rimozione da spam')
     },
     onSettled: () => {

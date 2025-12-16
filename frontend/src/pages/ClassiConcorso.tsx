@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { Briefcase, Search, TrendingUp, Check, AlertCircle, Filter } from 'lucide-react'
+import { Briefcase, Search, TrendingUp, Check, AlertCircle } from 'lucide-react'
 import { classiConcorsoApi } from '../lib/api'
 
 interface ClasseConcorso {

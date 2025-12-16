@@ -15,7 +15,6 @@ import {
   X,
   Paperclip,
   Calendar,
-  Clock,
   Building,
   RefreshCw,
   SkipForward,
@@ -1318,7 +1317,7 @@ export default function Reports() {
                         {/* Info scuola/zona */}
                         {issueDetails.dati_estratti && (
                           <div className="bg-gray-50 rounded-lg p-3 space-y-2">
-                            {(issueDetails.dati_estratti as Record<string, unknown>).scuola && (
+                            {Boolean((issueDetails.dati_estratti as Record<string, unknown>).scuola) && (
                               <div className="flex items-center gap-2">
                                 <Building className="w-4 h-4 text-gray-500" />
                                 <span className="text-sm">
@@ -1326,7 +1325,7 @@ export default function Reports() {
                                 </span>
                               </div>
                             )}
-                            {(issueDetails.dati_estratti as Record<string, unknown>).zona && (
+                            {Boolean((issueDetails.dati_estratti as Record<string, unknown>).zona) && (
                               <div className="flex items-center gap-2">
                                 <MapPin className="w-4 h-4 text-gray-500" />
                                 <span className="text-sm">
@@ -1420,15 +1419,13 @@ export default function Reports() {
                       <div className="mt-4 p-3 bg-blue-50 rounded-lg">
                         <h4 className="text-xs font-medium text-blue-800 mb-2">Dati estratti automaticamente:</h4>
                         <dl className="text-xs space-y-1">
-                          {Object.entries(issueDetails.dati_estratti).map(([key, value]) => (
-                            value && (
+                          {Object.entries(issueDetails.dati_estratti).filter(([, value]) => value).map(([key, value]) => (
                               <div key={key} className="flex">
                                 <dt className="text-blue-600 w-24">{key}:</dt>
                                 <dd className="text-blue-900 flex-1 truncate">
                                   {typeof value === 'object' ? JSON.stringify(value) : String(value)}
                                 </dd>
                               </div>
-                            )
                           ))}
                         </dl>
                       </div>

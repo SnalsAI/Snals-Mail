@@ -15,6 +15,32 @@ from app.models.interpello import Interpello, StatoInterpello
 from app.models.knowledge_document import KnowledgeDocument, TipoDocumento
 from app.models.llm_queue import RichiestaLLM, StatoRichiestaLLM
 
+# Modulo Prenotazioni (separato dal calendario esistente)
+from app.models.booking import (
+    StatoSlot,
+    StatoPrenotazione,
+    TipoNotifica,
+    StatoNotifica,
+    AzioneAudit,
+    TipoUtenteAudit,
+    BookingSede,
+    BookingStaff,
+    BookingTipoAppuntamento,
+    BookingStaffCompetenza,
+    BookingServizio,
+    BookingServizioTipoAppuntamento,
+    BookingDisponibilita,
+    BookingDisponibilitaTipi,
+    BookingSlot,
+    Scuola,
+    BookingContatto,
+    BookingPrenotazione,
+    BookingNotifica,
+    BookingAuditLog,
+    BookingConfig,
+    DEFAULT_BOOKING_CONFIG,
+)
+
 __all__ = [
     "Email",
     "AccountType",
@@ -39,4 +65,27 @@ __all__ = [
     "TipoDocumento",
     "RichiestaLLM",
     "StatoRichiestaLLM",
+    # Modulo Prenotazioni
+    "StatoSlot",
+    "StatoPrenotazione",
+    "TipoNotifica",
+    "StatoNotifica",
+    "AzioneAudit",
+    "TipoUtenteAudit",
+    "BookingSede",
+    "BookingStaff",
+    "BookingTipoAppuntamento",
+    "BookingStaffCompetenza",
+    "BookingServizio",
+    "BookingServizioTipoAppuntamento",
+    "BookingDisponibilita",
+    "BookingDisponibilitaTipi",
+    "BookingSlot",
+    "Scuola",
+    "BookingContatto",
+    "BookingPrenotazione",
+    "BookingNotifica",
+    "BookingAuditLog",
+    "BookingConfig",
+    "DEFAULT_BOOKING_CONFIG",
 ]

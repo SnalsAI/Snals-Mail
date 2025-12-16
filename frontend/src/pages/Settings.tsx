@@ -679,8 +679,7 @@ export default function Settings() {
       try {
         setEmailsLoading(true)
         const response = await emailsApi.getAll({ skip: page * pageSize, limit: pageSize })
-        // API returns { total, skip, limit, emails: [...] }
-        const data = response.data
+        const data = response.data as any
         if (Array.isArray(data)) {
           setEmails(data)
         } else if (data?.emails && Array.isArray(data.emails)) {
@@ -811,7 +810,7 @@ export default function Settings() {
         } else {
           // Categorization batch - verify recent emails
           const emailsResponse = await emailsApi.getAll({ limit: 10 })
-          const batchResult = { results: [], total_discrepancies: 0, count: 0 }
+          const batchResult: { results: any[], total_discrepancies: number, count: number } = { results: [], total_discrepancies: 0, count: 0 }
           for (const email of emailsResponse.data) {
             try {
               const vResponse = await verificationApi.verifyEmail(email.id, 'categorizzazione', selectedModel)
@@ -2536,7 +2535,7 @@ export default function Settings() {
                     const value = Number(e.target.value)
                     setAutoProcessInterval(value)
                   }}
-                  onBlur={(e) => {
+                  onBlur={() => {
                     updateAutomationSetting('auto_process_interval', autoProcessInterval, 'int')
                   }}
                 />
@@ -2774,9 +2773,9 @@ export default function Settings() {
                       <p className="text-xs text-gray-500 mt-1">
                         ✅ Premi INVIO per andare a capo e inserire più comuni (uno per riga, in MAIUSCOLO)
                       </p>
-                      {editingZona?.comuni && editingZona.comuni.filter(c => c.trim().length > 0).length > 0 && (
+                      {editingZona?.comuni && editingZona.comuni.filter((c: string) => c.trim().length > 0).length > 0 && (
                         <p className="text-xs text-green-600 mt-1">
-                          📍 {editingZona.comuni.filter(c => c.trim().length > 0).length} {editingZona.comuni.filter(c => c.trim().length > 0).length === 1 ? 'comune' : 'comuni'} inserito/i
+                          📍 {editingZona.comuni.filter((c: string) => c.trim().length > 0).length} {editingZona.comuni.filter((c: string) => c.trim().length > 0).length === 1 ? 'comune' : 'comuni'} inserito/i
                         </p>
                       )}
                     </div>

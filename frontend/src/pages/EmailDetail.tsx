@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { ArrowLeft, Mail, Calendar as CalendarIcon, Paperclip, Trash2, Code, Eye, RotateCcw, CheckCircle, XCircle, AlertCircle, ShieldAlert, MapPin, School, Clock, AlertTriangle } from 'lucide-react'
+import { ArrowLeft, Calendar as CalendarIcon, Paperclip, Trash2, Code, Eye, RotateCcw, CheckCircle, XCircle, AlertCircle, ShieldAlert, MapPin, School, Clock, AlertTriangle } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { emailsApi, settingsApi, actionsApi, spamApi, calendarApi } from '../lib/api'
 import { EmailCategory } from '../types'
@@ -43,14 +43,15 @@ export default function EmailDetail() {
   const { data: calendarResponse } = useQuery({
     queryKey: ['calendar-events', id],
     queryFn: () => calendarApi.getAll().then(res => {
-      const eventi = res.data.eventi || []
+      const eventi = Array.isArray(res.data) ? res.data : []
       return eventi.filter((e: any) => e.email_id === Number(id))
     }),
     enabled: !!id,
   })
 
   // Check if there are any failed actions
-  const hasFailedActions = actionsResponse?.azioni?.some((action: any) => action.stato === 'FALLITA')
+  const actionsArray = Array.isArray(actionsResponse) ? actionsResponse : []
+  const hasFailedActions = actionsArray.some((action: any) => action.stato === 'FALLITA')
 
   const reprocessMutation = useMutation({
     mutationFn: () => emailsApi.reprocess(Number(id)),
@@ -311,7 +312,7 @@ export default function EmailDetail() {
                 <div className="flex items-center gap-2">
                   <select
                     className="input flex-1"
-                    value={email.sottocategoria && categoriesResponse?.categories?.[email.categoria]?.subcategories?.includes(email.sottocategoria) ? email.sottocategoria : ''}
+                    value={email.sottocategoria && email.categoria && categoriesResponse?.categories?.[email.categoria as string]?.subcategories?.includes(email.sottocategoria) ? email.sottocategoria : ''}
                     onChange={(e) => {
                       if (e.target.value) {
                         updateSottocategoriaMutation.mutate({ sottocategoria: e.target.value })
@@ -404,7 +405,7 @@ export default function EmailDetail() {
                       onClick={async () => {
                         try {
                           await emailsApi.approveSubcategory(email.id)
-                          queryClient.invalidateQueries({ queryKey: ['email', emailId] })
+                          queryClient.invalidateQueries({ queryKey: ['email', id] })
                           toast.success('Sottocategoria approvata!')
                         } catch (error) {
                           toast.error('Errore durante l\'approvazione')
@@ -419,7 +420,7 @@ export default function EmailDetail() {
                       onClick={async () => {
                         try {
                           await emailsApi.rejectSubcategory(email.id)
-                          queryClient.invalidateQueries({ queryKey: ['email', emailId] })
+                          queryClient.invalidateQueries({ queryKey: ['email', id] })
                           toast.success('Proposta rifiutata')
                         } catch (error) {
                           toast.error('Errore durante il rifiuto')

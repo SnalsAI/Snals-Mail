@@ -179,8 +179,8 @@ def list_all_schools():
             **info
         })
 
-    # Sort by comune then nome
-    schools.sort(key=lambda x: (x.get("comune", ""), x.get("nome", "")))
+    # Sort by comune then nome (handle None values)
+    schools.sort(key=lambda x: (x.get("comune") or "", x.get("nome") or ""))
 
     return {
         "total": len(schools),

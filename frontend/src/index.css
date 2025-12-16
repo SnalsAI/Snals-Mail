@@ -427,3 +427,96 @@
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-gray-400;
 }
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@page {
+  size: A4 landscape;
+  margin: 10mm;
+}
+
+@media print {
+  /* Hide navigation, sidebar, and UI controls */
+  nav,
+  aside,
+  header,
+  .sidebar,
+  .print\\:hidden,
+  [class*="print:hidden"] {
+    display: none !important;
+  }
+
+  /* Reset background colors */
+  html, body {
+    background: white !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Ensure colors print */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Remove shadows and unnecessary styling */
+  .card {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+  }
+
+  /* Full width content */
+  main,
+  .main-content {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Page breaks */
+  .page-break {
+    page-break-before: always;
+  }
+
+  /* Compact font sizes for A4 fit */
+  .text-\\[8px\\] { font-size: 6pt !important; }
+  .text-\\[9px\\] { font-size: 7pt !important; }
+  .text-\\[10px\\] { font-size: 8pt !important; }
+  .text-xs { font-size: 8pt !important; }
+  .text-sm { font-size: 9pt !important; }
+  .text-lg { font-size: 11pt !important; }
+
+  /* Ensure timetable fits on page */
+  .overflow-x-auto {
+    overflow: visible !important;
+  }
+
+  /* Compact timetable cells */
+  .min-h-\\[36px\\] { min-height: 24px !important; }
+  .min-h-\\[100px\\] { min-height: 50px !important; }
+  .min-w-\\[70px\\] { min-width: 50px !important; }
+  .min-w-\\[60px\\] { min-width: 45px !important; }
+
+  /* Reduce padding */
+  .p-1 { padding: 2px !important; }
+  .p-2 { padding: 4px !important; }
+  .px-1 { padding-left: 2px !important; padding-right: 2px !important; }
+  .px-2 { padding-left: 4px !important; padding-right: 4px !important; }
+  .py-1 { padding-top: 2px !important; padding-bottom: 2px !important; }
+  .py-0\\.5 { padding-top: 1px !important; padding-bottom: 1px !important; }
+  .gap-1 { gap: 2px !important; }
+  .gap-0\\.5 { gap: 1px !important; }
+  .mb-0\\.5 { margin-bottom: 1px !important; }
+  .mt-0\\.5 { margin-top: 1px !important; }
+  .mb-2 { margin-bottom: 4px !important; }
+
+  /* Compact grid column for time */
+  [style*="grid-template-columns: 100px"] {
+    grid-template-columns: 50px repeat(auto-fit, 1fr) !important;
+  }
+}
